@@ -1,10 +1,11 @@
-﻿using System;
+﻿using JodyCore2.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Domain
+namespace JodyCore2.Bo.Domain
 {
     public class Team : ITeam
     {        

@@ -1,42 +1,59 @@
-﻿using JodyCore2.Data;
+﻿using JodyCore2.Bo.Domain;
+using JodyCore2.Data;
 using JodyCore2.Data.Dto;
-using JodyCore2.Domain;
+using JodyCore2.Data.Repositories;
+using JodyCore2.Service.Mappers;
 using JodyCore2.Service.ViewModels;
-using JodyCore2.Service.ViewModels.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JodyCore2.Service
 {
     public class TeamService : ITeamService
     {
+        private ITeamRepository teamRepository;
+
+        public TeamService(ITeamRepository _teamRepository)
+        {
+            teamRepository = _teamRepository;
+        }
+
         public IList<ITeamViewModel> GetAll()
         {
             using (var context = new JodyContext())
             {
-                return context.Teams.Select(t => TeamMapper.TeamToTeamViewModel(t)).ToList();
+                return teamRepository.GetAll(context).Select(s => TeamMapper.TeamDtoToTeamViewModel(s)).ToList();
             }
         }
 
-        public void Save(ITeamViewModel teamModel)
+        public void Create(string name, int skill)
+        {            
+
+            using (var context = new JodyContext())
+            {                
+                var teamDto = new TeamDto(Guid.NewGuid(), name, skill);
+                teamRepository.Create(teamDto, context);
+
+                context.SaveChanges();
+            }
+        }
+
+        public void Save(Guid identifier, string name, int skill)
         {
             using (var context = new JodyContext())
             {
-                var existingDto = context.Teams.Where(t => t.Identifier == teamModel.Identifier).FirstOrDefault();
+                var existingDto = teamRepository.GetByIdentifier(identifier, context);
 
                 if (existingDto is null)
                 {
-                    var dto = new TeamDto(TeamMapper.TeamViewModelToTeam(teamModel));
-                    context.Add(dto);
+                    throw new ApplicationException(string.Format("Team with identifier {0} does not exist.", identifier));
                 }
-                else
-                {
-                    existingDto.Name = teamModel.Name;
-                    existingDto.Skill = teamModel.Skill;
-                }
+
+                existingDto.Name = name;
+                existingDto.Skill = skill;
+
+                teamRepository.Update(existingDto, context);                
 
                 context.SaveChanges();
             }

@@ -1,4 +1,5 @@
 ﻿using JodyCore2.Data;
+using JodyCore2.Data.Repositories;
 using JodyCore2.Service;
 using JodyCore2.Service.ViewModels;
 using System;
@@ -16,20 +17,19 @@ namespace JodyCore2.ConsoleApp
                 context.Database.EnsureCreated();
             }
 
-            var teamService = new TeamService();
+            var teamService = new TeamService(new TeamRepository());
 
-            var team = new TeamViewModel(Guid.NewGuid(), "My Name", 5);
-            teamService.Save(team);
+            
+            teamService.Create("My Name", 5);            
 
             teamService.GetAll().ToList().ForEach(t =>
             {
                 Console.WriteLine(t.Name + "\t" + t.Identifier + "\t" + t.Skill);
             });
 
-            team.Name = "New Name";
-            team.Skill = 25;
+            var team = teamService.GetAll().ToList().Where(t => t.Name == "My Name").FirstOrDefault();
 
-            teamService.Save(team);
+            teamService.Save(team.Identifier, "New Name", 25);
 
             teamService.GetAll().ToList().ForEach(t =>
             {

@@ -1,4 +1,5 @@
-﻿using JodyCore2.Domain;
+﻿using JodyCore2.Bo.Domain;
+using JodyCore2.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Dto
 {
-    public class TeamDto : Team, ITeam, BaseDto
+    public class TeamDto
     {
         public int Id { get; set; }
-
+        public Guid Identifier { get; set; }
+        public string Name { get; set; }
+        public int Skill { get; set; }
         public TeamDto() { }
 
-        public TeamDto(ITeam team):base(team.Identifier, team.Name, team.Skill)
+        public TeamDto(Guid identifier, string name, int skill)
         {
-            
+            Identifier = identifier;
+            Name = name;
+            Skill = skill;
         }
     }
 }

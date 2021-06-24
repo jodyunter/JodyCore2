@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Dto
 {
-    public interface BaseDto
+    public interface IBaseDto
     {
         public int Id { get; set; }
     }

@@ -32,11 +32,14 @@ namespace JodyCore2.Data
         }
         
         public DbSet<TeamDto> Teams { get; set; }
+        public DbSet<GameDto> Games { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TeamDto>().ToTable("Teams");
             modelBuilder.Entity<TeamDto>().Property(p => p.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<GameDto>().ToTable("Games");
+            modelBuilder.Entity<GameDto>().Property(p => p.Id).ValueGeneratedOnAdd();
 
         }
         
