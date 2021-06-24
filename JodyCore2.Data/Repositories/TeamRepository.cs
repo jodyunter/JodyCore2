@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories
 {
-    public class TeamRepository : ITeamRepository
+    public class TeamRepository : BaseRepository<TeamDto>, ITeamRepository
     {
-        public TeamDto Create(TeamDto newTeam, JodyContext context)
-        {
-            context.Add(newTeam);
-
-            return newTeam;
-        }
 
         public IList<TeamDto> GetAll(JodyContext context)
         {
@@ -29,13 +23,6 @@ namespace JodyCore2.Data.Repositories
         public TeamDto GetByName(string name, JodyContext context)
         {
             return context.Teams.Where(t => t.Name == name).FirstOrDefault();
-        }
-
-        public TeamDto Update(TeamDto team, JodyContext context)
-        {
-            context.Update(team);
-
-            return team;
         }
     }
 }
