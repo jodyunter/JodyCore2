@@ -1,13 +1,7 @@
-﻿using JodyCore2.Domain;
+﻿using JodyCore2.Data.Dto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JodyCore2.Data
 {
@@ -37,12 +31,12 @@ namespace JodyCore2.Data
             }
         }
         
-        public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamDto> Teams { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Team>().ToTable("Teams");
-            modelBuilder.Entity<Team>().Property(p => p.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<TeamDto>().ToTable("Teams");
+            modelBuilder.Entity<TeamDto>().Property(p => p.Id).ValueGeneratedOnAdd();
 
         }
         

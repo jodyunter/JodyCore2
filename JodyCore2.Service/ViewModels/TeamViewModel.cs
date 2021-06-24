@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Domain
+namespace JodyCore2.Service.ViewModels
 {
-    public class Team : ITeam
-    {        
+    public class TeamViewModel : ITeamViewModel
+    {
         public Guid Identifier { get; set; }
         public string Name { get; set; }
         public int Skill { get; set; }
 
-        public Team() { }
+        public TeamViewModel() { }
 
-        public Team(Guid identifier, string name, int skill)
+        public TeamViewModel(Guid identifier, string name, int skill)
         {
             Identifier = identifier;
             Name = name;
