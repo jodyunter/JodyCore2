@@ -12,6 +12,7 @@ namespace JodyCore2.Test.Data
 {
     public class TestTeamRepository
     {
+        ITeamRepository teamRepository;
         [SetUp]
         public void Setup()
         {
@@ -19,6 +20,8 @@ namespace JodyCore2.Test.Data
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
+
+                 teamRepository = new TeamRepository();
             }
         }
 
@@ -40,15 +43,13 @@ namespace JodyCore2.Test.Data
                 var name = "My Name";
                 var skill = 25;
 
-                var teamDto = new TeamDto(identifier, name, skill);
-
-                ITeamRepository teamRepository = new TeamRepository();
+                var teamDto = new TeamDto(identifier, name, skill);                
 
                 teamRepository.Create(teamDto, context);
 
                 context.SaveChanges();
 
-                var newTeam = context.Teams.Where(t => t.Name == name).FirstOrDefault();
+                var newTeam = teamRepository.GetByIdentifier(teamDto.Identifier, context);
 
                 Assert.AreEqual(name, newTeam.Name);
                 Assert.AreEqual(identifier, newTeam.Identifier);
@@ -59,13 +60,58 @@ namespace JodyCore2.Test.Data
         [Test]
         public void ShouldUpdateTeam()
         {
-            Assert.Fail();
+            using (var context = new JodyContext())
+            {
+                var identifier = Guid.NewGuid();
+                var name = "My Name";
+                var skill = 25;
+
+                var teamDto = new TeamDto(identifier, name, skill);
+
+                teamRepository.Create(teamDto, context);
+
+                context.SaveChanges();
+
+                teamDto.Name = "New Name";
+                teamDto.Skill = 250;
+
+                teamRepository.Update(teamDto, context);
+
+                context.SaveChanges();
+
+                var updatedTeam = teamRepository.GetByIdentifier(teamDto.Identifier, context);
+
+                Assert.AreEqual("New Name", updatedTeam.Name);
+                Assert.AreEqual(teamDto.Identifier, updatedTeam.Identifier);
+                Assert.AreEqual(250, updatedTeam.Skill);
+
+            }
         }
 
         [Test]
         public void ShouldGetAll()
         {
-            Assert.Fail();
+            using (var context = new JodyContext())
+            {
+
+                for (int i = 0; i < 10; i++)
+                {
+                    var teamDto = new TeamDto(Guid.NewGuid(), "Team " + i, i);
+                    teamRepository.Create(teamDto, context);
+                }
+
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {
+                var teams = teamRepository.GetAll(context);
+
+                Assert.AreEqual(10, teams.Count);
+                Assert.AreEqual(context.Teams.Count(), teams.Count);
+            }
+
+
         }
     }
 }

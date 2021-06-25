@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories
 {
-    public interface ITeamRepository
+    public interface ITeamRepository:IBaseRepository<TeamDto>
     {
-        TeamDto GetByName(string name, JodyContext context);
-        TeamDto GetByIdentifier(Guid identifier, JodyContext context);
+        TeamDto GetByName(string name, JodyContext context);        
         IList<TeamDto> GetAll(JodyContext context);
-        TeamDto Create(TeamDto newTeam, JodyContext context);
-        TeamDto Update(TeamDto team, JodyContext context);
+
     }
 }

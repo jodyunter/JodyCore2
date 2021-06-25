@@ -9,5 +9,6 @@ namespace JodyCore2.Data.Dto
     public interface IBaseDto
     {
         public int Id { get; set; }
+        public Guid Identifier { get; set; }
     }
 }

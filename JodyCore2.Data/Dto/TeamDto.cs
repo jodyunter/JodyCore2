@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Dto
 {
-    public class TeamDto
+    public class TeamDto:IBaseDto
     {
         public int Id { get; set; }
         public Guid Identifier { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories
 {
-    public class BaseRepository<T>
+    public class BaseRepository<T>:IBaseRepository<T> where T: class, IBaseDto
     {
         public T Update(T dto, JodyContext context)
         {
@@ -21,5 +21,9 @@ namespace JodyCore2.Data.Repositories
             return dto;
         }
 
+        public T GetByIdentifier(Guid identifier, JodyContext context)
+        {
+            return context.Set<T>().Where(t => t.Identifier == identifier).FirstOrDefault();
+        }
     }
 }

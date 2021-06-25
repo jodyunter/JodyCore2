@@ -15,10 +15,6 @@ namespace JodyCore2.Data.Repositories
             return context.Teams.ToList();
         }
 
-        public TeamDto GetByIdentifier(Guid identifier, JodyContext context)
-        {
-            return context.Teams.Where(t => t.Identifier == identifier).FirstOrDefault();
-        }
 
         public TeamDto GetByName(string name, JodyContext context)
         {
