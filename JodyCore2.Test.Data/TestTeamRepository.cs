@@ -10,28 +10,14 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Data
 {
-    public class TestTeamRepository
+    public class TestTeamRepository:TestBaseRepository<TeamDto>
     {
         ITeamRepository teamRepository;
-        [SetUp]
-        public void Setup()
-        {
-            using (var context = new JodyContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
 
-                 teamRepository = new TeamRepository();
-            }
-        }
-
-        [TearDown]
-        public void TearDown()
+        public override IBaseRepository<TeamDto> SetupRepository()
         {
-            using (var context = new JodyContext())
-            {
-                context.Database.EnsureDeleted();
-            }
+            teamRepository = new TeamRepository();
+            return teamRepository;
         }
 
         [Test]
@@ -93,12 +79,7 @@ namespace JodyCore2.Test.Data
         {
             using (var context = new JodyContext())
             {
-
-                for (int i = 0; i < 10; i++)
-                {
-                    var teamDto = new TeamDto(Guid.NewGuid(), "Team " + i, i);
-                    teamRepository.Create(teamDto, context);
-                }
+                SetupGenericTeams(10, context);
 
                 context.SaveChanges();
             }
@@ -111,7 +92,38 @@ namespace JodyCore2.Test.Data
                 Assert.AreEqual(context.Teams.Count(), teams.Count);
             }
 
-
         }
+
+        [Test]
+        public void ShouldGetByName()
+        {
+            //setup data
+            using (var context = new JodyContext())
+            {
+                SetupGenericTeams(10, context);
+
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {
+                var team = teamRepository.GetByName("Team 5", context);
+
+                Assert.AreEqual("Team 5", team.Name);
+
+                team = teamRepository.GetByName("Team 0", context);
+                Assert.AreEqual("Team 0", team.Name);
+            }
+        }
+
+        void SetupGenericTeams(int count, JodyContext context)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                var teamDto = new TeamDto(Guid.NewGuid(), "Team " + i, i);
+                teamRepository.Create(teamDto, context);
+            }
+        }
+
     }
 }

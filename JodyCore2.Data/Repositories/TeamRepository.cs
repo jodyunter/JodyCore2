@@ -10,12 +10,6 @@ namespace JodyCore2.Data.Repositories
     public class TeamRepository : BaseRepository<TeamDto>, ITeamRepository
     {
 
-        public IList<TeamDto> GetAll(JodyContext context)
-        {
-            return context.Teams.ToList();
-        }
-
-
         public TeamDto GetByName(string name, JodyContext context)
         {
             return context.Teams.Where(t => t.Name == name).FirstOrDefault();

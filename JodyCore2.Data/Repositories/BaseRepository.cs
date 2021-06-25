@@ -25,5 +25,10 @@ namespace JodyCore2.Data.Repositories
         {
             return context.Set<T>().Where(t => t.Identifier == identifier).FirstOrDefault();
         }
+
+        public IList<T> GetAll(JodyContext context)
+        {
+            return context.Set<T>().ToList();
+        }
     }
 }

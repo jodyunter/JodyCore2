@@ -9,8 +9,7 @@ namespace JodyCore2.Data.Repositories
 {
     public interface ITeamRepository:IBaseRepository<TeamDto>
     {
-        TeamDto GetByName(string name, JodyContext context);        
-        IList<TeamDto> GetAll(JodyContext context);
+        TeamDto GetByName(string name, JodyContext context);                
 
     }
 }
