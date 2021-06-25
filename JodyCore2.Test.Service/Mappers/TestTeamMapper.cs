@@ -1,9 +1,7 @@
-﻿using NUnit.Framework;
+﻿using JodyCore2.Domain.Bo;
+using JodyCore2.Service.Mappers;
+using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Service.Mappers
 {
@@ -12,13 +10,13 @@ namespace JodyCore2.Test.Service.Mappers
         [Test]
         public void ShouldMapTeamViewModelToTeam()
         {
-            Assert.Fail();
-        }
+            var team = new Team(Guid.NewGuid(), "My Name", 25);
 
-        [Test]
-        public void ShouldMapTeamToTeamViewModel()
-        {
-            Assert.Fail();
+            var model = TeamMapper.TeamToTeamViewModel(team);
+
+            Assert.AreEqual(team.Identifier, model.Identifier);
+            Assert.AreEqual(team.Name, model.Name);
+            Assert.AreEqual(team.Skill, model.Skill);
         }
 
     }

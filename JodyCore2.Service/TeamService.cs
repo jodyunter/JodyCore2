@@ -1,5 +1,4 @@
-﻿using JodyCore2.Bo.Domain;
-using JodyCore2.Data;
+﻿using JodyCore2.Data;
 using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
 using JodyCore2.Service.Mappers;
@@ -27,7 +26,7 @@ namespace JodyCore2.Service
             }
         }
 
-        public void Create(string name, int skill)
+        public ITeamViewModel Create(string name, int skill)
         {            
 
             using (var context = new JodyContext())
@@ -36,10 +35,13 @@ namespace JodyCore2.Service
                 teamRepository.Create(teamDto, context);
 
                 context.SaveChanges();
+
+                return TeamMapper.TeamToTeamViewModel(teamDto);
             }
+            
         }
 
-        public void Save(Guid identifier, string name, int skill)
+        public ITeamViewModel Save(Guid identifier, string name, int skill)
         {
             using (var context = new JodyContext())
             {
@@ -56,6 +58,38 @@ namespace JodyCore2.Service
                 teamRepository.Update(existingDto, context);                
 
                 context.SaveChanges();
+
+                return TeamMapper.TeamToTeamViewModel(existingDto);
+            }
+        }
+
+        public ITeamViewModel GetByIdentifier(Guid identifier)
+        {
+            using (var context = new JodyContext())
+            {
+                var team = teamRepository.GetByIdentifier(identifier, context).FirstOrDefault();
+
+                if (team == null)
+                {
+                    throw new ApplicationException(string.Format("Team with identifier {0} does not exist.", identifier));
+                }
+
+                return TeamMapper.TeamToTeamViewModel(team);
+            }
+        }
+
+        public ITeamViewModel GetByName(string name)
+        {
+            using (var context = new JodyContext())
+            {
+                var team = teamRepository.GetByName(name, context);
+
+                if (team == null)
+                {
+                    throw new ApplicationException(string.Format("Team with name {0} does not exist.", name));
+                }
+
+                return TeamMapper.TeamToTeamViewModel(team);
             }
         }
     }

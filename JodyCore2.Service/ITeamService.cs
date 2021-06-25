@@ -10,8 +10,10 @@ namespace JodyCore2.Service
 {
     public interface ITeamService
     {
-        void Save(Guid identifier, string name, int skill);
-        void Create(string name, int skill);
+        ITeamViewModel Save(Guid identifier, string name, int skill);
+        ITeamViewModel Create(string name, int skill);
+        ITeamViewModel GetByIdentifier(Guid identifier);
+        ITeamViewModel GetByName(string name);
         IList<ITeamViewModel> GetAll();
     }
 }

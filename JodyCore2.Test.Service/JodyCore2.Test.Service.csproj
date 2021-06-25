@@ -13,4 +13,9 @@
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JodyCore2.Domain\JodyCore2.Domain.csproj" />
+    <ProjectReference Include="..\JodyCore2.Service\JodyCore2.Service.csproj" />
+  </ItemGroup>
+
 </Project>

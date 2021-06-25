@@ -1,5 +1,5 @@
-﻿using JodyCore2.Bo.Domain;
-using JodyCore2.Domain;
+﻿using JodyCore2.Domain;
+using JodyCore2.Domain.Bo;
 using System;
 using System.Collections.Generic;
 using System.Linq;

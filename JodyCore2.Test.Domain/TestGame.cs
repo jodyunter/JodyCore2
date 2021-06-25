@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
+using JodyCore2.Domain.Bo;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Domain
 {
@@ -12,7 +9,14 @@ namespace JodyCore2.Test.Domain
         [Test]
         public void ShouldPlayGame()
         {
-            Assert.Fail();
+            var game = new Game(Guid.NewGuid(), 5, 25, new Team(Guid.NewGuid(), "Team 1", 5), new Team(Guid.NewGuid(), "Team 2", 5), 0, 0, false, false, true);
+
+            game.Play(new Random(1277734512));
+
+            Assert.IsTrue(game.Complete);
+            Assert.AreEqual(3, game.HomeScore);
+            Assert.AreEqual(5, game.AwayScore);
+
         }
     }
 }
