@@ -33,5 +33,10 @@ namespace JodyCore2.Data.Dto
         {
             return HashCode.Combine(Identifier, Name, Skill);
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}\t{1}\t{2}\t{3}", Id, Identifier, Name, Skill);
+        }
     }
 }

@@ -2,33 +2,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories
 {
     public class BaseRepository<T>:IBaseRepository<T> where T: class, IBaseDto
     {
-        public T Update(T dto, JodyContext context)
+
+        public virtual IQueryable<T> AlwaysInclude(IQueryable<T> query)
+        {
+            return query;
+        }
+
+        public virtual T Update(T dto, JodyContext context)
         {
             context.Update(dto);
             return dto;
         }
+        public virtual IList<T> Update(IList<T> dto, JodyContext context)
+        {
+            context.UpdateRange(dto);
+            return dto;
+        }
 
-        public T Create(T dto, JodyContext context)
+        public virtual T Create(T dto, JodyContext context)
         {
             context.Add(dto);
             return dto;
         }
-
-        public T GetByIdentifier(Guid identifier, JodyContext context)
+        public virtual IList<T> Create(IList<T> dto, JodyContext context)
         {
-            return context.Set<T>().Where(t => t.Identifier == identifier).FirstOrDefault();
+            context.AddRange(dto);
+            return dto;
         }
 
-        public IQueryable<T> GetAll(JodyContext context)
+        public virtual IQueryable<T> GetByIdentifier(Guid identifier, JodyContext context)
         {
-            return context.Set<T>();
+            return AlwaysInclude(context.Set<T>().Where(t => t.Identifier == identifier));
+        }
+
+        public virtual IQueryable<T> GetAll(JodyContext context)
+        {
+            return AlwaysInclude(context.Set<T>());
         }
     }
 }

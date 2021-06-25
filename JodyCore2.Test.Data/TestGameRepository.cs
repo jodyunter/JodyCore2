@@ -25,12 +25,29 @@ namespace JodyCore2.Test.Data
 
         public override GameDto SetupUpdateData(GameDto originalData, JodyContext context)
         {
-            throw new NotImplementedException();
+            var team3 = new TeamDto(Guid.NewGuid(), "Team 3", 5);
+            var team4 = new TeamDto(Guid.NewGuid(), "team 4", 5);
+
+            var updatedData = gameRepository.GetByIdentifier(originalData.Identifier, context).FirstOrDefault();
+
+            updatedData.Home = team3;
+            updatedData.Away = team4;
+
+            return updatedData;
         }
 
         public override IList<GameDto> SetupGetAllData(JodyContext context)
         {
-            throw new NotImplementedException();
+            var teams = TestTeamRepository.SetupGenericTeams(20, context, teamRepository);
+            var list = new List<GameDto>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                var gameDto = new GameDto(Guid.NewGuid(), 1, 15, teams[i], teams[i + 10], 0, 0, false, false, true);
+                gameRepository.Create(gameDto, context);
+            }
+
+            return list;
         }
 
         public override IBaseRepository<GameDto> SetupRepository()
@@ -41,18 +58,98 @@ namespace JodyCore2.Test.Data
         }
 
 
-        [Test]
-        public void ShouldGetByYearAndDateRange()
+        public void SetupGameData(JodyContext context)
         {
-            Assert.Fail();
+            var gameDtos = new List<GameDto>()
+            {
+                new GameDto(Guid.NewGuid(), 1, 1, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 3, 1, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 3, 1, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 3, 1, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, true, false, true),
+                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, true, false, true),
+                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
+                new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
+                new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
+                new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, false, false, true),
+            };
+
+            gameRepository.Create(gameDtos, context);
+        }            
+
+        [Test]
+        public void ShouldGetByYearAndDateRangeNullLastDay()
+        {
+            using (var context = new JodyContext())
+            {
+                SetupGameData(context);
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {                
+                Assert.AreEqual(6, gameRepository.GetByYearAndDayRange(1, 1, null, context).Count());
+                Assert.AreEqual(10, gameRepository.GetByYearAndDayRange(2, 1, null, context).Count());
+            }
         }
 
         [Test]
-        public void GetByYearAndDayRangeAndCompleteStatus()
+        public void ShouldGetByYearAndDateRangeNotNullLastDay()
         {
-            Assert.Fail();
+            using (var context = new JodyContext())
+            {
+                SetupGameData(context);
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {
+                Assert.AreEqual(1, gameRepository.GetByYearAndDayRange(1, 1, 1, context).Count());
+                Assert.AreEqual(3, gameRepository.GetByYearAndDayRange(1, 1, 2, context).Count());
+                Assert.AreEqual(6, gameRepository.GetByYearAndDayRange(1, 1, 3, context).Count());
+                Assert.AreEqual(6, gameRepository.GetByYearAndDayRange(2, 1, 1, context).Count());
+                Assert.AreEqual(10, gameRepository.GetByYearAndDayRange(2, 1, 2, context).Count());
+                Assert.AreEqual(4, gameRepository.GetByYearAndDayRange(2, 2, 2, context).Count());
+            }
         }
 
+        [Test]
+        public void GetByYearAndDayRangeAndCompleteStatusTrue()
+        {
+            using (var context = new JodyContext())
+            {
+                SetupGameData(context);
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {
+                Assert.AreEqual(0, gameRepository.GetByYearAndDayRangeAndCompleteStatus(1, 1, 5, true, context).Count());                
+                Assert.AreEqual(3, gameRepository.GetByYearAndDayRangeAndCompleteStatus(2, 2, 5, true, context).Count());                
+            }
+        }
+
+        [Test]
+        public void GetByYearAndDayRangeAndCompleteStatusFalse()
+        {
+            using (var context = new JodyContext())
+            {
+                SetupGameData(context);
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {                
+                Assert.AreEqual(6, gameRepository.GetByYearAndDayRangeAndCompleteStatus(1, 1, 5, false, context).Count());                
+                Assert.AreEqual(1, gameRepository.GetByYearAndDayRangeAndCompleteStatus(2, 2, 2, false, context).Count());
+            }
+        }
 
     }
 }

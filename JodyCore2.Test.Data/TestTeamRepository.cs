@@ -21,7 +21,7 @@ namespace JodyCore2.Test.Data
 
         public override TeamDto SetupUpdateData(TeamDto originalData, JodyContext context)
         {
-            var updatedData = Repository.GetByIdentifier(originalData.Identifier, context);
+            var updatedData = Repository.GetByIdentifier(originalData.Identifier, context).First();
             updatedData.Name = "New Name";
             updatedData.Skill = 50;
 
@@ -30,7 +30,7 @@ namespace JodyCore2.Test.Data
 
         public override IList<TeamDto> SetupGetAllData(JodyContext context)
         {
-            return SetupGenericTeams(10, context);            
+            return SetupGenericTeams(10, context, teamRepository);            
         }
 
         public override IBaseRepository<TeamDto> SetupRepository()
@@ -45,7 +45,7 @@ namespace JodyCore2.Test.Data
             //setup data
             using (var context = new JodyContext())
             {
-                SetupGenericTeams(10, context);
+                SetupGenericTeams(10, context, teamRepository);
 
                 context.SaveChanges();
             }
@@ -61,7 +61,7 @@ namespace JodyCore2.Test.Data
             }
         }
 
-        IList<TeamDto> SetupGenericTeams(int count, JodyContext context)
+        public static IList<TeamDto> SetupGenericTeams(int count, JodyContext context, ITeamRepository teamRepository)
         {
             var list = new List<TeamDto>();
 

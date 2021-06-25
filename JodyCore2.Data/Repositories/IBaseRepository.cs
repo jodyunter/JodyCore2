@@ -11,8 +11,10 @@ namespace JodyCore2.Data.Repositories
     {
         public T Update(T dto, JodyContext context);
         public T Create(T dto, JodyContext context);
+        public IList<T> Update(IList<T> dtos, JodyContext context);
+        public IList<T> Create(IList<T> dtos, JodyContext context);
 
-        T GetByIdentifier(Guid identifier, JodyContext context);
+        IQueryable<T> GetByIdentifier(Guid identifier, JodyContext context);
         IQueryable<T> GetAll(JodyContext context);
 
     }

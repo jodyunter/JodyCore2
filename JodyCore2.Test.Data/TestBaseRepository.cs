@@ -62,7 +62,7 @@ namespace JodyCore2.Test.Data
 
             using (var context = new JodyContext())
             {
-                var compareData = Repository.GetByIdentifier(createdData.Identifier, context);
+                var compareData = Repository.GetByIdentifier(createdData.Identifier, context).FirstOrDefault();
                 Assert.AreEqual(createdData, compareData);
             }
 
@@ -92,7 +92,7 @@ namespace JodyCore2.Test.Data
 
             using (var context = new JodyContext())
             {
-                var currentData = Repository.GetByIdentifier(createdData.Identifier, context);
+                var currentData = Repository.GetByIdentifier(createdData.Identifier, context).FirstOrDefault();
                 Assert.AreNotEqual(currentData, createdData);
                 Assert.AreEqual(currentData, updatedData);
             }
@@ -110,10 +110,10 @@ namespace JodyCore2.Test.Data
 
             using (var context = new JodyContext())
             {
-                var teams = Repository.GetAll(context);
+                var values = Repository.GetAll(context);
 
-                Assert.AreEqual(10, teams.Count());
-                Assert.AreEqual(context.Teams.Count(), teams.Count());
+                Assert.AreEqual(10, values.Count());
+                Assert.AreEqual(context.Set<T>().Count(), values.Count());
             }
 
         }

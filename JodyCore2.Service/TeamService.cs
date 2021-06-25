@@ -43,7 +43,7 @@ namespace JodyCore2.Service
         {
             using (var context = new JodyContext())
             {
-                var existingDto = teamRepository.GetByIdentifier(identifier, context);
+                var existingDto = teamRepository.GetByIdentifier(identifier, context).FirstOrDefault();
 
                 if (existingDto is null)
                 {

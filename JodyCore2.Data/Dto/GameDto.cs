@@ -12,9 +12,9 @@ namespace JodyCore2.Data.Dto
         public TeamDto HomeDto { get; set; }
         public TeamDto AwayDto { get; set; }
         [NotMapped]
-        public new ITeam Home { get; set; }
+        public new ITeam Home { get { return HomeDto; } set { HomeDto = (TeamDto)value; } }
         [NotMapped]
-        public new ITeam Away { get; set; }
+        public new ITeam Away { get { return AwayDto; } set { AwayDto = (TeamDto)value; } }
 
         public GameDto() { }
 
@@ -61,6 +61,11 @@ namespace JodyCore2.Data.Dto
             hash.Add(Processed);
             hash.Add(CanTie);
             return hash.ToHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}", Id, Identifier, Day, Year, Home, Away, HomeScore, AwayScore, Complete, Processed, CanTie);
         }
     }
 }

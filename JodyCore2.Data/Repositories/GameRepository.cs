@@ -1,4 +1,5 @@
 ﻿using JodyCore2.Data.Dto;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,16 +24,16 @@ namespace JodyCore2.Data.Repositories
 
         public IQueryable<GameDto> GetByYearAndDayRangeAndCompleteStatus(int year, int firstDay, int? lastDay, bool complete, JodyContext context)
         {
-            var query = context.Games.Where(g => g.Year == year && g.Day >= firstDay);
-
-            if (lastDay != null && lastDay >= firstDay)
-            {
-                query = query.Where(g => g.Day <= lastDay);
-            }
-
-            query.Where(g => g.Complete == complete);
+            var query = GetByYearAndDayRange(year, firstDay, lastDay, context).Where(g => g.Complete == complete);
 
             return query;
         }
+
+        public override IQueryable<GameDto> AlwaysInclude(IQueryable<GameDto> query)
+        {
+            return query.Include(g => g.HomeDto)
+                        .Include(g => g.AwayDto);
+        }
+
     }
 }
