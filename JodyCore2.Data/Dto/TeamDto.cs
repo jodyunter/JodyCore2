@@ -22,5 +22,18 @@ namespace JodyCore2.Data.Dto
             Name = name;
             Skill = skill;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is TeamDto dto &&
+                   Identifier.Equals(dto.Identifier) &&
+                   Name == dto.Name &&
+                   Skill == dto.Skill;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Identifier, Name, Skill);
+        }
     }
 }

@@ -37,5 +37,36 @@ namespace JodyCore2.Data.Dto
             Processed = processed;
             CanTie = canTie;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is GameDto dto &&
+                   Identifier.Equals(dto.Identifier) &&
+                   Day == dto.Day &&
+                   Year == dto.Year &&
+                   EqualityComparer<TeamDto>.Default.Equals(Home, dto.Home) &&
+                   EqualityComparer<TeamDto>.Default.Equals(Away, dto.Away) &&
+                   HomeScore == dto.HomeScore &&
+                   AwayScore == dto.AwayScore &&
+                   Complete == dto.Complete &&
+                   Processed == dto.Processed &&
+                   CanTie == dto.CanTie;
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(Identifier);
+            hash.Add(Day);
+            hash.Add(Year);
+            hash.Add(Home);
+            hash.Add(Away);
+            hash.Add(HomeScore);
+            hash.Add(AwayScore);
+            hash.Add(Complete);
+            hash.Add(Processed);
+            hash.Add(CanTie);
+            return hash.ToHashCode();
+        }
     }
 }

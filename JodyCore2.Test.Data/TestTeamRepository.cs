@@ -14,64 +14,29 @@ namespace JodyCore2.Test.Data
     {
         ITeamRepository teamRepository;
 
+        public override TeamDto SetupCreateData(JodyContext context)
+        {
+            return new TeamDto(Guid.NewGuid(), "My Team", 25);
+        }
+
+        public override TeamDto SetupUpdateData(TeamDto originalData, JodyContext context)
+        {
+            var updatedData = Repository.GetByIdentifier(originalData.Identifier, context);
+            updatedData.Name = "New Name";
+            updatedData.Skill = 50;
+
+            return updatedData;
+        }
+
+        public override IList<TeamDto> SetupGetAllData(JodyContext context)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IBaseRepository<TeamDto> SetupRepository()
         {
             teamRepository = new TeamRepository();
             return teamRepository;
-        }
-
-        [Test]
-        public void ShouldCreateTeam()
-        {
-            using (var context = new JodyContext())
-            {
-                var identifier = Guid.NewGuid();
-                var name = "My Name";
-                var skill = 25;
-
-                var teamDto = new TeamDto(identifier, name, skill);                
-
-                teamRepository.Create(teamDto, context);
-
-                context.SaveChanges();
-
-                var newTeam = teamRepository.GetByIdentifier(teamDto.Identifier, context);
-
-                Assert.AreEqual(name, newTeam.Name);
-                Assert.AreEqual(identifier, newTeam.Identifier);
-                Assert.AreEqual(skill, newTeam.Skill);
-            }
-        }
-
-        [Test]
-        public void ShouldUpdateTeam()
-        {
-            using (var context = new JodyContext())
-            {
-                var identifier = Guid.NewGuid();
-                var name = "My Name";
-                var skill = 25;
-
-                var teamDto = new TeamDto(identifier, name, skill);
-
-                teamRepository.Create(teamDto, context);
-
-                context.SaveChanges();
-
-                teamDto.Name = "New Name";
-                teamDto.Skill = 250;
-
-                teamRepository.Update(teamDto, context);
-
-                context.SaveChanges();
-
-                var updatedTeam = teamRepository.GetByIdentifier(teamDto.Identifier, context);
-
-                Assert.AreEqual("New Name", updatedTeam.Name);
-                Assert.AreEqual(teamDto.Identifier, updatedTeam.Identifier);
-                Assert.AreEqual(250, updatedTeam.Skill);
-
-            }
         }
 
         [Test]
@@ -118,12 +83,11 @@ namespace JodyCore2.Test.Data
 
         void SetupGenericTeams(int count, JodyContext context)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < count; i++)
             {
                 var teamDto = new TeamDto(Guid.NewGuid(), "Team " + i, i);
                 teamRepository.Create(teamDto, context);
             }
         }
-
     }
 }
