@@ -9,14 +9,30 @@ namespace JodyCore2.Data.Repositories
 {
     public class GameRepository : BaseRepository<GameDto>, IGameRepository
     {
-        public IList<GameDto> GetByYearAndDayRange(int year, int firstDay, int? lastDay, JodyContext context)
+        public IQueryable<GameDto> GetByYearAndDayRange(int year, int firstDay, int? lastDay, JodyContext context)
         {
-            throw new NotImplementedException();
+            var query = context.Games.Where(g => g.Year == year && g.Day >= firstDay);
+
+            if (lastDay != null && lastDay >= firstDay)
+            {
+                query = query.Where(g => g.Day <= lastDay);
+            }
+
+            return query;
         }
 
-        public IList<GameDto> GetByYearAndDayRangeAndCompleteStatus(int year, int firstDay, int? lastDay, JodyContext context)
+        public IQueryable<GameDto> GetByYearAndDayRangeAndCompleteStatus(int year, int firstDay, int? lastDay, bool complete, JodyContext context)
         {
-            throw new NotImplementedException();
+            var query = context.Games.Where(g => g.Year == year && g.Day >= firstDay);
+
+            if (lastDay != null && lastDay >= firstDay)
+            {
+                query = query.Where(g => g.Day <= lastDay);
+            }
+
+            query.Where(g => g.Complete == complete);
+
+            return query;
         }
     }
 }

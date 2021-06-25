@@ -8,12 +8,10 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Dto
 {
-    public class TeamDto:IBaseDto
+    public class TeamDto:Team, ITeam, IBaseDto
     {
         public int Id { get; set; }
-        public Guid Identifier { get; set; }
-        public string Name { get; set; }
-        public int Skill { get; set; }
+
         public TeamDto() { }
 
         public TeamDto(Guid identifier, string name, int skill)

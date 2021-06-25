@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9C3CAC3F-0728-4D3A-8845-A5E83595E06F}"
 	ProjectSection(SolutionItems) = preProject
 		dockerhelp.txt = dockerhelp.txt
+		DtoPlan.txt = DtoPlan.txt
 		entityframeworkmigrationshelp.txt = entityframeworkmigrationshelp.txt
 	EndProjectSection
 EndProject

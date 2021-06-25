@@ -2,25 +2,19 @@
 using JodyCore2.Domain.Bo;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JodyCore2.Data.Dto
 {
-    public class GameDto:IBaseDto
+    public class GameDto:Game, IGame, IBaseDto
     {
         public int Id { get; set; }
-        public Guid Identifier { get; set; }
-        public int Day { get; set; }
-        public int Year { get; set; }
-        public TeamDto Home { get; set; }
-        public TeamDto Away { get; set; }
-        public int HomeScore { get; set; }
-        public int AwayScore { get; set; }
-        public bool Complete { get; set; }
-        public bool Processed { get; set; }
-        public bool CanTie { get; set; }
+        public TeamDto HomeDto { get; set; }
+        public TeamDto AwayDto { get; set; }
+        [NotMapped]
+        public new ITeam Home { get; set; }
+        [NotMapped]
+        public new ITeam Away { get; set; }
 
         public GameDto() { }
 
@@ -29,8 +23,8 @@ namespace JodyCore2.Data.Dto
             Identifier = identifier;
             Day = day;
             Year = year;
-            Home = home;
-            Away = away;
+            HomeDto = home;
+            AwayDto = away;
             HomeScore = homeScore;
             AwayScore = awayScore;
             Complete = complete;
@@ -44,8 +38,8 @@ namespace JodyCore2.Data.Dto
                    Identifier.Equals(dto.Identifier) &&
                    Day == dto.Day &&
                    Year == dto.Year &&
-                   EqualityComparer<TeamDto>.Default.Equals(Home, dto.Home) &&
-                   EqualityComparer<TeamDto>.Default.Equals(Away, dto.Away) &&
+                   EqualityComparer<TeamDto>.Default.Equals(HomeDto, dto.HomeDto) &&
+                   EqualityComparer<TeamDto>.Default.Equals(AwayDto, dto.AwayDto) &&
                    HomeScore == dto.HomeScore &&
                    AwayScore == dto.AwayScore &&
                    Complete == dto.Complete &&
@@ -59,8 +53,8 @@ namespace JodyCore2.Data.Dto
             hash.Add(Identifier);
             hash.Add(Day);
             hash.Add(Year);
-            hash.Add(Home);
-            hash.Add(Away);
+            hash.Add(HomeDto);
+            hash.Add(AwayDto);
             hash.Add(HomeScore);
             hash.Add(AwayScore);
             hash.Add(Complete);

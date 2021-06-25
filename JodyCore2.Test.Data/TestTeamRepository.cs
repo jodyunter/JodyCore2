@@ -30,33 +30,13 @@ namespace JodyCore2.Test.Data
 
         public override IList<TeamDto> SetupGetAllData(JodyContext context)
         {
-            throw new NotImplementedException();
+            return SetupGenericTeams(10, context);            
         }
 
         public override IBaseRepository<TeamDto> SetupRepository()
         {
             teamRepository = new TeamRepository();
             return teamRepository;
-        }
-
-        [Test]
-        public void ShouldGetAll()
-        {
-            using (var context = new JodyContext())
-            {
-                SetupGenericTeams(10, context);
-
-                context.SaveChanges();
-            }
-
-            using (var context = new JodyContext())
-            {
-                var teams = teamRepository.GetAll(context);
-
-                Assert.AreEqual(10, teams.Count);
-                Assert.AreEqual(context.Teams.Count(), teams.Count);
-            }
-
         }
 
         [Test]
@@ -81,13 +61,17 @@ namespace JodyCore2.Test.Data
             }
         }
 
-        void SetupGenericTeams(int count, JodyContext context)
+        IList<TeamDto> SetupGenericTeams(int count, JodyContext context)
         {
+            var list = new List<TeamDto>();
+
             for (int i = 0; i < count; i++)
             {
                 var teamDto = new TeamDto(Guid.NewGuid(), "Team " + i, i);
-                teamRepository.Create(teamDto, context);
+                list.Add(teamRepository.Create(teamDto, context));
             }
+
+            return list;
         }
     }
 }

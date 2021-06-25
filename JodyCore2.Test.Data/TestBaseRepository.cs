@@ -97,5 +97,25 @@ namespace JodyCore2.Test.Data
                 Assert.AreEqual(currentData, updatedData);
             }
         }
+
+        [Test]
+        public void ShouldGetAll()
+        {
+            using (var context = new JodyContext())
+            {
+                SetupGetAllData(context);
+
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {
+                var teams = Repository.GetAll(context);
+
+                Assert.AreEqual(10, teams.Count());
+                Assert.AreEqual(context.Teams.Count(), teams.Count());
+            }
+
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace JodyCore2.Service
         {
             using (var context = new JodyContext())
             {
-                return teamRepository.GetAll(context).Select(s => TeamMapper.TeamDtoToTeamViewModel(s)).ToList();
+                return teamRepository.GetAll(context).Select(s => TeamMapper.TeamToTeamViewModel(s)).ToList();
             }
         }
 

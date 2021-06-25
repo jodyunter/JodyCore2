@@ -9,7 +9,7 @@ namespace JodyCore2.Data.Repositories
 {
     public interface IGameRepository:IBaseRepository<GameDto>
     {        
-        IList<GameDto> GetByYearAndDayRange(int year, int firstDay, int? lastDay, JodyContext context);
-        IList<GameDto> GetByYearAndDayRangeAndCompleteStatus(int year, int firstDay, int? lastDay, JodyContext context);        
+        IQueryable<GameDto> GetByYearAndDayRange(int year, int firstDay, int? lastDay, JodyContext context);
+        IQueryable<GameDto> GetByYearAndDayRangeAndCompleteStatus(int year, int firstDay, int? lastDay, bool complete, JodyContext context);        
     }
 }

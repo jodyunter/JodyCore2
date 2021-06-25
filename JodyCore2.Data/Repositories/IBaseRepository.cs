@@ -13,7 +13,7 @@ namespace JodyCore2.Data.Repositories
         public T Create(T dto, JodyContext context);
 
         T GetByIdentifier(Guid identifier, JodyContext context);
-        IList<T> GetAll(JodyContext context);
+        IQueryable<T> GetAll(JodyContext context);
 
     }
 }

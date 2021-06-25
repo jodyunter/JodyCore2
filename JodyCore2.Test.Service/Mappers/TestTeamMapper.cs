@@ -21,10 +21,5 @@ namespace JodyCore2.Test.Service.Mappers
             Assert.Fail();
         }
 
-        [Test]
-        public void ShouldMapTeamDtoToTeamViewModel()
-        {
-            Assert.Fail();
-        }
     }
 }
