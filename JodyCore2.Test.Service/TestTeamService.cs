@@ -40,13 +40,29 @@ namespace JodyCore2.Test.Service
         [Test]
         public void ShouldUpdateTeam()
         {
-            Assert.Fail();
+            var newTeam = teamService.Create("My Team", 25);
+
+            teamService.Save(newTeam.Identifier, "new Name", 55);
+
+            var retrievedTeam = teamService.GetByName("new Name");
+
+            Assert.AreEqual("new Name", retrievedTeam.Name);
+            Assert.AreEqual(55, retrievedTeam.Skill);
+            Assert.NotNull(newTeam.Identifier);
+            Assert.AreEqual(newTeam.Identifier, retrievedTeam.Identifier);
         }
 
         [Test]
         public void ShouldGetAll()
         {
-            Assert.Fail();
+            for (int i = 0; i < 10; i++) 
+            {
+                teamService.Create("Team " + i, 25);
+            }
+
+            var teams = teamService.GetAll();
+
+            Assert.AreEqual(10, teams.Count);
         }
 
         [Test]
