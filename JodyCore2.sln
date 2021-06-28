@@ -12,19 +12,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		entityframeworkmigrationshelp.txt = entityframeworkmigrationshelp.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Data", "JodyCore2.Data\JodyCore2.Data.csproj", "{8EF24FB5-3A2C-4DCB-9336-3C3F7807688B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Data", "JodyCore2.Data\JodyCore2.Data.csproj", "{8EF24FB5-3A2C-4DCB-9336-3C3F7807688B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Domain", "JodyCore2.Domain\JodyCore2.Domain.csproj", "{C4AA8407-E47E-4C6A-B12C-F80603D1E425}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Domain", "JodyCore2.Domain\JodyCore2.Domain.csproj", "{C4AA8407-E47E-4C6A-B12C-F80603D1E425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Service", "JodyCore2.Service\JodyCore2.Service.csproj", "{D73B96D5-C33C-4050-876D-38A6F6B3DD9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Service", "JodyCore2.Service\JodyCore2.Service.csproj", "{D73B96D5-C33C-4050-876D-38A6F6B3DD9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Test.Domain", "JodyCore2.Test.Domain\JodyCore2.Test.Domain.csproj", "{9C276BD4-CA2A-4947-91CF-98CB64DB38A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Domain", "JodyCore2.Test.Domain\JodyCore2.Test.Domain.csproj", "{9C276BD4-CA2A-4947-91CF-98CB64DB38A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Test.Data", "JodyCore2.Test.Data\JodyCore2.Test.Data.csproj", "{A63D1C89-AA18-4096-9981-B6ADB1F33BD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Data", "JodyCore2.Test.Data\JodyCore2.Test.Data.csproj", "{A63D1C89-AA18-4096-9981-B6ADB1F33BD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Test.Service", "JodyCore2.Test.Service\JodyCore2.Test.Service.csproj", "{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Web", "JodyCore2.Web\JodyCore2.Web.csproj", "{DE189179-3FB4-418B-9601-B46E035EFC99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Service", "JodyCore2.Test.Service\JodyCore2.Test.Service.csproj", "{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,10 +58,6 @@ Global
 		{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE189179-3FB4-418B-9601-B46E035EFC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE189179-3FB4-418B-9601-B46E035EFC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE189179-3FB4-418B-9601-B46E035EFC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE189179-3FB4-418B-9601-B46E035EFC99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
