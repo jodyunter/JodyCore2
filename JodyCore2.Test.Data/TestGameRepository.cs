@@ -36,6 +36,7 @@ namespace JodyCore2.Test.Data
             return updatedData;
         }
 
+
         public override IList<GameDto> SetupGetAllData(JodyContext context)
         {
             var teams = TestTeamRepository.SetupGenericTeams(20, context, teamRepository);
@@ -81,7 +82,7 @@ namespace JodyCore2.Test.Data
             };
 
             gameRepository.Create(gameDtos, context);
-        }            
+        }
 
         [Test]
         public void ShouldGetByYearAndDateRangeNullLastDay()
