@@ -11,8 +11,8 @@ namespace JodyCore2.Domain.Bo
         public Guid Identifier { get; set; }
         public int Day { get; set; }
         public int Year { get; set; }
-        public ITeam Home { get; set; }
-        public ITeam Away { get; set; }
+        public virtual ITeam Home { get; set; }
+        public virtual ITeam Away { get; set; }
         public int HomeScore { get; set; }
         public int AwayScore { get; set; }
         public bool Complete { get; set; }

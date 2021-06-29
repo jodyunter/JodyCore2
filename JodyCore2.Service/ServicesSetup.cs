@@ -13,6 +13,7 @@ namespace JodyCore2.Service
         public static void SetupServicesAndRepositories(this IServiceCollection services)
         {
             services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
 
 
         }

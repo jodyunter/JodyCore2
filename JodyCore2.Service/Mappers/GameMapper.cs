@@ -12,7 +12,9 @@ namespace JodyCore2.Service.Mappers
     {
         public static IGameSummaryViewModel GameToGameSummaryViewModel(Game game)
         {
-            return null;
+            return new GameSummaryViewModel(game.Identifier, game.Day, game.Year,
+                game.Home.Identifier, game.Home.Name, game.Away.Identifier, game.Away.Name,
+                game.HomeScore, game.AwayScore, game.Complete);
         }
     }
 }

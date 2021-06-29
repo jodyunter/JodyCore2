@@ -12,9 +12,9 @@ namespace JodyCore2.Data.Dto
         public TeamDto HomeDto { get; set; }
         public TeamDto AwayDto { get; set; }
         [NotMapped]
-        public new ITeam Home { get { return HomeDto; } set { HomeDto = (TeamDto)value; } }
+        public override ITeam Home { get { return HomeDto; } set { HomeDto = (TeamDto)value; } }
         [NotMapped]
-        public new ITeam Away { get { return AwayDto; } set { AwayDto = (TeamDto)value; } }
+        public override ITeam Away { get { return AwayDto; } set { AwayDto = (TeamDto)value; } }
 
         public GameDto() { }
 

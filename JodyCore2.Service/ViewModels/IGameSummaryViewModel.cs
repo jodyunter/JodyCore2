@@ -8,6 +8,7 @@ namespace JodyCore2.Service.ViewModels
 {
     public interface IGameSummaryViewModel
     {
+        Guid Identifier { get; }
         int Day { get; }
         int Year { get; }
         Guid HomeTeamIdentifier { get; }

@@ -9,7 +9,7 @@ namespace JodyCore2.Service
 {
     public interface IGameService
     {
-        IGameSummaryViewModel Create(int day, int year, Guid homeId, Guid awayid);
+        IGameSummaryViewModel Create(int year, int day, Guid homeId, Guid awayid);
         IGameSummaryViewModel Play(Guid gameId);
         IList<IGameSummaryViewModel> GetGames(int year, int firstDay, int lastDay);
     }
