@@ -28,7 +28,7 @@ namespace JodyCore2.Api.Controllers
 
                 return Ok(model);
             }
-            catch (Exception e)
+            catch (ApplicationException e)
             {
                 return NotFound(e.Message);
             }
@@ -44,7 +44,23 @@ namespace JodyCore2.Api.Controllers
 
                 return Ok(result);
             }
-            catch (Exception e)
+            catch (ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpPost("play")]
+        [Produces("application/json")]
+        public IActionResult Play(Guid gameId)
+        {
+            try
+            {
+                var result = gameService.Play(gameId);
+
+                return Ok(result);
+            }
+            catch (ApplicationException e)
             {
                 return NotFound(e.Message);
             }
