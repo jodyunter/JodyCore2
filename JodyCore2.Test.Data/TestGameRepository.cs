@@ -20,7 +20,7 @@ namespace JodyCore2.Test.Data
             var home = new TeamDto(Guid.NewGuid(), "Team 1", 5);
             var away = new TeamDto(Guid.NewGuid(), "Team 2", 5);
 
-            return new GameDto(Guid.NewGuid(), 5, 25, home, away, 25, 36, true, false, true);
+            return new GameDto(Guid.NewGuid(), 25, 5, home, away, 25, 36, true, false, true);
         }
 
         public override GameDto SetupUpdateData(GameDto originalData, JodyContext context)
@@ -44,7 +44,7 @@ namespace JodyCore2.Test.Data
 
             for (int i = 0; i < 10; i++)
             {
-                var gameDto = new GameDto(Guid.NewGuid(), 1, 15, teams[i], teams[i + 10], 0, 0, false, false, true);
+                var gameDto = new GameDto(Guid.NewGuid(), 15, 1, teams[i], teams[i + 10], 0, 0, false, false, true);
                 gameRepository.Create(gameDto, context);
             }
 
@@ -64,17 +64,17 @@ namespace JodyCore2.Test.Data
             var gameDtos = new List<GameDto>()
             {
                 new GameDto(Guid.NewGuid(), 1, 1, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, true, false, true),
+                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, true, false, true),
                 new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
                 new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 3, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 3, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 3, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, true, false, true),
-                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, true, false, true),
-                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
+                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
                 new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
                 new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
                 new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
@@ -136,12 +136,12 @@ namespace JodyCore2.Test.Data
             }
         }
 
+        //todo: need to figure out how to verify the data returned per game is correct
         [Test]
         public void GetByYearAndDayRangeAndCompleteStatusFalse()
         {
             using (var context = new JodyContext())
-            {
-                SetupGameData(context);
+            {             
                 context.SaveChanges();
             }
 

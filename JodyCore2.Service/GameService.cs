@@ -36,7 +36,7 @@ namespace JodyCore2.Service
                     throw new ApplicationException(string.Format("Home or Away Team Does not exist. Home identifier is {0}.  Away Identifier is {1}", homeId, awayid));
                 }
                 
-                var game = new GameDto(Guid.NewGuid(), day, year, homeTeam, awayTeam, 0, 0, false, false, true);
+                var game = new GameDto(Guid.NewGuid(), year, day, homeTeam, awayTeam, 0, 0, false, false, true);
                 gameRepository.Create(game, context);
 
                 context.SaveChanges();
@@ -56,7 +56,21 @@ namespace JodyCore2.Service
 
         public IGameSummaryViewModel Play(Guid gameId)
         {
-            throw new NotImplementedException();
+            using (var context = new JodyContext())
+            {
+                var game = gameRepository.GetByIdentifier(gameId, context).FirstOrDefault();
+
+                if (game == null)
+                {
+                    throw new ApplicationException(string.Format("Game does not exist. Identifier {0}", gameId));
+                }
+
+                game.Play(new Random());
+
+                context.SaveChanges();
+
+                return GameMapper.GameToGameSummaryViewModel(game);
+            }
         }
     }
 }

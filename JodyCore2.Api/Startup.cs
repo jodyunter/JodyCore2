@@ -33,6 +33,7 @@ namespace JodyCore2.Api
             services.SetupServicesAndRepositories();
             //services
             services.AddTransient<ITeamService, TeamService>();
+            services.AddTransient<IGameService, GameService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "JodyCore2.Api", Version = "v1" });

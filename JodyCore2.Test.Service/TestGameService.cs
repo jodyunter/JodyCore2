@@ -72,7 +72,46 @@ namespace JodyCore2.Test.Service
         [Test]
         public void ShouldGetGames()
         {
+            var teamList = new List<TeamDto>();
+
+            using (var context = new JodyContext())
+            {
+
+
+                for (int i = 0; i < 10; i++)
+                {
+                    teamList.Add(new TeamDto(Guid.NewGuid(), "Team " + i, 5));                    
+                }
+
+                var repo = new TeamRepository();
+                repo.Create(teamList, context);
+
+                context.SaveChanges();
+
+            }
+
+            gameService.Create(2, 1, teamList[0].Identifier, teamList[1].Identifier);
+            gameService.Create(2, 2, teamList[2].Identifier, teamList[1].Identifier);
+            gameService.Create(2, 3, teamList[4].Identifier, teamList[1].Identifier);
+            gameService.Create(2, 4, teamList[6].Identifier, teamList[1].Identifier);
+            gameService.Create(2, 5, teamList[8].Identifier, teamList[1].Identifier);
+
+            var games = gameService.GetGames(2, 1, 12);
+
+            Assert.AreEqual(10, games.Count());
+        }
+
+        [Test]
+        public void ShouldPlayGame()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void ShouldNotPlayGameGameIdDoesNotExist()
+        {
             Assert.Fail();
         }
     }
+
 }

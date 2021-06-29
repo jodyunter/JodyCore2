@@ -101,9 +101,11 @@ namespace JodyCore2.Test.Data
         [Test]
         public void ShouldGetAll()
         {
+            var setupData = new List<T>();
+
             using (var context = new JodyContext())
             {
-                SetupGetAllData(context);
+                setupData = SetupGetAllData(context).ToList();
 
                 context.SaveChanges();
             }
@@ -114,6 +116,12 @@ namespace JodyCore2.Test.Data
 
                 Assert.AreEqual(10, values.Count());
                 Assert.AreEqual(context.Set<T>().Count(), values.Count());
+
+                setupData.ForEach(d =>
+                {
+                    Assert.IsTrue(values.Contains(d));
+                });
+
             }
 
         }

@@ -19,14 +19,14 @@ namespace JodyCore2.Data.Repositories
                 query = query.Where(g => g.Day <= lastDay);
             }
 
-            return query;
+            return AlwaysInclude(query);
         }
 
         public IQueryable<GameDto> GetByYearAndDayRangeAndCompleteStatus(int year, int firstDay, int? lastDay, bool complete, JodyContext context)
         {
             var query = GetByYearAndDayRange(year, firstDay, lastDay, context).Where(g => g.Complete == complete);
 
-            return query;
+            return AlwaysInclude(query);
         }
 
         public override IQueryable<GameDto> AlwaysInclude(IQueryable<GameDto> query)

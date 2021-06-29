@@ -18,7 +18,7 @@ namespace JodyCore2.Data.Dto
 
         public GameDto() { }
 
-        public GameDto(Guid identifier, int day, int year, TeamDto home, TeamDto away, int homeScore, int awayScore, bool complete, bool processed, bool canTie)
+        public GameDto(Guid identifier, int year, int day, TeamDto home, TeamDto away, int homeScore, int awayScore, bool complete, bool processed, bool canTie)
         {            
             Identifier = identifier;
             Day = day;

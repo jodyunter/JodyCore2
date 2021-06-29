@@ -11,6 +11,6 @@ namespace JodyCore2.Service
     {
         IGameSummaryViewModel Create(int year, int day, Guid homeId, Guid awayid);
         IGameSummaryViewModel Play(Guid gameId);
-        IList<IGameSummaryViewModel> GetGames(int year, int firstDay, int lastDay);
+        IList<IGameSummaryViewModel> GetGames(int year, int firstDay, int lastDay);        
     }
 }

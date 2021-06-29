@@ -12,9 +12,10 @@ namespace JodyCore2.Api.Controllers
     public class GameController : Controller
     {
         private readonly IGameService gameService;
+
         public GameController(IGameService _gameService)
         {
-            _gameService = gameService;
+            gameService = _gameService;
         }
 
         [HttpGet]
