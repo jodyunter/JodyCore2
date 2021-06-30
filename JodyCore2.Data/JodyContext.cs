@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System;
 
 namespace JodyCore2.Data
 {
@@ -15,6 +16,8 @@ namespace JodyCore2.Data
         
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
+            var env = Environment.GetEnvironmentVariable("ENVIRONMENT");
+
             var configuration = new ConfigurationBuilder()
                               .SetBasePath(Directory.GetCurrentDirectory())
                               .AddJsonFile("appsettings.json")
