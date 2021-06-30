@@ -1,0 +1,26 @@
+version: '3.4'
+# You do not want the Port mapping for PROD
+# You will need a directory mapping for PROD
+# How do we do this with AWS? Maybe we just don't have a DB for PROD
+# Migrations in PROD should be done via SQL, not code.
+# When you re-create the container, you will need to migrate
+services:
+  db:
+    image: ${DOCKER_REGISTRY-}postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mypostgres_password
+    ports:
+        - "5432:5432"
+
+  jodycore2.api:
+    image: ${DOCKER_REGISTRY-}jodycore2api
+    build:
+      context: .
+      dockerfile: JodyCore2.Api/Dockerfile
+    environment:
+        - ASPNETCORE_URLS=https://+:443;http://+:80
+        - ASPNETCORE_HTTPS_PORT=443
+    ports:
+        - "80:5000"
+        - "443:5001"

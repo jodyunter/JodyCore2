@@ -98,11 +98,17 @@ namespace JodyCore2.Test.Service
 
             var games = gameService.GetGames(2, 1, 12);
 
-            Assert.AreEqual(10, games.Count());
+            Assert.AreEqual(5, games.Count());
         }
 
         [Test]
         public void ShouldPlayGame()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void ShouldNotPlayCompleteGame()
         {
             Assert.Fail();
         }

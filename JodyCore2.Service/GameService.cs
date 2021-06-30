@@ -65,6 +65,11 @@ namespace JodyCore2.Service
                     throw new ApplicationException(string.Format("Game does not exist. Identifier {0}", gameId));
                 }
 
+                if (game.Complete)
+                {
+                    throw new ApplicationException(string.Format("Game is already complete."));
+                }
+
                 game.Play(new Random());
 
                 context.SaveChanges();

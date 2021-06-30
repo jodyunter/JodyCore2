@@ -1,3 +1,8 @@
 dotnet ef migrations add Start --project JodyCore2.Data -v
 
 dotnet ef database update --project JodyCore2.Data
+
+This is for the docker containers
+dotnet ef database update -p JodyCore2.Data -s JodyCore2.Data -c JodyContext
+
+It's important that the database project has the localhost where the API has db for the connection string because in docker, apps in the same compose space can reference each other through their names.

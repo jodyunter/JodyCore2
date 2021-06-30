@@ -147,6 +147,7 @@ namespace JodyCore2.Test.Data
 
             using (var context = new JodyContext())
             {                
+                var value = context.Games.Where(g => g.Year == 1 && g.Day >= 1 && g.Day <= 5 && !g.Complete).Count();
                 Assert.AreEqual(6, gameRepository.GetByYearAndDayRangeAndCompleteStatus(1, 1, 5, false, context).Count());                
                 Assert.AreEqual(1, gameRepository.GetByYearAndDayRangeAndCompleteStatus(2, 2, 2, false, context).Count());
             }
