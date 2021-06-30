@@ -10,8 +10,6 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: mypostgres_password      
-    ports:
-        - "5432:5432"
 
   jodycore2.api:
     image: ${DOCKER_REGISTRY-}jodycore2api
@@ -22,10 +20,14 @@ services:
         - ASPNETCORE_URLS=https://+:443;http://+:80
         - ASPNETCORE_HTTPS_PORT=443    
         - ENV=Development
+    ports:
+        - "5000:443"
+        - "5001:80"
+
   react:
     image: ${DOCKER_REGISTRY-}jody-game
     build:        
         context: ./JodyCore2.Web/jody-game
         dockerfile: Dockerfile
     ports:
-       - "80:3000"       
+       - "200:3000"       

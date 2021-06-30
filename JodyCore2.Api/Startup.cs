@@ -1,8 +1,10 @@
+using JodyCore2.Data;
 using JodyCore2.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,8 +29,8 @@ namespace JodyCore2.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddDbContext<JodyContext>();
             //setup repositories from the service layer
             services.SetupServicesAndRepositories();
             //services
@@ -41,13 +43,15 @@ namespace JodyCore2.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, JodyContext context)
+        {            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JodyCore2.Api v1"));
+                context.Database.Migrate();
             }
 
             app.UseHttpsRedirection();
@@ -60,6 +64,8 @@ namespace JodyCore2.Api
             {
                 endpoints.MapControllers();
             });
+
+          
         }
     }
 }

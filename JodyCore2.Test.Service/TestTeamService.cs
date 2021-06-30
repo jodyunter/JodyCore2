@@ -90,5 +90,11 @@ namespace JodyCore2.Test.Service
             Assert.NotNull(newTeam.Identifier);
             Assert.AreEqual(newTeam.Identifier, retrievedTeam.Identifier);
         }
+
+        [Test]
+        public void ShouldNotCreateTeamNameInUse()
+        {
+            Assert.Fail();
+        }
     }
 }

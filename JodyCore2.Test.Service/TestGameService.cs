@@ -118,6 +118,14 @@ namespace JodyCore2.Test.Service
         {
             Assert.Fail();
         }
+
+        [Test]
+        public void ShouldNotPlayGameSameTeams()
+        {
+            Assert.Fail();
+        }
+
+        
     }
 
 }

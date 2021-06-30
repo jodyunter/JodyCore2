@@ -16,7 +16,7 @@ namespace JodyCore2.Data
         
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var env = Environment.GetEnvironmentVariable("ENVIRONMENT");
+            var env = Environment.GetEnvironmentVariable("ENV");
 
             var configuration = new ConfigurationBuilder()
                               .SetBasePath(Directory.GetCurrentDirectory())
@@ -27,6 +27,7 @@ namespace JodyCore2.Data
 
             var connectionString = configuration
                         .GetConnectionString("DefaultConnection");
+
 
             if (!options.IsConfigured)
             {
