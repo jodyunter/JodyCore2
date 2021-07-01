@@ -19,6 +19,7 @@ namespace JodyCore2.Api
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,6 +41,19 @@ namespace JodyCore2.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "JodyCore2.Api", Version = "v1" });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("https://localhost:200",
+                                          "http://localhost:200",
+                                          "http://react", "https://react")
+                                                .AllowAnyHeader()
+                                                .AllowAnyMethod();
+                                  });
+            }); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +73,8 @@ namespace JodyCore2.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseEndpoints(endpoints =>
             {
