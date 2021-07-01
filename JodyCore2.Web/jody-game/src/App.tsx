@@ -1,29 +1,33 @@
 import React, { useState } from 'react';
-import { TeamList } from './TeamComponents';
+import { TeamList } from './components/TeamComponents';
 
-function App() {  
+function App() {
   const [teams, setTeams] = useState([]);
 
   function fetchTeamshandler() {
-    fetch('https://localhost:5000/api/Team/all').then(response =>
-    {
+    fetch('https://localhost:5000/api/Team/all').then(response => {
       return response.json();
     }).then((data) => {
       setTeams(data);
     });
 
   }
- 
+
   return (
-    <React.Fragment>
-        <section>
-          <button onClick={fetchTeamshandler}>Get Teams</button>
-        </section>
-        <TeamList teams={ teams } />
-    </React.Fragment>
-    
+    <div>
+      <h1>Team List</h1>
+      <div>
+        <h2>My Title</h2>
+        <div><button> Delete</button></div>
+      </div>
+      <section>
+        <button onClick={fetchTeamshandler}>Get Teams</button>
+      </section>
+      <TeamList teams={teams} />
+    </div>
+
   );
-  
+
 }
 
 export default App;
