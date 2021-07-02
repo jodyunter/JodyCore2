@@ -65,5 +65,22 @@ namespace JodyCore2.Api.Controllers
                 return NotFound(e.Message);
             }
         }
+
+        [HttpPost("playbyday")]
+        [Produces("application/json")]
+        public IActionResult PlayByDay(int year, int day)
+        {
+            try
+            {
+                var result = gameService.PlayGamesOnDay(year, day);
+
+                return Ok(result);
+            }
+            catch (ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
     }
 }

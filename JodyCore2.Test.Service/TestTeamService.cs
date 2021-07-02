@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Service
 {
-    public class TestTeamService
+    public class TestTeamService:BaseIntegrationTest
     {
         ITeamService teamService;
         
@@ -93,6 +93,24 @@ namespace JodyCore2.Test.Service
 
         [Test]
         public void ShouldNotCreateTeamNameInUse()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void ShouldDeleteTeam()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void ShouldNotDeleteTeamDoesNotExist()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void ShouldNotDeleteGamesExist()
         {
             Assert.Fail();
         }

@@ -3,6 +3,7 @@ using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
 using JodyCore2.Domain.Bo;
 using JodyCore2.Service.Mappers;
+using JodyCore2.Service.Util;
 using JodyCore2.Service.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,25 @@ namespace JodyCore2.Service
             }
         }
 
+        public IList<IGameSummaryViewModel> PlayGamesOnDay(int year, int day)
+        {
+            using (var context = new JodyContext())
+            {
+                var games = gameRepository.GetByYearAndDayRangeAndCompleteStatus(year, day, day, false, context).ToList();
+
+                var random = RandomUtility.GetRandom();
+                    
+                games.ForEach(g =>
+                {
+                    g.Play(random);
+                });
+
+                context.SaveChanges();
+
+                return games.Select(g => GameMapper.GameToGameSummaryViewModel(g)).ToList();
+            }
+        }
+
         public IGameSummaryViewModel Play(Guid gameId)
         {
             using (var context = new JodyContext())
@@ -70,7 +90,9 @@ namespace JodyCore2.Service
                     throw new ApplicationException(string.Format("Game is already complete."));
                 }
 
-                game.Play(new Random());
+                var random = RandomUtility.GetRandom();
+
+                game.Play(random);
 
                 context.SaveChanges();
 

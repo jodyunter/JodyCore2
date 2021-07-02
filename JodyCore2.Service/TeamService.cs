@@ -92,5 +92,22 @@ namespace JodyCore2.Service
                 return TeamMapper.TeamToTeamViewModel(team);
             }
         }
+
+        public void Delete(Guid identifier)
+        {
+            using (var context = new JodyContext())
+            {
+                var team = teamRepository.GetByIdentifier(identifier, context).FirstOrDefault();
+
+                if (team == null)
+                {
+                    throw new ApplicationException(string.Format("Team with id {0} does not exist.", identifier));
+                }
+
+                teamRepository.Delete(team, context);                
+
+                context.SaveChanges();
+            }
+        }
     }
 }

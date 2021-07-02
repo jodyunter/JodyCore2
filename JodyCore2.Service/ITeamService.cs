@@ -15,5 +15,6 @@ namespace JodyCore2.Service
         ITeamViewModel GetByIdentifier(Guid identifier);
         ITeamViewModel GetByName(string name);
         IList<ITeamViewModel> GetAll();
+        void Delete(Guid identifier);
     }
 }

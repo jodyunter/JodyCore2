@@ -61,6 +61,12 @@ namespace JodyCore2.Test.Data
             }
         }
 
+        [Test]
+        public void ShouldNotDeleteTeamWithGames()
+        {
+            Assert.Fail();
+        }
+
         public static IList<TeamDto> SetupGenericTeams(int count, JodyContext context, ITeamRepository teamRepository)
         {
             var list = new List<TeamDto>();
@@ -73,5 +79,6 @@ namespace JodyCore2.Test.Data
 
             return list;
         }
+
     }
 }

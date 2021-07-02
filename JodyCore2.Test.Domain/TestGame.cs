@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using JodyCore2.Domain.Bo;
 using System;
+using JodyCore2.Service.Util;
 
 namespace JodyCore2.Test.Domain
 {
@@ -11,7 +12,7 @@ namespace JodyCore2.Test.Domain
         {
             var game = new Game(Guid.NewGuid(), 5, 25, new Team(Guid.NewGuid(), "Team 1", 5), new Team(Guid.NewGuid(), "Team 2", 5), 0, 0, false, false, true);
 
-            game.Play(new Random(1277734512));
+            game.Play(RandomUtility.GetRandom(1277734512));
 
             Assert.IsTrue(game.Complete);
             Assert.AreEqual(3, game.HomeScore);

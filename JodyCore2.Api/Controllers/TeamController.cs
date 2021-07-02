@@ -63,5 +63,20 @@ namespace JodyCore2.Api.Controllers
                 return NotFound(e.Message);
             }
         }
+
+        [HttpPost("delete")]
+        public IActionResult Delete(Guid identifier)
+        {
+            try
+            {
+                teamService.Delete(identifier);
+
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
     }
 }

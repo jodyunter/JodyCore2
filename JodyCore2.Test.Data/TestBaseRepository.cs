@@ -23,6 +23,9 @@ namespace JodyCore2.Test.Data
         [SetUp]
         public void Setup()
         {
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Integration");
+            Environment.SetEnvironmentVariable("CONNECTION_STRING", "DefaultConnectionString");
+
             using (var context = new JodyContext())
             {
                 context.Database.EnsureDeleted();
@@ -124,6 +127,12 @@ namespace JodyCore2.Test.Data
 
             }
 
+        }
+
+        [Test]
+        public void ShouldDelete()
+        {
+            Assert.Fail();
         }
     }
 }

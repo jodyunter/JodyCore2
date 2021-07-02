@@ -16,19 +16,29 @@ namespace JodyCore2.Data
         
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var env = Environment.GetEnvironmentVariable("ENV");
+            var connectionStringName = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var fileString = "";
 
+            if (environment != null)
+            {
+                fileString = "." + environment;
+            }
             var configuration = new ConfigurationBuilder()
                               .SetBasePath(Directory.GetCurrentDirectory())
-                              .AddJsonFile("appsettings.json")
+                              .AddJsonFile($"appsettings{fileString}.json")
                               .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder();
 
+            if (connectionStringName == null)
+            {
+                connectionStringName = "DefaultConnectionString";
+            }
+
             var connectionString = configuration
-                        .GetConnectionString("DefaultConnection");
-
-
+                        .GetConnectionString(connectionStringName);
+            
             if (!options.IsConfigured)
             {
                 options.UseNpgsql(connectionString);

@@ -35,6 +35,17 @@ namespace JodyCore2.Data.Repositories
             return dto;
         }
 
+        public virtual void Delete(T dto, JodyContext context)
+        {
+            context.Remove(dto);
+            return;
+        }
+
+        public virtual void Delete(IList<T> dtos, JodyContext context)
+        {
+            context.RemoveRange(dtos);
+        }
+
         public virtual IQueryable<T> GetByIdentifier(Guid identifier, JodyContext context)
         {
             return AlwaysInclude(context.Set<T>().Where(t => t.Identifier == identifier));
