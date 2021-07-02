@@ -19,7 +19,8 @@ services:
     environment:        
         - ASPNETCORE_URLS=https://+:443;http://+:80
         - ASPNETCORE_HTTPS_PORT=443    
-        - ENV=Development
+        - ASPNETCORE_ENVIRONMENT=Development
+        - CONNECTION_STRING=dockerConnection
     ports:
         - "5000:443"
         - "5001:80"
