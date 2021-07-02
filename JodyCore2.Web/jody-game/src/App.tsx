@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TeamList } from './components/TeamComponents';
+import TeamPage from './components/TeamComponents';
 
 function App() {
   const [teams, setTeams] = useState([]);
@@ -13,6 +14,8 @@ function App() {
 
   }
 
+  return <TeamPage />
+  /*
   return (
     <div>
       <h1>Team List</h1>
@@ -27,7 +30,7 @@ function App() {
     </div>
 
   );
-
+*/
 }
 
 export default App;
