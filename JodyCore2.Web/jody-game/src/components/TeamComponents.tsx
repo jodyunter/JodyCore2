@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 interface ListProps {
   teams: Team[];
@@ -20,10 +21,10 @@ function TeamPage() {
   }
 
   return (
+
     <div>
       {fetchTeamshandler()}
       <TeamList teams={teams} />
-      <TeamEdit />
     </div>
   );
 }
