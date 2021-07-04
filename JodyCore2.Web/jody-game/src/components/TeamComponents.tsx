@@ -1,7 +1,14 @@
+import { stringify } from 'querystring';
 import React, { useState } from 'react';
+import Select from 'react-select'
 
 interface ListProps {
   teams: Team[];
+}
+
+interface OptionProps {
+  team_options: Array<{ value: string, label: string }>;
+
 }
 interface Props {
   team: Team;
@@ -9,12 +16,20 @@ interface Props {
 
 function TeamPage() {
   const [teams, setTeams] = useState([]);
+  const [team_options, setTeamOptions] = useState<{ value: string, label: string }[]>([]);
 
   function fetchTeamshandler() {
     fetch('https://localhost:5000/api/Team/all').then(response => {
       return response.json();
     }).then((data) => {
       setTeams(data);
+
+      var options = Array<{ value: string, label: string }>()
+
+      teams.forEach((t: Team) => {
+        options.push({ value: t.identifier, label: t.name });
+      });
+      setTeamOptions(options);
     });
 
   }
@@ -24,18 +39,40 @@ function TeamPage() {
     <div>
       {fetchTeamshandler()}
       <TeamList teams={teams} />
+      <TeamEdit team_options={team_options} />
     </div>
   );
 }
 
-export const TeamEdit: React.FC<Props> = ({ team }) => {
+export const TeamEdit: React.FC<OptionProps> = ({ team_options }) => {
   return (
     <form>
-      <div className="mb-3">
-        <label htmlFor="nameInput" className="form-label">Name</label>
-        <input type="text" className="form-control" id="nameInput" />
+      <div className="form-row">
+        <div className="form-group col-md-2">
+          <label htmlFor="teamEditSelect">Select Team</label>
+          <Select options={team_options} className="form-control" id="teamEditSelect" />
+        </div>
       </div>
-    </form>
+      <div className="form-row">
+        <div className="form-group col-md-2">
+          <label htmlFor="nameInput" className="form-label">Name</label>
+          <input type="text" className="form-control" id="nameInput" />
+        </div>
+      </div>
+      <div className="form-row">
+        <div className="form-group col-md-2">
+          <label htmlFor="skillInput" className="form-label">Skill</label>
+          <input type="text" className="form-control" id="skillInput" />
+        </div>
+      </div>
+      <div className="form-row">
+        <div className="form-group col-md-2 text-center">
+          <button className="btn btn-primary">Save</button>|
+          <button className="btn btn-secondary">Undo</button>|
+          <button className="btn btn-danger">Create</button>
+        </div>
+      </div>
+    </form >
   );
 }
 

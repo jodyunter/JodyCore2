@@ -32,6 +32,22 @@ namespace JodyCore2.Api.Controllers
             }                       
         }
 
+
+        [HttpGet("id")]
+        [Produces("application/json")]
+        public IActionResult GetById(Guid identifier)
+        {
+            try
+            {
+                var result = teamService.GetByIdentifier(identifier);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
         [HttpPost("create")]
         public IActionResult Create(string name, int skill)
         {

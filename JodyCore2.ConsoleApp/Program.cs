@@ -17,7 +17,7 @@ namespace JodyCore2.ConsoleApp
                 context.Database.EnsureCreated();
             }
 
-            var teamService = new TeamService(new TeamRepository());
+            var teamService = new TeamService(new TeamRepository(), new GameRepository());
 
             
             teamService.Create("My Name", 5);            
