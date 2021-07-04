@@ -1,4 +1,3 @@
-import { stringify } from 'querystring';
 import React, { useState } from 'react';
 import Select from 'react-select'
 
@@ -78,7 +77,7 @@ export const TeamEdit: React.FC<OptionProps> = ({ team_options }) => {
 
 export const TeamList: React.FC<ListProps> = ({ teams }) => {
   return (
-    <table className="table table-striped">
+    <table className="table table-sm table-hover">
       <thead>
         <th>Name</th>
         <th>Skill</th>
@@ -95,16 +94,16 @@ export const TeamList: React.FC<ListProps> = ({ teams }) => {
 export const TeamListItem: React.FC<Props> = ({ team }) => {
   return (
     <tr>
-      <td>
+      <td className="col col-sm-3">
         {team.name}
       </td>
-      <td className="col-sm">
+      <td className="col col-sm-1">
         {team.skill}
       </td>
-      <td className="col-sm">
+      <td className="col col-sm-1">
         {team.identifier}
       </td>
-      <td>
+      <td className="col col-sm-1">
         <button className="btn btn-primary btn-sm">Edit</button>|
         <button className="btn btn-danger btn-sm">Delete</button>
       </td>
