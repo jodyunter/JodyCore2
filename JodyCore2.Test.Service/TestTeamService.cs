@@ -22,7 +22,7 @@ namespace JodyCore2.Test.Service
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();                
             }
-            teamService = new TeamService(new TeamRepository());
+            teamService = new TeamService(new TeamRepository(), new GameRepository());
         }
         [Test]
         public void ShouldCreateTeam()
@@ -35,6 +35,17 @@ namespace JodyCore2.Test.Service
             Assert.AreEqual(25, retrievedTeam.Skill);
             Assert.NotNull(newTeam.Identifier);
             Assert.AreEqual(newTeam.Identifier, retrievedTeam.Identifier);
+        }
+
+        [Test]        
+        public void ShouldNotCreateTeamNameInUse()
+        {
+            var newTeam = teamService.Create("Team 5", 50);
+
+            var e = Assert.Throws<ApplicationException>(() => teamService.Create("Team 5", 25));
+            Assert.AreEqual("Team with name Team 5 already exists.", e.Message);
+
+
         }
 
         [Test]
@@ -92,27 +103,44 @@ namespace JodyCore2.Test.Service
         }
 
         [Test]
-        public void ShouldNotCreateTeamNameInUse()
-        {
-            Assert.Fail();
-        }
-
-        [Test]
         public void ShouldDeleteTeam()
         {
-            Assert.Fail();
+            var newTeam = teamService.Create("Test Team", 25);
+
+            var retreivedTeam = teamService.GetByIdentifier(newTeam.Identifier);
+
+            teamService.Delete(newTeam.Identifier);
+
+            var e = Assert.Throws<ApplicationException>(() => teamService.GetByIdentifier(newTeam.Identifier));
+            Assert.AreEqual(string.Format("Team with identifier {0} does not exist.", newTeam.Identifier), e.Message);
         }
 
         [Test]
         public void ShouldNotDeleteTeamDoesNotExist()
         {
-            Assert.Fail();
+            var id = Guid.NewGuid();
+
+            var e = Assert.Throws<ApplicationException>(() => teamService.Delete(id));
+            Assert.AreEqual(string.Format("Team with identifier {0} does not exist.", id), e.Message);
         }
 
         [Test]
         public void ShouldNotDeleteGamesExist()
         {
-            Assert.Fail();
+            var team1 = teamService.Create("Team 1", 5);
+            var team2 = teamService.Create("Team 2", 5);
+
+            var gameService = new GameService(new TeamRepository(), new GameRepository());
+
+            gameService.Create(1, 1, team1.Identifier, team2.Identifier);
+
+            var e = Assert.Throws<ApplicationException>(() => teamService.Delete(team1.Identifier));
+            Assert.AreEqual(string.Format("Games with Team {0} exist. Cannot delete.", team1.Identifier), e.Message);
+
+            var e2 = Assert.Throws<ApplicationException>(() => teamService.Delete(team2.Identifier));
+            Assert.AreEqual(string.Format("Games with Team {0} exist. Cannot delete.", team2.Identifier), e2.Message);
+
         }
+
     }
 }

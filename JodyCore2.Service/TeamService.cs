@@ -12,10 +12,12 @@ namespace JodyCore2.Service
     public class TeamService : ITeamService
     {
         private ITeamRepository teamRepository;
+        private IGameRepository gameRepository;
 
-        public TeamService(ITeamRepository _teamRepository)
+        public TeamService(ITeamRepository _teamRepository, IGameRepository _gameRepository)
         {
             teamRepository = _teamRepository;
+            gameRepository = _gameRepository;
         }
 
         public IList<ITeamViewModel> GetAll()
@@ -31,6 +33,11 @@ namespace JodyCore2.Service
 
             using (var context = new JodyContext())
             {                
+                if (teamRepository.GetByName(name, context) != null)
+                {
+                    throw new ApplicationException(string.Format("Team with name {0} already exists.", name));
+                }
+
                 var teamDto = new TeamDto(Guid.NewGuid(), name, skill);
                 teamRepository.Create(teamDto, context);
 
@@ -101,7 +108,12 @@ namespace JodyCore2.Service
 
                 if (team == null)
                 {
-                    throw new ApplicationException(string.Format("Team with id {0} does not exist.", identifier));
+                    throw new ApplicationException(string.Format("Team with identifier {0} does not exist.", identifier));
+                }
+
+                if (gameRepository.GetAll(context).Where(g => g.HomeDto.Identifier == identifier || g.AwayDto.Identifier == identifier).FirstOrDefault() != null)
+                {
+                    throw new ApplicationException(string.Format("Games with Team {0} exist. Cannot delete.", identifier));
                 }
 
                 teamRepository.Delete(team, context);                
