@@ -31,4 +31,4 @@ services:
         context: ./JodyCore2.Web/jody-game
         dockerfile: Dockerfile
     ports:
-       - "200:3000"       
+       - "200:200"       
