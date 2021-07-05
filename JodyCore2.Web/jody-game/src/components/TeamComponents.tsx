@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
 
 interface ListProps {
@@ -17,6 +17,11 @@ function TeamPage() {
   const [teams, setTeams] = useState([]);
   const [team_options, setTeamOptions] = useState<{ value: string, label: string }[]>([]);
 
+  const [inEditMode, setInEditMode] = useState({
+    status: false,
+    rowKey: null
+  });
+
   function fetchTeamshandler() {
     fetch('https://localhost:5000/api/Team/all').then(response => {
       return response.json();
@@ -33,10 +38,14 @@ function TeamPage() {
 
   }
 
+  useEffect(() => {
+    fetchTeamshandler();
+  }, []);
+
   return (
 
     <div>
-      {fetchTeamshandler()}
+
       <TeamList teams={teams} />
       <TeamEdit team_options={team_options} />
     </div>
