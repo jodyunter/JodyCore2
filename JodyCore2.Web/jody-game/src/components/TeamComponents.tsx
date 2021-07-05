@@ -1,41 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select'
-
-interface ListProps {
-  teams: Team[];
-}
-
-interface OptionProps {
-  team_options: Array<{ value: string, label: string }>;
-
-}
-interface Props {
-  team: Team;
-}
+import axios, { AxiosResponse } from 'axios'
 
 function TeamPage() {
   const [teams, setTeams] = useState([]);
-  const [team_options, setTeamOptions] = useState<{ value: string, label: string }[]>([]);
 
-  const [inEditMode, setInEditMode] = useState({
+  const [inEditMode, setInEditMode] = useState<{ status: Boolean, rowKey: string }>({
     status: false,
-    rowKey: null
+    rowKey: ""
   });
 
+  const [newName, setNewName] = useState<string>()
+  const [newSkill, setNewSkill] = useState<number>()
+
+  const onEdit = (id: string, name: string, skill: number) => {
+    setInEditMode({
+      status: true,
+      rowKey: id
+    })
+    setNewName(name)
+    setNewSkill(skill)
+  }
+
   function fetchTeamshandler() {
-    fetch('https://localhost:5000/api/Team/all').then(response => {
-      return response.json();
+    axios.get('https://localhost:5000/api/Team/all').then((response: AxiosResponse) => {
+      return response.data;
     }).then((data) => {
       setTeams(data);
-
-      var options = Array<{ value: string, label: string }>()
-
-      teams.forEach((t: Team) => {
-        options.push({ value: t.identifier, label: t.name });
-      });
-      setTeamOptions(options);
     });
 
+  }
+
+  const updateInventory = (id: string, name: string, skill: number) => {
+    axios.post('https://localhost:5000/api/Team/update', null, {
+      params: {
+        identifier: id,
+        name: name,
+        skill: skill
+      }
+    })
+      .then((response: AxiosResponse) => {
+
+        // reset inEditMode and unit price state values
+        onCancel();
+
+        // fetch the updated data
+        fetchTeamshandler();
+      })
+  }
+
+  const onSave = (id: string, name: string, skill: number) => {
+    updateInventory(id, name, skill);
+  }
+
+  const onCancel = () => {
+    // reset the inEditMode state value
+    setInEditMode({
+      status: false,
+      rowKey: "null"
+    })
+    // reset the unit price state value
+    setNewSkill(0)
+    setNewName("")
   }
 
   useEffect(() => {
@@ -43,82 +68,61 @@ function TeamPage() {
   }, []);
 
   return (
-
-    <div>
-
-      <TeamList teams={teams} />
-      <TeamEdit team_options={team_options} />
-    </div>
-  );
-}
-
-export const TeamEdit: React.FC<OptionProps> = ({ team_options }) => {
-  return (
-    <form>
-      <div className="form-row">
-        <div className="form-group col-md-2">
-          <label htmlFor="teamEditSelect">Select Team</label>
-          <Select options={team_options} className="form-control" id="teamEditSelect" />
-        </div>
-      </div>
-      <div className="form-row">
-        <div className="form-group col-md-2">
-          <label htmlFor="nameInput" className="form-label">Name</label>
-          <input type="text" className="form-control" id="nameInput" />
-        </div>
-      </div>
-      <div className="form-row">
-        <div className="form-group col-md-2">
-          <label htmlFor="skillInput" className="form-label">Skill</label>
-          <input type="text" className="form-control" id="skillInput" />
-        </div>
-      </div>
-      <div className="form-row">
-        <div className="form-group col-md-2 text-center">
-          <button className="btn btn-primary">Save</button>|
-          <button className="btn btn-secondary">Undo</button>|
-          <button className="btn btn-danger">Create</button>
-        </div>
-      </div>
-    </form >
-  );
-}
-
-export const TeamList: React.FC<ListProps> = ({ teams }) => {
-  return (
     <table className="table table-sm table-hover">
       <thead>
-        <th>Name</th>
-        <th>Skill</th>
-        <th>Id</th>
-        <th>Action</th>
+        <tr>
+          <th>Name</th>
+          <th>Skill</th>
+          <th>Action</th>
+        </tr>
       </thead>
       <tbody>
-        {teams.map((object, i) => <TeamListItem team={object} key={i} />)}
+        {teams.map((team: Team) => (
+          <tr key={team.identifier}>
+            <td className="col col-sm-3">
+              {
+                inEditMode.status && inEditMode.rowKey == team.identifier ? (
+                  <input value={newName} onChange={(event) => setNewName(event.target.value)} />
+                ) : (
+
+                    team.name
+                  )
+              }
+            </td>
+            <td className="col col-sm-1">
+              {
+                inEditMode.status && inEditMode.rowKey == team.identifier ? (
+                  <input value={newSkill} onChange={(event) => setNewSkill(parseInt(event.target.value))} />
+                ) : (
+
+                    team.skill
+                  )
+              }
+            </td>
+            <td className="col col-sm-1">
+              {
+                inEditMode.status && inEditMode.rowKey === team.identifier ? (
+                  <React.Fragment>
+                    <button className={"btn-success"} onClick={() => onSave(team.identifier, newName, newSkill)}>
+                      Save
+                    </button>
+                    <button className={"btn-secondary"} style={{ marginLeft: 8 }} onClick={() => onCancel()}>
+                      Cancel
+                    </button>
+                  </React.Fragment>
+                ) : (
+                    <button className={"btn-primary"} onClick={() => onEdit(team.identifier, team.name, team.skill)}>
+                      Edit
+                    </button>
+                  )
+              }
+            </td>
+          </tr>
+        ))
+        }
       </tbody>
     </table>
   );
 }
-
-export const TeamListItem: React.FC<Props> = ({ team }) => {
-  return (
-    <tr>
-      <td className="col col-sm-3">
-        {team.name}
-      </td>
-      <td className="col col-sm-1">
-        {team.skill}
-      </td>
-      <td className="col col-sm-1">
-        {team.identifier}
-      </td>
-      <td className="col col-sm-1">
-        <button className="btn btn-primary btn-sm">Edit</button>|
-        <button className="btn btn-danger btn-sm">Delete</button>
-      </td>
-    </tr>
-
-  );
-};
 
 export default TeamPage;
