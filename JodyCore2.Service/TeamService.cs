@@ -46,7 +46,7 @@ namespace JodyCore2.Service
                 return TeamMapper.TeamToTeamViewModel(teamDto);
             }
             
-        }
+        }        
 
         public ITeamViewModel Save(Guid identifier, string name, int skill)
         {
@@ -57,6 +57,14 @@ namespace JodyCore2.Service
                 if (existingDto is null)
                 {
                     throw new ApplicationException(string.Format("Team with identifier {0} does not exist.", identifier));
+                }
+
+                if (!(existingDto.Name.Equals(name)))
+                {
+                    if (teamRepository.GetByName(name, context) != null)
+                    {
+                        throw new ApplicationException(string.Format("Team with name {0} already exists.", name));
+                    }
                 }
 
                 existingDto.Name = name;

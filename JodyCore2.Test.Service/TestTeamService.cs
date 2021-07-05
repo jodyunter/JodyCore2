@@ -64,6 +64,17 @@ namespace JodyCore2.Test.Service
         }
 
         [Test]
+        public void ShouldNotUpdateTeamNameInUse()
+        {
+            var newTeam = teamService.Create("Team 5", 50);
+            teamService.Create("Current Name", 25);
+
+            var e = Assert.Throws<ApplicationException>(() => teamService.Save(newTeam.Identifier, "Current Name", 35));
+            Assert.AreEqual("Team with name Current Name already exists.", e.Message);
+
+        }
+
+        [Test]
         public void ShouldGetAll()
         {
             for (int i = 0; i < 10; i++) 
