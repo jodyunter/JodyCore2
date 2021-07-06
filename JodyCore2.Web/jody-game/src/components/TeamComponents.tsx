@@ -30,7 +30,7 @@ function TeamPage() {
 
   }
 
-  const updateInventory = (id: string, name: string, skill: number) => {
+  const updateTeam = (id: string, name: string, skill: number) => {
     axios.post('https://localhost:5000/api/Team/update', null, {
       params: {
         identifier: id,
@@ -48,8 +48,26 @@ function TeamPage() {
       })
   }
 
+  const deleteTeam = (id: string) => {
+    axios.post('https://localhost:5000/api/Team/delete', null, {
+      params: {
+        identifier: id
+      }
+    })
+      .then((response: AxiosResponse) => {
+        onCancel();
+        fetchTeamshandler();
+      })
+  }
+
+  const onDelete = (id: string) => {
+    if (window.confirm('Are you sure, want to delete this team?')) {
+      deleteTeam(id);
+    }
+  }
+
   const onSave = (id: string, name: string, skill: number) => {
-    updateInventory(id, name, skill);
+    updateTeam(id, name, skill);
   }
 
   const onCancel = () => {
@@ -111,9 +129,14 @@ function TeamPage() {
                     </button>
                   </React.Fragment>
                 ) : (
-                  <button className={"btn btn-primary"} onClick={() => onEdit(team.identifier, team.name, team.skill)}>
-                    Edit
-                  </button>
+                  <React.Fragment>
+                    <button className={"btn btn-primary"} onClick={() => onEdit(team.identifier, team.name, team.skill)}>
+                      Edit
+                    </button>
+                    <button className={"btn btn-danger"} onClick={() => onDelete(team.identifier)}>
+                      Delete
+                    </button>
+                  </React.Fragment>
                 )
               }
             </td>
