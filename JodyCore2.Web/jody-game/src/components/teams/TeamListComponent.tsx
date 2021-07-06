@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios, { AxiosResponse } from 'axios'
 
 //export default TeamPage;
@@ -9,7 +9,6 @@ interface IState {
   newName: string,
   newSkill: number
 }
-
 
 interface IProps {
 }
@@ -60,6 +59,10 @@ class TeamEditor extends React.Component<IProps, IState> {
     this.updateTeam(id, name, skill);
   }
 
+  onCreate = (name: string, skill: number) => {
+    this.createTeam(name, skill)
+  }
+
   getTeams = () => {
     axios.get('https://localhost:5000/api/Team/all').then((response: AxiosResponse) => {
       return response.data;
@@ -97,12 +100,17 @@ class TeamEditor extends React.Component<IProps, IState> {
     //need to add error handling to all of this
   }
 
-  CreateForm = () => {
-    return (
-      <form>
-        <input type="text" value="What?" />
-      </form>
-    )
+
+  createTeam = (name: string, skill: number) => {
+    axios.post('https://localhost:5000/api/Team/create', null, {
+      params: {
+        name: name,
+        skill: skill
+      }
+    })
+      .then((response: AxiosResponse) => {
+        this.getTeams()
+      })
   }
 
   render() {
@@ -122,7 +130,7 @@ class TeamEditor extends React.Component<IProps, IState> {
             <tr key={team.identifier}>
               <td className="col col-sm-2">
                 {
-                  inEditMode.status && inEditMode.rowKey == team.identifier ? (
+                  inEditMode.status && inEditMode.rowKey === team.identifier ? (
                     <input value={this.state.newName} onChange={(event) => this.setUpdateData(team.identifier, event.target.value, this.state.newSkill)} />
                   ) : (
 
@@ -132,7 +140,7 @@ class TeamEditor extends React.Component<IProps, IState> {
               </td>
               <td className="col col-sm-1">
                 {
-                  inEditMode.status && inEditMode.rowKey == team.identifier ? (
+                  inEditMode.status && inEditMode.rowKey === team.identifier ? (
                     <input value={this.state.newSkill} onChange={(event) => this.setUpdateData(team.identifier, this.state.newName, parseInt(event.target.value))} />
                   ) : (
                     team.skill
@@ -166,11 +174,6 @@ class TeamEditor extends React.Component<IProps, IState> {
           ))
           }
         </tbody>
-        <tr>
-          <td>
-            <this.CreateForm />
-          </td>
-        </tr>
       </table>
     );
   }

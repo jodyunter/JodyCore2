@@ -1,10 +1,13 @@
-import React from 'react';
-import TeamPage from './components/TeamComponents';
-import TeamEditor from './components/TeamComponents';
+import TeamEditor from './components/teams/TeamListComponent';
+import { ContactUsForm } from './components/TestForm';
 
 function App() {
-  //return <TeamPage />
-  return <TeamEditor />
+  return (
+    <div>
+      <TeamEditor />
+      <ContactUsForm />
+    </div>
+  )
 
 }
 
