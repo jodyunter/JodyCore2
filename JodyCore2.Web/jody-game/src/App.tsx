@@ -1,11 +1,9 @@
-import TeamEditor from './components/teams/TeamListComponent';
-import { ContactUsForm } from './components/TestForm';
+import TeamComponent from './components/teams/TeamComponent';
 
 function App() {
   return (
     <div>
-      <TeamEditor />
-      <ContactUsForm />
+      <TeamComponent />
     </div>
   )
 

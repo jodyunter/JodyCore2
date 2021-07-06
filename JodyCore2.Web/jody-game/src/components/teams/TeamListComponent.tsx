@@ -59,10 +59,6 @@ class TeamEditor extends React.Component<IProps, IState> {
     this.updateTeam(id, name, skill);
   }
 
-  onCreate = (name: string, skill: number) => {
-    this.createTeam(name, skill)
-  }
-
   getTeams = () => {
     axios.get('https://localhost:5000/api/Team/all').then((response: AxiosResponse) => {
       return response.data;
@@ -98,19 +94,6 @@ class TeamEditor extends React.Component<IProps, IState> {
         this.getTeams();
       })
     //need to add error handling to all of this
-  }
-
-
-  createTeam = (name: string, skill: number) => {
-    axios.post('https://localhost:5000/api/Team/create', null, {
-      params: {
-        name: name,
-        skill: skill
-      }
-    })
-      .then((response: AxiosResponse) => {
-        this.getTeams()
-      })
   }
 
   render() {
