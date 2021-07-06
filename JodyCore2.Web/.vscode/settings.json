@@ -1,4 +1,5 @@
 {
-    "typescript.tsdk": "node_modules\\typescript\\lib",
+    //"typescript.tsdk": "C:\\temp\\repos\\JodyCore2\\JodyCore2.Web\\jody-game\\node_modules\\typescript\\lib",
+    "typescript.tsdk": ".\\jody-game\\node_modules\\typescript\\lib",
     "debug.node.autoAttach": "on",
 }
