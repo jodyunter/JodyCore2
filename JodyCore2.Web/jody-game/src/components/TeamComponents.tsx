@@ -148,4 +148,72 @@ function TeamPage() {
   );
 }
 
-export default TeamPage;
+//export default TeamPage;
+interface IState {
+  teams: Team[]
+}
+
+
+interface IProps {
+}
+
+class TeamEditor extends React.Component<IProps, IState> {
+
+  constructor(props: IProps) {
+    super(props)
+    this.state = {
+      teams: []
+    }
+  }
+
+  componentDidMount() {
+    this.getTeams()
+  }
+
+  getTeams = () => {
+    axios.get('https://localhost:5000/api/Team/all').then((response: AxiosResponse) => {
+      return response.data;
+    }).then((data: Team[]) => {
+      this.setState({ teams: data })
+    });
+  }
+
+  render() {
+    const teams = this.state.teams
+    return (
+      <table className="table table-sm table-hover" >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Skill</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {teams.map((team: Team) => (
+            <tr key={team.identifier}>
+              <td>
+                {team.name}
+              </td>
+              <td className="col col-sm-1">
+                {team.skill}
+              </td>
+              <td className="col col-sm-1">
+                <React.Fragment>
+                  <button className={"btn btn-primary"} >
+                    Edit
+                  </button>
+                  <button className={"btn btn-danger"} >
+                    Delete
+                  </button>
+                </React.Fragment>
+              </td>
+            </tr>
+          ))}
+        </tbody >
+      </table >
+    );
+  }
+}
+
+export default TeamEditor;
