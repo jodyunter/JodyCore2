@@ -1,156 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios'
 
-function TeamPage() {
-  const [teams, setTeams] = useState<Team[]>([]);
-
-  const [inEditMode, setInEditMode] = useState<{ status: Boolean, rowKey: string }>({
-    status: false,
-    rowKey: ""
-  });
-
-  const [newName, setNewName] = useState<string>("")
-  const [newSkill, setNewSkill] = useState<number>(-1)
-
-  const onEdit = (id: string, name: string, skill: number) => {
-    setInEditMode({
-      status: true,
-      rowKey: id
-    })
-    setNewName(name)
-    setNewSkill(skill)
-  }
-
-  function fetchTeamshandler() {
-    axios.get('https://localhost:5000/api/Team/all').then((response: AxiosResponse) => {
-      return response.data;
-    }).then((data: Team[]) => {
-      setTeams(data);
-    });
-
-  }
-
-  const updateTeam = (id: string, name: string, skill: number) => {
-    axios.post('https://localhost:5000/api/Team/update', null, {
-      params: {
-        identifier: id,
-        name: name,
-        skill: skill
-      }
-    })
-      .then((response: AxiosResponse) => {
-
-        // reset inEditMode and unit price state values
-        onCancel();
-
-        // fetch the updated data
-        fetchTeamshandler();
-      })
-  }
-
-  const deleteTeam = (id: string) => {
-    axios.post('https://localhost:5000/api/Team/delete', null, {
-      params: {
-        identifier: id
-      }
-    })
-      .then((response: AxiosResponse) => {
-        onCancel();
-        fetchTeamshandler();
-      })
-  }
-
-  const onDelete = (id: string) => {
-    if (window.confirm('Are you sure, want to delete this team?')) {
-      deleteTeam(id);
-    }
-  }
-
-  const onSave = (id: string, name: string, skill: number) => {
-    updateTeam(id, name, skill);
-  }
-
-  const onCancel = () => {
-    // reset the inEditMode state value
-    setInEditMode({
-      status: false,
-      rowKey: "null"
-    })
-    // reset the unit price state value
-    setNewSkill(0)
-    setNewName("")
-  }
-
-  useEffect(() => {
-    fetchTeamshandler();
-  }, []);
-
-  return (
-    <table className="table table-sm table-hover">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Skill</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {teams.map((team: Team) => (
-          <tr key={team.identifier}>
-            <td className="col col-sm-3">
-              {
-                inEditMode.status && inEditMode.rowKey == team.identifier ? (
-                  <input value={newName} onChange={(event) => setNewName(event.target.value)} />
-                ) : (
-
-                  team.name
-                )
-              }
-            </td>
-            <td className="col col-sm-1">
-              {
-                inEditMode.status && inEditMode.rowKey == team.identifier ? (
-                  <input value={newSkill} onChange={(event) => setNewSkill(parseInt(event.target.value))} />
-                ) : (
-
-                  team.skill
-                )
-              }
-            </td>
-            <td className="col col-sm-1">
-              {
-                inEditMode.status && inEditMode.rowKey === team.identifier ? (
-                  <React.Fragment>
-                    <button className={"btn btn-success"} onClick={() => onSave(team.identifier, newName, newSkill)}>
-                      Save
-                    </button>
-                    <button className={"btn btn-secondary"} style={{ marginLeft: 8 }} onClick={() => onCancel()}>
-                      Cancel
-                    </button>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <button className={"btn btn-primary"} onClick={() => onEdit(team.identifier, team.name, team.skill)}>
-                      Edit
-                    </button>
-                    <button className={"btn btn-danger"} onClick={() => onDelete(team.identifier)}>
-                      Delete
-                    </button>
-                  </React.Fragment>
-                )
-              }
-            </td>
-          </tr>
-        ))
-        }
-      </tbody>
-    </table>
-  );
-}
-
 //export default TeamPage;
 interface IState {
-  teams: Team[]
+  teams: Team[],
+  status: Boolean,
+  rowKey: string,
+  newName: string,
+  newSkill: number
 }
 
 
@@ -162,12 +19,45 @@ class TeamEditor extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props)
     this.state = {
-      teams: []
+      teams: [],
+      status: false,
+      rowKey: "",
+      newName: "",
+      newSkill: -1
     }
   }
 
   componentDidMount() {
     this.getTeams()
+  }
+
+  setInEditMode(status: boolean, row: string) {
+    this.setState({ status: status, rowKey: row })
+  }
+
+  setUpdateData(id: string, name: string, skill: number) {
+    this.setState({ newName: name, newSkill: skill })
+  }
+
+  onEdit = (id: string, name: string, skill: number) => {
+    this.setInEditMode(true, id)
+    this.setUpdateData(id, name, skill)
+  }
+
+  onDelete = (id: string) => {
+    if (window.confirm('Are you sure, want to delete this team?')) {
+      this.deleteTeam(id);
+    }
+  }
+
+  onCancel = () => {
+    // reset the inEditMode state value
+    this.setInEditMode(false, "null")
+    this.setUpdateData("", "", -1)
+  }
+
+  onSave = (id: string, name: string, skill: number) => {
+    this.updateTeam(id, name, skill);
   }
 
   getTeams = () => {
@@ -178,10 +68,48 @@ class TeamEditor extends React.Component<IProps, IState> {
     });
   }
 
+  deleteTeam = (id: string) => {
+    axios.post('https://localhost:5000/api/Team/delete', null, {
+      params: {
+        identifier: id
+      }
+    })
+      .then((response: AxiosResponse) => {
+        this.onCancel();
+        this.getTeams();
+      })
+  }
+
+  updateTeam = (id: string, name: string, skill: number) => {
+    axios.post('https://localhost:5000/api/Team/update', null, {
+      params: {
+        identifier: id,
+        name: name,
+        skill: skill
+      }
+    })
+      .then((response: AxiosResponse) => {
+        // reset inEditMode and unit price state values
+        this.onCancel();
+        // fetch the updated data
+        this.getTeams();
+      })
+    //need to add error handling to all of this
+  }
+
+  CreateForm = () => {
+    return (
+      <form>
+        <input type="text" value="What?" />
+      </form>
+    )
+  }
+
   render() {
     const teams = this.state.teams
+    const inEditMode = { status: this.state.status, rowKey: this.state.rowKey };
     return (
-      <table className="table table-sm table-hover" >
+      <table className="table table-sm table-hover">
         <thead>
           <tr>
             <th>Name</th>
@@ -192,26 +120,58 @@ class TeamEditor extends React.Component<IProps, IState> {
         <tbody>
           {teams.map((team: Team) => (
             <tr key={team.identifier}>
-              <td>
-                {team.name}
+              <td className="col col-sm-2">
+                {
+                  inEditMode.status && inEditMode.rowKey == team.identifier ? (
+                    <input value={this.state.newName} onChange={(event) => this.setUpdateData(team.identifier, event.target.value, this.state.newSkill)} />
+                  ) : (
+
+                    team.name
+                  )
+                }
               </td>
               <td className="col col-sm-1">
-                {team.skill}
+                {
+                  inEditMode.status && inEditMode.rowKey == team.identifier ? (
+                    <input value={this.state.newSkill} onChange={(event) => this.setUpdateData(team.identifier, this.state.newName, parseInt(event.target.value))} />
+                  ) : (
+                    team.skill
+                  )
+                }
               </td>
               <td className="col col-sm-1">
-                <React.Fragment>
-                  <button className={"btn btn-primary"} >
-                    Edit
-                  </button>
-                  <button className={"btn btn-danger"} >
-                    Delete
-                  </button>
-                </React.Fragment>
+                {
+                  inEditMode.status && inEditMode.rowKey === team.identifier ? (
+                    <React.Fragment>
+                      <button className={"btn btn-success"} onClick={() => this.onSave(team.identifier, this.state.newName, this.state.newSkill)}>
+                        Save
+                      </button>
+                      <button className={"btn btn-secondary"} style={{ marginLeft: 8 }} onClick={() => this.onCancel()}>
+                        Cancel
+                      </button>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <button className={"btn btn-primary"} onClick={() => this.onEdit(team.identifier, team.name, team.skill)}>
+                        Edit
+                      </button>
+                      <button className={"btn btn-danger"} onClick={() => this.onDelete(team.identifier)}>
+                        Delete
+                      </button>
+                    </React.Fragment>
+                  )
+                }
               </td>
             </tr>
-          ))}
-        </tbody >
-      </table >
+          ))
+          }
+        </tbody>
+        <tr>
+          <td>
+            <this.CreateForm />
+          </td>
+        </tr>
+      </table>
     );
   }
 }
