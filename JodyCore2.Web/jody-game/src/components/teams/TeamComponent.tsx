@@ -1,26 +1,28 @@
 import React from 'react';
 import TeamEditor from './TeamListComponent';
 import { TeamCreator } from './TeamCreateComponent';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { Dispatch } from "redux"
+import { createTeam } from '../../store/actionCreators';
 
 
-interface IProps {
+export const TeamComponent: React.FC = () => {
+    const teams: readonly ITeam[] = useSelector(
+        (state: TeamState) => state.teams,
+        shallowEqual
+    )
 
-}
+    const dispatch: Dispatch<any> = useDispatch()
 
-interface IState {
+    const addTeam = React.useCallback((team: ITeam) => dispatch(createTeam(team)), [dispatch])
 
-}
+    return (
+        <div>
+            <TeamEditor />
+            <TeamCreator addTeam={addTeam} />
+        </div>
+    )
 
-class TeamComponent extends React.Component<IProps, IState> {
-
-    render() {
-        return (
-            <div>
-                <TeamEditor />
-                <TeamCreator />
-            </div>
-        )
-    }
 }
 
 export default TeamComponent

@@ -2,6 +2,7 @@ import React from 'react';
 import axios, { AxiosResponse } from 'axios'
 
 interface IFormProps {
+    addTeam: (team: ITeam | any) => void
 }
 interface IFormState {
     newName: string,
@@ -29,7 +30,8 @@ export class TeamCreator extends React.Component<IFormProps, IFormState> {
     handleSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
         if (this.state && this.state.newName && this.state.newSkill) {
-            this.createTeam(this.state.newName, this.state.newSkill)
+            //this.createTeam(this.state.newName, this.state.newSkill)
+            this.props.addTeam({ identifier: "", name: this.state.newName, skill: this.state.newSkill })
         }
         else {
             alert('No name and/or skill')

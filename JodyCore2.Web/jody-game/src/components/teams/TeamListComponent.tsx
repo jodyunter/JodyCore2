@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios'
 
 //export default TeamPage;
 interface IState {
-  teams: Team[],
+  teams: ITeam[],
   status: Boolean,
   rowKey: string,
   newName: string,
@@ -62,7 +62,7 @@ class TeamEditor extends React.Component<IProps, IState> {
   getTeams = () => {
     axios.get('https://localhost:5000/api/Team/all').then((response: AxiosResponse) => {
       return response.data;
-    }).then((data: Team[]) => {
+    }).then((data: ITeam[]) => {
       this.setState({ teams: data })
     });
   }
@@ -109,7 +109,7 @@ class TeamEditor extends React.Component<IProps, IState> {
           </tr>
         </thead>
         <tbody>
-          {teams.map((team: Team) => (
+          {teams.map((team: ITeam) => (
             <tr key={team.identifier}>
               <td className="col col-sm-2">
                 {
