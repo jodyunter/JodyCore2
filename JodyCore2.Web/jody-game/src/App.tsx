@@ -1,9 +1,9 @@
-import TeamComponent from './components/teams/TeamComponent';
+import Team from './components/teams/Team';
 
 function App() {
   return (
     <div>
-      <TeamComponent />
+      <Team />
     </div>
   )
 

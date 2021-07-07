@@ -3,7 +3,7 @@ import TeamEditor from './TeamListComponent';
 import { AddTeam } from './AddTeam';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Dispatch } from "redux"
-import { createTeam } from '../../store/actionCreators';
+import { addTeamAction, getTeamsAction } from '../../store/actionCreators';
 
 
 export const TeamComponent: React.FC = () => {
@@ -14,11 +14,12 @@ export const TeamComponent: React.FC = () => {
 
     const dispatch: Dispatch<any> = useDispatch()
 
-    const addTeam = React.useCallback((team: ITeam) => dispatch(createTeam(team)), [dispatch])
+    const addTeam = React.useCallback((team: ITeam) => dispatch(addTeamAction(team)), [dispatch])
+    const getTeams = React.useCallback(() => dispatch(getTeamsAction()), [dispatch])
 
     return (
         <div>
-            <TeamEditor />
+            <TeamEditor teams={getTeams().teams} />
             <AddTeam addTeam={addTeam} />
         </div>
     )

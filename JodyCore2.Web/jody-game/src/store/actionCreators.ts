@@ -1,33 +1,40 @@
 
 //https://www.freecodecamp.org/news/how-to-use-redux-in-your-react-typescript-app/
+//https://redux.js.org/tutorials/essentials/part-1-overview-concepts
+
 import * as actionTypes from "./actionTypes"
 import axios, { AxiosResponse } from 'axios'
 
+export const getTeamsAction = () => {
+    const action: TeamAction = {
+        type: actionTypes.GET_TEAMS,
+        team: { identifier: "", name: "", skill: -1 }
+    }
 
-export function addTeam(team: ITeam) {
+    axios.get('https://localhost:5000/api/Team/all').then((response: AxiosResponse) => {
+        return response.data;
+    }).then((data: ITeam[]) => {
+        action.teams = data
+    });
+
+    return action
+}
+export const addTeamAction = (team: ITeam) => {
     const action: TeamAction = {
         type: actionTypes.ADD_TEAM,
         team
     }
 
-    return createTeamApiCall(action)
-}
-export function createTeamApiCall(action: TeamAction) {
-
-
-    //need other work here
     axios.post("https://localhost:5000/api/Team/create", null, {
         params: {
             name: team.name,
             skill: team.skill
         }
     }).then((response: AxiosResponse) => {
-        //need to put the ID on the team in the action, very important
-        return (dispatch: DispatchType) => {
-            setTimeout(() => {
-                dispatch(action)
-            })
-        }
-    })
-}
 
+        action.team.identifier = response.data.identifier
+    }
+    )
+
+    return action
+}
