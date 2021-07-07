@@ -11,13 +11,9 @@ type TeamState = {
 type TeamAction = {
   type: string
   team: ITeam
+  teams: ITeam[]
 }
 
-type TeamListAction = {
-  type: string
-  teams: Team[]
-}
 
 type DispatchType = (args: TeamAction) => TeamAction
-type TeamDispatchType = (args: TeamListAction) => TeamListAction
 

@@ -11,7 +11,7 @@ interface IState {
 }
 
 interface IProps {
-  teams: ITeam[]
+  getTeams: () => TeamAction
 }
 
 class TeamEditor extends React.Component<IProps, IState> {
@@ -28,7 +28,8 @@ class TeamEditor extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-    //this.getTeams()
+    var result = this.props.getTeams()
+    this.setState({ teams: result.teams })
   }
 
   setInEditMode(status: boolean, row: string) {

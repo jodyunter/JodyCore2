@@ -8,7 +8,8 @@ import axios, { AxiosResponse } from 'axios'
 export const getTeamsAction = () => {
     const action: TeamAction = {
         type: actionTypes.GET_TEAMS,
-        team: { identifier: "", name: "", skill: -1 }
+        team: { identifier: "", name: "", skill: -1 },
+        teams: [] as ITeam[]
     }
 
     axios.get('https://localhost:5000/api/Team/all').then((response: AxiosResponse) => {
@@ -22,7 +23,8 @@ export const getTeamsAction = () => {
 export const addTeamAction = (team: ITeam) => {
     const action: TeamAction = {
         type: actionTypes.ADD_TEAM,
-        team
+        team,
+        teams: [] as ITeam[]
     }
 
     axios.post("https://localhost:5000/api/Team/create", null, {

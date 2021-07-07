@@ -19,7 +19,7 @@ export const TeamComponent: React.FC = () => {
 
     return (
         <div>
-            <TeamEditor teams={getTeams().teams} />
+            <TeamEditor getTeams={getTeams} />
             <AddTeam addTeam={addTeam} />
         </div>
     )

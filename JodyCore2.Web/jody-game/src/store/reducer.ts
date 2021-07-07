@@ -27,6 +27,11 @@ export const teamReducer = (
                 ...state,
                 teams: state.teams.concat(newTeam),
             }
+        case actionTypes.GET_TEAMS:
+            return {
+                ...state,
+                teams: state.teams = action.teams
+            }
     }
     return state
 }
