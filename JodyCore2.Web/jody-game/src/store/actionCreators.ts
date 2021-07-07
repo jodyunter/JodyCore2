@@ -3,11 +3,17 @@
 import * as actionTypes from "./actionTypes"
 import axios, { AxiosResponse } from 'axios'
 
-export function createTeam(team: ITeam) {
+
+export function addTeam(team: ITeam) {
     const action: TeamAction = {
         type: actionTypes.ADD_TEAM,
         team
     }
+
+    return createTeamApiCall(action)
+}
+export function createTeamApiCall(action: TeamAction) {
+
 
     //need other work here
     axios.post("https://localhost:5000/api/Team/create", null, {
