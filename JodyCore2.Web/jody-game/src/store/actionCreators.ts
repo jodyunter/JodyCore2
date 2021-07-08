@@ -20,6 +20,7 @@ export const getTeamsAction = () => {
     });
 
     return action
+
 }
 export const addTeamAction = (team: ITeam) => {
     const action: TeamAction = {
