@@ -16,6 +16,7 @@ export const getTeamsAction = () => {
         return response.data;
     }).then((data: ITeam[]) => {
         action.teams = data
+        return action
     });
 
     return action

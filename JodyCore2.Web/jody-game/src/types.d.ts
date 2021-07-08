@@ -5,6 +5,7 @@ interface ITeam {
 }
 
 type TeamState = {
+  loaded: boolean
   teams: ITeam[]
 }
 
