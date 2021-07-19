@@ -36,7 +36,10 @@ namespace JodyCore2.Test.Data
             return updatedData;
         }
 
-
+        public override IList<GameDto> SetupDeleteData(JodyContext context)
+        {
+            return SetupGetAllData(context);
+        }
         public override IList<GameDto> SetupGetAllData(JodyContext context)
         {
             var teams = TestTeamRepository.SetupGenericTeams(20, context, teamRepository);
@@ -46,6 +49,8 @@ namespace JodyCore2.Test.Data
             {
                 var gameDto = new GameDto(Guid.NewGuid(), 15, 1, teams[i], teams[i + 10], 0, 0, false, false, true);
                 gameRepository.Create(gameDto, context);
+
+                list.Add(gameDto);
             }
 
             return list;

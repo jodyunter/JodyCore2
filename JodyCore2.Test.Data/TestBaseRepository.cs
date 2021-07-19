@@ -16,6 +16,7 @@ namespace JodyCore2.Test.Data
         public abstract T SetupCreateData(JodyContext context);
         public abstract T SetupUpdateData(T originalData, JodyContext context);
         public abstract IList<T> SetupGetAllData(JodyContext context);
+        public abstract IList<T> SetupDeleteData(JodyContext context);
 
 
         public IBaseRepository<T> Repository { get; set; }
@@ -132,7 +133,31 @@ namespace JodyCore2.Test.Data
         [Test]
         public void ShouldDelete()
         {
-            Assert.Fail();
+            IList<T> createdData = null;
+
+            using (var context = new JodyContext())
+            {
+                createdData = SetupDeleteData(context);
+
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {                
+
+                Repository.Delete(createdData[0], context);
+
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {
+                var currentData = Repository.GetAll(context);
+
+                Assert.AreEqual(createdData.Count - 1, currentData.Count());
+
+                Assert.Null(currentData.Where(g => g.Identifier == createdData[0].Identifier).FirstOrDefault());
+            }
         }
     }
 }

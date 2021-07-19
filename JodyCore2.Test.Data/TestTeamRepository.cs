@@ -13,6 +13,7 @@ namespace JodyCore2.Test.Data
     public class TestTeamRepository:TestBaseRepository<TeamDto>
     {
         ITeamRepository teamRepository;
+        IGameRepository gameRepository;
 
         public override TeamDto SetupCreateData(JodyContext context)
         {
@@ -28,6 +29,10 @@ namespace JodyCore2.Test.Data
             return updatedData;
         }
 
+        public override IList<TeamDto> SetupDeleteData(JodyContext context)
+        {
+            return SetupGetAllData(context);
+        }
         public override IList<TeamDto> SetupGetAllData(JodyContext context)
         {
             return SetupGenericTeams(10, context, teamRepository);            
@@ -36,8 +41,9 @@ namespace JodyCore2.Test.Data
         public override IBaseRepository<TeamDto> SetupRepository()
         {
             teamRepository = new TeamRepository();
+            gameRepository = new GameRepository();
             return teamRepository;
-        }
+        }        
 
         [Test]
         public void ShouldGetByName()
@@ -61,10 +67,29 @@ namespace JodyCore2.Test.Data
             }
         }
 
+        //this should be moved to the service layer or else we're just testing the FK contstraint
         [Test]
         public void ShouldNotDeleteTeamWithGames()
         {
-            Assert.Fail();
+            var team1 = new TeamDto(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new TeamDto(Guid.NewGuid(), "Team 2", 5);
+            var team3 = new TeamDto(Guid.NewGuid(), "Team 3", 5);
+
+            var game = new GameDto(Guid.NewGuid(), 1, 5, team1, team3, 5, 5, true, false, true);
+
+            using (var context = new JodyContext())
+            {
+                teamRepository.Create(new List<TeamDto>() { team1, team2, team3 }, context);                                           
+                gameRepository.Create(game, context);
+
+                context.SaveChanges();
+            }
+
+            using (var context = new JodyContext())
+            {
+                teamRepository.Delete(team1, context);
+                var e = Assert.Throws<Microsoft.EntityFrameworkCore.DbUpdateException>(() => context.SaveChanges());
+            }            
         }
 
         public static IList<TeamDto> SetupGenericTeams(int count, JodyContext context, ITeamRepository teamRepository)

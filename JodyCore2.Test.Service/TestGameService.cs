@@ -55,13 +55,35 @@ namespace JodyCore2.Test.Service
         [Test]
         public void ShouldNotCreateHomeTeamDoesNotExist()
         {
-            Assert.Fail();
+            var teamRepo = new TeamRepository();
+            var team1 = new TeamDto(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new TeamDto(Guid.NewGuid(), "Team 2", 6);
+
+            using (var context = new JodyContext())
+            {                
+                teamRepo.Create(team2, context);
+                context.SaveChanges();
+            }
+            
+            var e = Assert.Throws<ApplicationException>(() => gameService.Create(12, 1, team1.Identifier, team2.Identifier));
+            Assert.AreEqual(string.Format("Home or Away Team Does not exist. Home identifier is {0}.  Away Identifier is {1}", team1.Identifier, team2.Identifier), e.Message);            
         }
 
         [Test]
         public void ShouldNotCreateAwyTeamDoesNotExist()
         {
-            Assert.Fail();
+            var teamRepo = new TeamRepository();
+            var team1 = new TeamDto(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new TeamDto(Guid.NewGuid(), "Team 2", 6);
+
+            using (var context = new JodyContext())
+            {
+                teamRepo.Create(team1, context);
+                context.SaveChanges();
+            }
+
+            var e = Assert.Throws<ApplicationException>(() => gameService.Create(12, 1, team1.Identifier, team2.Identifier));
+            Assert.AreEqual(string.Format("Home or Away Team Does not exist. Home identifier is {0}.  Away Identifier is {1}", team1.Identifier, team2.Identifier), e.Message);
         }
         [Test]
         public void ShouldUpdateGame()
