@@ -14,8 +14,7 @@ namespace JodyCore2.Domain
         int EndDay { get; set; }
         string Description { get; set; }
         string Division { get; set; }
-        IList<IStandingsRecord> Records { get; set; }
-        Action<IGame> ProcessGame { get; set; }
+        IList<IStandingsRecord> Records { get; set; }        
         IStandingsRecord GetRecord(ITeam inputTeam);
     }
 }

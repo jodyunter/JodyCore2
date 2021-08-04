@@ -14,9 +14,7 @@ namespace JodyCore2.Domain.Bo.Standings
         public int EndDay { get; set; }
         public string Description { get; set; }
         public string Division { get; set; }
-        public IList<IStandingsRecord> Records { get; set; }
-
-        public Action<IGame> ProcessGame { get; set; }
+        public IList<IStandingsRecord> Records { get; set; }        
 
         public IStandingsRecord GetRecord(ITeam inputTeam)
         {

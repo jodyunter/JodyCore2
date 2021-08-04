@@ -12,12 +12,6 @@ namespace JodyCore2.Test.Domain.Bo.Standings
     public class TestStandingsExtensions
     {
         [Test]
-        public void ShouldUseDefaultProcessGame()
-        {
-            Assert.Fail();
-        }
-
-        [Test]
         public void ShouldUseDefaultGetPoints()
         {
             var record = new StandingsRecord(1, "None", "None", 1, 2, 3, 4, 5, 6, 7, 25, 20);
