@@ -21,7 +21,7 @@ namespace JodyCore2.Service
             gameRepository = _gameRepository;
         }
 
-        //need to do checks like, if teams play on day
+        //need to do checks like, if teams play on day        
         public IGameSummaryViewModel Create(int year, int day, Guid homeId, Guid awayid)
         {
             using (var context = new JodyContext())
