@@ -1,15 +1,12 @@
 ﻿using JodyCore2.Data;
 using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
-using JodyCore2.Domain.Bo;
 using JodyCore2.Service.Mappers;
 using JodyCore2.Service.Util;
 using JodyCore2.Service.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JodyCore2.Service
 {

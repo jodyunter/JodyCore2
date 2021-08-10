@@ -10,7 +10,10 @@ namespace JodyCore2.ConsoleApp
     class Program
     {
         static void Main(string[] args)
-        {            
+        {
+            Environment.SetEnvironmentVariable("CONNECTION_STRING", "consoleConnectionString");
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "console");            
+
             using (var context = new JodyContext())
             {
                 context.Database.EnsureDeleted();

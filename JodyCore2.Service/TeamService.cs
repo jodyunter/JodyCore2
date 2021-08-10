@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace JodyCore2.Service
 {
+    /* TODO: Remove the game repository */
     public class TeamService : ITeamService
     {
         private ITeamRepository teamRepository;
