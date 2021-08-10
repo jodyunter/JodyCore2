@@ -20,19 +20,15 @@ namespace JodyCore2.ConsoleApp
                 context.Database.EnsureCreated();
             }
 
-            var teamService = new TeamService(new TeamRepository(), new GameRepository());
+            var services = new Services();
 
+
+            var teamService = services.TeamService;
             
-            teamService.Create("My Name", 5);            
-
-            teamService.GetAll().ToList().ForEach(t =>
+            for (int i = 0; i < 10; i++)
             {
-                Console.WriteLine(t.Name + "\t" + t.Identifier + "\t" + t.Skill);
-            });
-
-            var team = teamService.GetAll().ToList().Where(t => t.Name == "My Name").FirstOrDefault();
-
-            teamService.Save(team.Identifier, "New Name", 25);
+                teamService.Create("Team " + i, 5);
+            }                       
 
             teamService.GetAll().ToList().ForEach(t =>
             {
