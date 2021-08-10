@@ -8,7 +8,8 @@ const initialState = {
 }
 
 export const fetchTeams = createAsyncThunk('Team/all', async () => {
-    const response = await fetchAllTeams()
+    const response = fetchAllTeams()
+    return response
 })
 
 const teamSlice = createSlice(
