@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain
 {
+    //todo add a game stats class to keep track of all game stats
     public interface IGame
     {
         Guid Identifier { get; }

@@ -54,7 +54,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
             for (int i = 0; (i < games.Count) && !doesPlay; i++)            
             {
-                if (DoesTeamPlayInGame(g, team))
+                if (DoesTeamPlayInGame(games[i], team))
                 {
                     doesPlay = true;
                 }
