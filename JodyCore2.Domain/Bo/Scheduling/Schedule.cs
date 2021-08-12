@@ -36,7 +36,16 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
             if (Games.ContainsKey(dayToStartAt))
             {
+
+                //do a recursive funciton to add day to the schedule instead
                 //check if games can be added to a day
+                var teamList = games.Select(t => t.Home).ToList();
+                teamList.AddRange(games.Select(t => t.Away).ToList());
+
+                if (DoTeamsPlayInList(Games[dayToStartAt], teamList))
+                {
+
+                }
             }
             else
             {
@@ -46,6 +55,8 @@ namespace JodyCore2.Domain.Bo.Scheduling
                 Games.Add(dayToStartAt, games);                
             }
         }
+
+        //some validation functions
 
         //home,away
         public static int[] CountOfGamesPlayedInList(IList<ScheduleGame> games, Guid team)
