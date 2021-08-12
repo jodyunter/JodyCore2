@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace JodyCore2.Data.Repositories
 {
+    //remember to control when you call something like ToList.  This is when a query will execute
     public class BaseRepository<T>:IBaseRepository<T> where T: class, IBaseDto
     {
 
@@ -51,6 +52,7 @@ namespace JodyCore2.Data.Repositories
             return AlwaysInclude(context.Set<T>().Where(t => t.Identifier == identifier));
         }
 
+        //this can be used to build your own queries.        
         public virtual IQueryable<T> GetAll(JodyContext context)
         {
             return AlwaysInclude(context.Set<T>());

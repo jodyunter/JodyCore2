@@ -47,6 +47,35 @@ namespace JodyCore2.Domain.Bo.Scheduling
             }
         }
 
+        //home,away
+        public static int[] CountOfGamesPlayedInList(IList<ScheduleGame> games, Guid team)
+        {
+            int[] count = new int[2];
+
+            count[0] = 0;
+            count[1] = 1;
+
+            games.ToList().ForEach(g =>
+            {
+                if (g.Home.Equals(team))
+                {
+                    count[0]++;
+                }
+
+                if (g.Away.Equals(team))
+                {
+                    count[1]++;
+                }
+            });
+
+            return count;
+
+        }
+
+        public static bool DoTeamsPlayInList(IList<ScheduleGame> games, IList<Guid> teams)
+        {
+            return false;
+        }
         //TODO: Test these!
         public static bool DoesTeamPlayInList(IList<ScheduleGame> games, Guid team)
         {
