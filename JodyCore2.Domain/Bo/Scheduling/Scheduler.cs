@@ -18,10 +18,38 @@ namespace JodyCore2.Domain.Bo.Scheduling
             int totalTeams = teams.Count;
 
             int extraMatches = totalTeams % 2;
+            int totalDays = totalTeams - 1 + extraMatches; //a perfect schedule has each team playing everyday, but if it's odd number of teams, they get a day of rest.
+
+            //initialize the matrix
+            int[,] matrix = SetupMatrix(totalTeams, extraMatches);
+
+            var gameList = new Dictionary<int, IList<ScheduleGame>>();
+
+            for (int i = startingDay; i <= (startingDay + totalDays); i++)
+            {
+                if (!gameList.ContainsKey(startingDay))
+                {
+                    gameList.Add(startingDay, new List<ScheduleGame>());
+                }                
+
+                if (i != startingDay)
+                {
+                    IncrementMatrix(matrix, totalTeams);
+                    
+                }
+                //var games = null; //CreateGamesFromMatrix(matrix, teams);
+            }
+
+
+            return null;
+        }
+
+        //does not allow for more than a single extra match
+        public  static int[,] SetupMatrix(int totalTeams, int extraMatches)
+        {
             bool useExtra = extraMatches > 0;
 
             int matches = (totalTeams / 2) + extraMatches;
-            int totalDays = totalTeams - 1 + extraMatches; //a perfect schedule has each team playing everyday, but if it's odd number of teams, they get a day of rest.
 
             //initialize the matrix
             int[,] matrix = new int[matches, 2];
@@ -46,42 +74,26 @@ namespace JodyCore2.Domain.Bo.Scheduling
                 else
                 {
                     matrix[i, 0] = i;
-                    matrix[i, 1] = totalTeams - 1 - i;                        
-                }
-            }
-
-            var gameList = new Dictionary<int, IList<ScheduleGame>>();
-
-            for (int i = startingDay; i <= (startingDay + totalDays); i++)
-            {
-                if (!gameList.ContainsKey(startingDay))
-                {
-                    gameList.Add(startingDay, new List<ScheduleGame>());
-                }                
-
-                if (i != startingDay)
-                {
-                    IncrementMatrix(matrix, totalTeams);
-                    
-                }
-                //var games = null; //CreateGamesFromMatrix(matrix, teams);
-            }
-
-
-            return null;
-        }
-
-        public static int[,] IncrementMatrix(int[,] matrix, int totalTeams)
-        {
-            for (int i = 0; i < matrix.Length; i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    matrix[i, j] = IncrementPosition(totalTeams, matrix[i, j]);
+                    matrix[i, 1] = totalTeams - 1 - i;
                 }
             }
 
             return matrix;
+        }
+
+        public static int[,] IncrementMatrix(int[,] matrix, int totalTeams)
+        {
+            var newMatrix = new int[matrix.GetLength(0), matrix.GetLength(1)];
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    newMatrix[i, j] = IncrementPosition(totalTeams, matrix[i, j]);
+                }
+            }
+
+            return newMatrix;
         }
         public static int IncrementPosition(int totalTeams, int startingValue)
         {
@@ -110,7 +122,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
             int[] count = new int[2];
 
             count[0] = 0;
-            count[1] = 1;
+            count[1] = 0;
 
             games.ToList().ForEach(g =>
             {
@@ -131,7 +143,16 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
         public static bool DoTeamsPlayInList(IList<ScheduleGame> games, IList<Guid> teams)
         {
-            return false;
+            bool aTeamPlaysinList = false;
+
+            teams.ToList().ForEach(t =>
+            {
+                var teamPlaysInLlist = Scheduler.DoesTeamPlayInList(games, t);
+                if (teamPlaysInLlist)
+                    aTeamPlaysinList = true;
+            });
+
+            return aTeamPlaysinList;
         }
         //TODO: Test these!
         public static bool DoesTeamPlayInList(IList<ScheduleGame> games, Guid team)
