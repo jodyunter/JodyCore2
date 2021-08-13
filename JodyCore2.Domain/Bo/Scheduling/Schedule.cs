@@ -42,7 +42,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
                 var teamList = games.Select(t => t.Home).ToList();
                 teamList.AddRange(games.Select(t => t.Away).ToList());
 
-                if (DoTeamsPlayInList(Games[dayToStartAt], teamList))
+                if (Scheduler.DoTeamsPlayInList(Games[dayToStartAt], teamList))
                 {
 
                 }

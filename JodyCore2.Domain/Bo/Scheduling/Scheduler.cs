@@ -64,12 +64,14 @@ namespace JodyCore2.Domain.Bo.Scheduling
                     IncrementMatrix(matrix, totalTeams);
                     
                 }
-                var games = null; //CreateGamesFromMatrix(matrix, teams);
+                //var games = null; //CreateGamesFromMatrix(matrix, teams);
             }
 
+
+            return null;
         }
 
-        public int[,] IncrementMatrix(int[,] matrix, int totalTeams)
+        public static int[,] IncrementMatrix(int[,] matrix, int totalTeams)
         {
             for (int i = 0; i < matrix.Length; i++)
             {
@@ -81,7 +83,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
             return matrix;
         }
-        public int IncrementPosition(int totalTeams, int startingValue)
+        public static int IncrementPosition(int totalTeams, int startingValue)
         {
             if (startingValue == -1)
             {
