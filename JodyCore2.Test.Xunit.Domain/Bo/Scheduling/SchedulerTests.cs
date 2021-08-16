@@ -195,7 +195,6 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
         {
             Assert.Equal(expectedResults, Scheduler.DoTeamsPlayInList(games, teams));
         }
-
         
         public static IEnumerable<object[]> GetDataForMatrixSetup()
         {
@@ -279,5 +278,35 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
             //test
         }   
         
+        [Fact]
+        public void ShouldCreateRoundRobin()
+        {
+            var teams = new List<Guid>()
+            { 
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid()
+            };
+
+            int expectedDays = 9;
+
+            //specific number of days
+            //specific number of games
+            //no duplicate teams on a day
+
+            var result = Scheduler.ScheduleRoundRobin(1, 1, teams);
+
+            //expected days
+            Assert.StrictEqual(expectedDays, result.Count);
+            
+            
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
             return null;
         }
 
-        public Dictionary<int, IList<ScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<Guid> teams)
+        public static Dictionary<int, IList<ScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<Guid> teams)
         {
             int totalTeams = teams.Count;
 
@@ -29,7 +29,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
             var gameList = new Dictionary<int, IList<ScheduleGame>>();
 
-            for (int day = startingDay; day <= (startingDay + totalDays); day++)
+            for (int day = startingDay; day < (startingDay + totalDays); day++)
             {
                 if (!gameList.ContainsKey(day))
                 {
