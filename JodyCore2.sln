@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Api", "JodyC
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{643D3E97-CDB3-4745-9118-835D929AE573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Test.Xunit.Domain", "..\JodyCore2.Test.Xunit.Domain\JodyCore2.Test.Xunit.Domain.csproj", "{3BD0E3BB-129D-41CE-8899-E28B4B91B721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Xunit.Domain", "JodyCore2.Test.Xunit.Domain\JodyCore2.Test.Xunit.Domain.csproj", "{00350E1E-7741-4AEC-84C8-0F42E629DBCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,10 +79,10 @@ Global
 		{643D3E97-CDB3-4745-9118-835D929AE573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{643D3E97-CDB3-4745-9118-835D929AE573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{643D3E97-CDB3-4745-9118-835D929AE573}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3BD0E3BB-129D-41CE-8899-E28B4B91B721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BD0E3BB-129D-41CE-8899-E28B4B91B721}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BD0E3BB-129D-41CE-8899-E28B4B91B721}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BD0E3BB-129D-41CE-8899-E28B4B91B721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00350E1E-7741-4AEC-84C8-0F42E629DBCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00350E1E-7741-4AEC-84C8-0F42E629DBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00350E1E-7741-4AEC-84C8-0F42E629DBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00350E1E-7741-4AEC-84C8-0F42E629DBCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

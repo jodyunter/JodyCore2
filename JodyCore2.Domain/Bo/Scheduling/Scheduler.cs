@@ -8,6 +8,8 @@ namespace JodyCore2.Domain.Bo.Scheduling
 {
     public class Scheduler
     {
+        public const int NO_TEAM_VALUE = -1;
+
         public IList<ScheduleGame> ScheduleGames(int year, int startingDay, IList<ITeam> teams)
         {
             return null;
@@ -27,39 +29,42 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
             var gameList = new Dictionary<int, IList<ScheduleGame>>();
 
-            for (int i = startingDay; i <= (startingDay + totalDays); i++)
+            for (int day = startingDay; day <= (startingDay + totalDays); day++)
             {
-                if (!gameList.ContainsKey(startingDay))
+                if (!gameList.ContainsKey(day))
                 {
-                    gameList.Add(startingDay, new List<ScheduleGame>());
+                    gameList.Add(day, new List<ScheduleGame>());
                 }                
 
-                if (i != startingDay)
+                if (day != startingDay)
                 {
                     IncrementMatrix(matrix, totalTeams);
                     
                 }
-                var newGames = CreateGamesFromMatrix(matrix, teams, year, i);
+                var newGames = CreateGamesFromMatrix(matrix, teams, year, day);
                 //validate day of games
 
-                games.Add(i, newGames);
+                games.Add(day, newGames);
             }
 
             return games;
         }
 
-        public IList<ScheduleGame> CreateGamesFromMatrix(int[,] matrix, IList<Guid> teams, int year, int day)
+        public static IList<ScheduleGame> CreateGamesFromMatrix(int[,] matrix, IList<Guid> teams, int year, int day)
         {
             var games = new List<ScheduleGame>();
             
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                var home = teams[matrix[i, 0]];
-                var away = teams[matrix[i, 1]];
+                if (matrix[i, 0] != NO_TEAM_VALUE)
+                {
+                    var home = teams[matrix[i, 0]];
+                    var away = teams[matrix[i, 1]];
 
-                var game = new ScheduleGame(Guid.NewGuid(), year, day, home, away);
+                    var game = new ScheduleGame(Guid.NewGuid(), year, day, home, away);
 
-                games.Add(game);
+                    games.Add(game);
+                }
             }
 
             return games;
@@ -80,22 +85,26 @@ namespace JodyCore2.Domain.Bo.Scheduling
              * [1, 4]
              * [2, 3]
              */
+            int currentTeam = 0;
+
             for (int i = 0; i < matches; i++)
             {
                 if (i == 0 && useExtra)
                 {
-                    matrix[i, 0] = -1;
+                    matrix[i, 0] = NO_TEAM_VALUE;
                     matrix[i, 1] = totalTeams - 1;
                 }
                 else if (i == 0 && !useExtra)
                 {
-                    matrix[i, 0] = 0;
+                    matrix[i, 0] = currentTeam;
                     matrix[i, 1] = totalTeams - 1;
+                    currentTeam++;
                 }
                 else
                 {
-                    matrix[i, 0] = i;
+                    matrix[i, 0] = currentTeam;
                     matrix[i, 1] = totalTeams - 1 - i;
+                    currentTeam++;
                 }
             }
 
@@ -118,7 +127,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
         }
         public static int IncrementPosition(int totalTeams, int startingValue)
         {
-            if (startingValue == -1)
+            if (startingValue == NO_TEAM_VALUE)
             {
                 return startingValue;
             }
