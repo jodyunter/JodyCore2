@@ -8,17 +8,19 @@ namespace JodyCore2.Domain.Bo.Scheduling
 {
     public class Scheduler
     {
-        public IList<ScheduleGame> ScheduleGames(int startingDay, IList<ITeam> teams)
+        public IList<ScheduleGame> ScheduleGames(int year, int startingDay, IList<ITeam> teams)
         {
             return null;
         }
 
-        public IList<ScheduleGame> ScheduleRoundRobin(int startingDay, IList<Guid> teams)
+        public Dictionary<int, IList<ScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<Guid> teams)
         {
             int totalTeams = teams.Count;
 
             int extraMatches = totalTeams % 2;
             int totalDays = totalTeams - 1 + extraMatches; //a perfect schedule has each team playing everyday, but if it's odd number of teams, they get a day of rest.
+
+            var games = new Dictionary<int, IList<ScheduleGame>>();
 
             //initialize the matrix
             int[,] matrix = SetupMatrix(totalTeams, extraMatches);
@@ -37,13 +39,32 @@ namespace JodyCore2.Domain.Bo.Scheduling
                     IncrementMatrix(matrix, totalTeams);
                     
                 }
-                //var games = null; //CreateGamesFromMatrix(matrix, teams);
+                var newGames = CreateGamesFromMatrix(matrix, teams, year, i);
+                //validate day of games
+
+                games.Add(i, newGames);
             }
 
-
-            return null;
+            return games;
         }
 
+        public IList<ScheduleGame> CreateGamesFromMatrix(int[,] matrix, IList<Guid> teams, int year, int day)
+        {
+            var games = new List<ScheduleGame>();
+            
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                var home = teams[matrix[i, 0]];
+                var away = teams[matrix[i, 1]];
+
+                var game = new ScheduleGame(Guid.NewGuid(), year, day, home, away);
+
+                games.Add(game);
+            }
+
+            return games;
+
+        }
         //does not allow for more than a single extra match
         public  static int[,] SetupMatrix(int totalTeams, int extraMatches)
         {
