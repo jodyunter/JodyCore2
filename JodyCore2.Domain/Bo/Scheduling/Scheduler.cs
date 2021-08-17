@@ -37,8 +37,8 @@ namespace JodyCore2.Domain.Bo.Scheduling
                 }                
 
                 if (day != startingDay)
-                {
-                    IncrementMatrix(matrix, totalTeams);
+                {                    
+                    matrix = IncrementMatrix(matrix, totalTeams);
                     
                 }
                 var newGames = CreateGamesFromMatrix(matrix, teams, year, day);

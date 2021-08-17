@@ -22,10 +22,10 @@ namespace JodyCore2.ConsoleApp
             }
 
             var services = new Services();
-
-
             var teamService = services.TeamService;
-            
+            var gameService = services.GameService;
+            var schedulingService = services.SchedulingService;
+
             for (int i = 0; i < 10; i++)
             {
                 teamService.Create("Team " + i, 5);
@@ -33,22 +33,18 @@ namespace JodyCore2.ConsoleApp
 
             var teams = teamService.GetAll().ToList();
 
-            var gameService = services.GameService;
-            gameService.Create(1, 1, teams[0].Identifier, teams[1].Identifier);
-            gameService.Create(1, 1, teams[2].Identifier, teams[3].Identifier);
-            gameService.Create(1, 1, teams[4].Identifier, teams[5].Identifier);
-            gameService.Create(1, 1, teams[6].Identifier, teams[7].Identifier);
-            gameService.Create(1, 1, teams[8].Identifier, teams[9].Identifier);
+            var scheduledGames = schedulingService.CreateScheduleGames(1, 1, teams.Select(t => t.Identifier).ToList(), 1, false);
 
-            teamService.GetAll().ToList().ForEach(t =>
+            scheduledGames.ToList().ForEach(g =>
             {
-                Console.WriteLine(t.Name + "\t" + t.Identifier + "\t" + t.Skill);
+                gameService.Create(g.Year, g.Day, g.Home, g.Away);
             });
 
-
             gameService.PlayGamesOnDay(1, 1);
+            gameService.PlayGamesOnDay(1, 9);
 
-            gameService.GetGames(1, 1, 1).ToList().ForEach(g =>
+
+            gameService.GetGames(1, 1, 9).OrderBy(g => g.Day).ToList().ForEach(g =>
             {
                 Console.WriteLine(GameView.GetGameSummaryView(g));
             });

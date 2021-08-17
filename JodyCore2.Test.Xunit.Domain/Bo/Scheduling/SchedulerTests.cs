@@ -300,12 +300,15 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
             //specific number of days
             //specific number of games
             //no duplicate teams on a day
+            //result should be exact and consistent, write out the schedule results
 
             var result = Scheduler.ScheduleRoundRobin(1, 1, teams);
 
             //expected days
             Assert.StrictEqual(expectedDays, result.Count);
-            
+
+            //need way more validation here!
+            Assert.True(false);
             
         }
     }

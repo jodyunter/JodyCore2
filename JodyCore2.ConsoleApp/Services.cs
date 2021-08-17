@@ -12,6 +12,7 @@ namespace JodyCore2.ConsoleApp
     {
         public ITeamService TeamService { get; set; }
         public IGameService GameService { get; set; }
+        public ISchedulingService SchedulingService { get; set; }
 
         public Services()
         {
@@ -20,6 +21,7 @@ namespace JodyCore2.ConsoleApp
 
             TeamService = new TeamService(teamRepository, gameRepository);
             GameService = new GameService(teamRepository, gameRepository);
+            SchedulingService = new SchedulingService();
         }
         
     }
