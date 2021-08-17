@@ -10,6 +10,8 @@ using System.Linq;
 
 namespace JodyCore2.Service
 {
+    //todo, we'll want a competition ID for using this
+    //todo, we should probably use a web api for getting the teams or verifying they exist
     public class GameService : IGameService
     {
         private readonly ITeamRepository teamRepository;
