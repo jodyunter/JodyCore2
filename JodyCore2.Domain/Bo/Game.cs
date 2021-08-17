@@ -55,5 +55,10 @@ namespace JodyCore2.Domain.Bo
 
             Complete = true;
         }
+
+        public void Process()
+        {
+            Processed = true;
+        }
     }
 }

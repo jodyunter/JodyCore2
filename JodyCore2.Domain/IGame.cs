@@ -19,7 +19,7 @@ namespace JodyCore2.Domain
         bool Complete { get; }
         bool Processed { get; }
         bool CanTie { get; }
-
         void Play(Random r);
+        void Process();
     }
 }
