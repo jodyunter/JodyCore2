@@ -8,6 +8,8 @@ namespace JodyCore2.Domain
 {
     public interface IStandings
     {
+        Guid Identifier { get; set; }
+        String Name { get; set; }
         int StartYear { get; set; }
         int EndYear { get; set; }
         int StartDay { get; set; }

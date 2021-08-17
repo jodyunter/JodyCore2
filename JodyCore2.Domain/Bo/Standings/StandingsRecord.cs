@@ -8,7 +8,9 @@ namespace JodyCore2.Domain.Bo.Standings
 {
     public class StandingsRecord:IStandingsRecord
     {
-        public ITeam Team { get; set; }
+        public Guid Identifier { get; set; }
+        public virtual IStandings ParentStandings { get; set; }
+        public virtual ITeam Team { get; set; }
         public int Rank { get; set; }
         public string Division { get; set; }
         public string Name { get; set; }
@@ -24,13 +26,17 @@ namespace JodyCore2.Domain.Bo.Standings
         public int GoalsFor { get; set; }
         public int GoalsAgainst { get; set; }
         public int Points { get { return calculatePoints(this); } }
-        private Func<IStandingsRecord, int> calculatePoints;
+        protected Func<IStandingsRecord, int> calculatePoints;
 
         public int GoalDifference { get { return GoalsFor - GoalsAgainst; } }
         public int GamesPlayed { get { return Wins + Loses + Ties; } }
 
-        public StandingsRecord(int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
+        public StandingsRecord() { }
+        public StandingsRecord(Guid identifier, IStandings standings, ITeam team, int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
         {
+            Identifier = identifier;
+            ParentStandings = standings;
+            Team = team;
             Rank = rank;
             Division = division;
             Name = name;
@@ -46,8 +52,11 @@ namespace JodyCore2.Domain.Bo.Standings
             calculatePoints = points;
         }
 
-        public StandingsRecord(int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst)
+        public StandingsRecord(Guid identifier, IStandings standings, ITeam team, int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst)
         {
+            Identifier = identifier;
+            ParentStandings = standings;
+            Team = team;
             Rank = rank;
             Division = division;
             Name = name;

@@ -8,6 +8,8 @@ namespace JodyCore2.Domain
 {
     public interface IStandingsRecord
     {
+        Guid Identifier { get; set; }
+        IStandings ParentStandings { get; set; }
         ITeam Team { get; set; }
         int Rank { get; set; }
         string Division { get; set; }

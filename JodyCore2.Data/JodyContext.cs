@@ -47,6 +47,8 @@ namespace JodyCore2.Data
         
         public DbSet<TeamDto> Teams { get; set; }
         public DbSet<GameDto> Games { get; set; }
+        public DbSet<StandingsDto> Standings { get; set; }        
+        public DbSet<StandingsRecordDto> StandingsRecords { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,6 +56,10 @@ namespace JodyCore2.Data
             modelBuilder.Entity<TeamDto>().Property(p => p.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<GameDto>().ToTable("Games");
             modelBuilder.Entity<GameDto>().Property(p => p.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<StandingsRecordDto>().ToTable("StandingsRecords");
+            modelBuilder.Entity<StandingsRecordDto>().Property(p => p.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<StandingsDto>().ToTable("Standings");
+            modelBuilder.Entity<StandingsDto>().Property(p => p.Id).ValueGeneratedOnAdd();
 
         }
         
