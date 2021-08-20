@@ -23,7 +23,7 @@ namespace JodyCore2.Test.Data
 
         public override IList<StandingsRecordDto> SetupDeleteData(JodyContext context)
         {
-            throw new NotImplementedException();
+            return SetupGetAllData(context);
         }
 
         public override IList<StandingsRecordDto> SetupGetAllData(JodyContext context)

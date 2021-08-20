@@ -96,7 +96,7 @@ namespace JodyCore2.Test.Data
 
             using (var context = new JodyContext())
             {
-                var currentData = Repository.GetByIdentifier(createdData.Identifier, context).FirstOrDefault();
+                var currentData = Repository.WithAllObjects(Repository.GetByIdentifier(createdData.Identifier, context)).FirstOrDefault();
                 Assert.AreNotEqual(currentData, createdData);
                 Assert.AreEqual(currentData, updatedData);
             }
@@ -116,7 +116,7 @@ namespace JodyCore2.Test.Data
 
             using (var context = new JodyContext())
             {
-                var values = Repository.GetAll(context);
+                var values = Repository.WithAllObjects(Repository.GetAll(context));
 
                 Assert.AreEqual(10, values.Count());
                 Assert.AreEqual(context.Set<T>().Count(), values.Count());
