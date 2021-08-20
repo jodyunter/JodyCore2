@@ -62,5 +62,69 @@ namespace JodyCore2.Data.Dto
             GoalsAgainst = goalsAgainst;
             calculatePoints = this.DefaultGetPoints;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is StandingsRecordDto dto &&
+                   Identifier.Equals(dto.Identifier) &&
+                   ((ParentStandings == null && dto.ParentStandings == null)  || EqualityComparer<IStandings>.Default.Equals(ParentStandings, dto.ParentStandings)) &&
+                   EqualityComparer<ITeam>.Default.Equals(Team, dto.Team) &&
+                   Rank == dto.Rank &&
+                   Division == dto.Division &&
+                   Name == dto.Name &&
+                   Wins == dto.Wins &&
+                   RegulationWins == dto.RegulationWins &&
+                   OverTimeWins == dto.OverTimeWins &&
+                   ShootOutWins == dto.ShootOutWins &&
+                   Loses == dto.Loses &&
+                   RegulationLoses == dto.RegulationLoses &&
+                   OverTimeLoses == dto.OverTimeLoses &&
+                   ShootoutLoses == dto.ShootoutLoses &&
+                   Ties == dto.Ties &&
+                   GoalsFor == dto.GoalsFor &&
+                   GoalsAgainst == dto.GoalsAgainst &&
+                   Points == dto.Points &&
+                   EqualityComparer<Func<IStandingsRecord, int>>.Default.Equals(calculatePoints, dto.calculatePoints) &&
+                   GoalDifference == dto.GoalDifference &&
+                   GamesPlayed == dto.GamesPlayed &&                   
+                   EqualityComparer<StandingsDto>.Default.Equals(StandingsDto, dto.StandingsDto) &&
+                   EqualityComparer<TeamDto>.Default.Equals(TeamDto, dto.TeamDto) &&
+                   EqualityComparer<IStandings>.Default.Equals(ParentStandings, dto.ParentStandings) &&
+                   EqualityComparer<ITeam>.Default.Equals(Team, dto.Team);
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(Identifier);
+            hash.Add(ParentStandings);
+            hash.Add(Team);
+            hash.Add(Rank);
+            hash.Add(Division);
+            hash.Add(Name);
+            hash.Add(Wins);
+            hash.Add(RegulationWins);
+            hash.Add(OverTimeWins);
+            hash.Add(ShootOutWins);
+            hash.Add(Loses);
+            hash.Add(RegulationLoses);
+            hash.Add(OverTimeLoses);
+            hash.Add(ShootoutLoses);
+            hash.Add(Ties);
+            hash.Add(GoalsFor);
+            hash.Add(GoalsAgainst);
+            hash.Add(Points);
+            hash.Add(calculatePoints);
+            hash.Add(GoalDifference);
+            hash.Add(GamesPlayed);
+            hash.Add(Id);
+            hash.Add(StandingsDto);
+            hash.Add(TeamDto);
+            hash.Add(ParentStandings);
+            hash.Add(Team);
+            return hash.ToHashCode();
+        }
+
+
     }
 }

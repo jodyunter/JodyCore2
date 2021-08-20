@@ -32,5 +32,33 @@ namespace JodyCore2.Data.Dto
             Division = division;
             RecordsDto = records;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is StandingsDto dto &&
+                   Identifier.Equals(dto.Identifier) &&
+                   Name == dto.Name &&
+                   StartYear == dto.StartYear &&
+                   EndYear == dto.EndYear &&
+                   StartDay == dto.StartDay &&
+                   EndDay == dto.EndDay &&
+                   Description == dto.Description &&
+                   Division == dto.Division;                   
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(Identifier);
+            hash.Add(Name);
+            hash.Add(StartYear);
+            hash.Add(EndYear);
+            hash.Add(StartDay);
+            hash.Add(EndDay);
+            hash.Add(Description);
+            hash.Add(Division);
+            hash.Add(Id);
+            return hash.ToHashCode();
+        }
     }
 }
