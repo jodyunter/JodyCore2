@@ -13,15 +13,18 @@ namespace JodyCore2.ConsoleApp
         public ITeamService TeamService { get; set; }
         public IGameService GameService { get; set; }
         public ISchedulingService SchedulingService { get; set; }
+        public IStandingsService StandingsService { get; set; }
 
         public Services()
         {
             var teamRepository = new TeamRepository();
             var gameRepository = new GameRepository();
+            var standingsRepository = new StandingsRepository();
 
             TeamService = new TeamService(teamRepository, gameRepository);
             GameService = new GameService(teamRepository, gameRepository);
             SchedulingService = new SchedulingService();
+            StandingsService = new StandingsService(standingsRepository, teamRepository);
         }
         
     }

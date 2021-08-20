@@ -9,11 +9,32 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Service.Mappers
 {
-    public class StandingsRecordMapper
+    public static class StandingsRecordMapper
     {
-        public IStandingsRecordViewModel StandingsRecordToStandingsRecordViewModel(IStandingsRecord record)
+        public static IStandingsRecordViewModel StandingsRecordToStandingsRecordViewModel(IStandingsRecord record)
         {
-            return null;
+            return new StandingsRecordViewModel(record.Identifier,
+                record.ParentStandings.Identifier,
+                record.ParentStandings.Name,
+                record.Team.Identifier,
+                record.Team.Name,
+                record.Rank,
+                record.Division,
+                record.Name,
+                record.Wins,
+                record.RegulationWins,
+                record.OverTimeWins,
+                record.ShootOutWins,
+                record.Loses,
+                record.RegulationLoses,
+                record.OverTimeLoses,
+                record.ShootoutLoses,
+                record.Ties,
+                record.GoalsFor,
+                record.GoalsAgainst,
+                record.Points,
+                record.GamesPlayed,
+                record.GoalDifference);
         }
     }
 }

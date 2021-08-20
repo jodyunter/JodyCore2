@@ -25,13 +25,15 @@ namespace JodyCore2.Domain.Bo.Standings
         public int Ties { get; set; }
         public int GoalsFor { get; set; }
         public int GoalsAgainst { get; set; }
-        public int Points { get { return calculatePoints(this); } }
+        public int Points { get { return calculatePoints(this); } }        
         protected Func<IStandingsRecord, int> calculatePoints;
-
         public int GoalDifference { get { return GoalsFor - GoalsAgainst; } }
         public int GamesPlayed { get { return Wins + Loses + Ties; } }
 
-        public StandingsRecord() { }
+        public StandingsRecord() 
+        {
+            calculatePoints = this.DefaultGetPoints;
+        }
         public StandingsRecord(Guid identifier, IStandings standings, ITeam team, int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
         {
             Identifier = identifier;

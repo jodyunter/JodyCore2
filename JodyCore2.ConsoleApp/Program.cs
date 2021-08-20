@@ -25,6 +25,7 @@ namespace JodyCore2.ConsoleApp
             var teamService = services.TeamService;
             var gameService = services.GameService;
             var schedulingService = services.SchedulingService;
+            var standingsService = services.StandingsService;
 
             for (int i = 0; i < 10; i++)
             {
@@ -47,6 +48,15 @@ namespace JodyCore2.ConsoleApp
             gameService.GetGames(1, 1, 9).OrderBy(g => g.Day).ToList().ForEach(g =>
             {
                 Console.WriteLine(GameView.GetGameSummaryView(g));
+            });
+
+            var a = standingsService.Create("First", 1, 1, 1, 200, "Test Me Out", "Permier", teams);
+
+            var standings = standingsService.GetByIdentifier(a.Identifier);
+
+            standings.Records.ToList().ForEach(r =>
+            {
+                Console.WriteLine(StandingsRecordView.RecordView(r));
             });
 
             Console.ReadLine();

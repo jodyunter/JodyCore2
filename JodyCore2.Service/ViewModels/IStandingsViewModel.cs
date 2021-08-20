@@ -8,5 +8,15 @@ namespace JodyCore2.Service.ViewModels
 {
     public interface IStandingsViewModel
     {
+        public Guid Identifier { get; }
+        public string Name { get; }
+        public int StartYear { get; }
+        public int EndYear { get; }
+        public int StartDay { get; }
+        public int EndDay { get; }
+        public string Description { get; }
+        public string Division { get; }
+        public IList<IStandingsRecordViewModel> Records { get; }
+
     }
 }

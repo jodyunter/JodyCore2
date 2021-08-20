@@ -46,8 +46,8 @@ namespace JodyCore2.Data.Dto
         public StandingsRecordDto(Guid identifier, StandingsDto standings, TeamDto team, int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst)
         {
             Identifier = identifier;
-            ParentStandings = standings;
-            Team = team;
+            StandingsDto = standings;
+            TeamDto = team;
             Rank = rank;
             Division = division;
             Name = name;

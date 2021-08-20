@@ -26,5 +26,7 @@ namespace JodyCore2.Domain
         int GoalsFor { get; set; }
         int GoalsAgainst { get; set; }
         int Points { get; }
+        int GamesPlayed { get; }
+        int GoalDifference { get; }
     }
 }
