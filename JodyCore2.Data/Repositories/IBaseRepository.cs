@@ -17,6 +17,7 @@ namespace JodyCore2.Data.Repositories
         public void Delete(IList<T> dto, JodyContext context);
         IQueryable<T> GetByIdentifier(Guid identifier, JodyContext context);
         IQueryable<T> GetAll(JodyContext context);
+        IQueryable<T> WithAllObjects(IQueryable<T> query);
 
     }
 }

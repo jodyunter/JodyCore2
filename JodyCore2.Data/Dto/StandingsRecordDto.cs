@@ -67,30 +67,20 @@ namespace JodyCore2.Data.Dto
         {
             return obj is StandingsRecordDto dto &&
                    Identifier.Equals(dto.Identifier) &&
-                   ((ParentStandings == null && dto.ParentStandings == null)  || EqualityComparer<IStandings>.Default.Equals(ParentStandings, dto.ParentStandings)) &&
+                   ((ParentStandings == null && dto.ParentStandings == null) || EqualityComparer<IStandings>.Default.Equals(ParentStandings, dto.ParentStandings)) &&
                    EqualityComparer<ITeam>.Default.Equals(Team, dto.Team) &&
                    Rank == dto.Rank &&
                    Division == dto.Division &&
-                   Name == dto.Name &&
-                   Wins == dto.Wins &&
+                   Name == dto.Name &&                   
                    RegulationWins == dto.RegulationWins &&
                    OverTimeWins == dto.OverTimeWins &&
-                   ShootOutWins == dto.ShootOutWins &&
-                   Loses == dto.Loses &&
+                   ShootOutWins == dto.ShootOutWins &&                   
                    RegulationLoses == dto.RegulationLoses &&
                    OverTimeLoses == dto.OverTimeLoses &&
                    ShootoutLoses == dto.ShootoutLoses &&
                    Ties == dto.Ties &&
                    GoalsFor == dto.GoalsFor &&
-                   GoalsAgainst == dto.GoalsAgainst &&
-                   Points == dto.Points &&
-                   EqualityComparer<Func<IStandingsRecord, int>>.Default.Equals(calculatePoints, dto.calculatePoints) &&
-                   GoalDifference == dto.GoalDifference &&
-                   GamesPlayed == dto.GamesPlayed &&                   
-                   EqualityComparer<StandingsDto>.Default.Equals(StandingsDto, dto.StandingsDto) &&
-                   EqualityComparer<TeamDto>.Default.Equals(TeamDto, dto.TeamDto) &&
-                   EqualityComparer<IStandings>.Default.Equals(ParentStandings, dto.ParentStandings) &&
-                   EqualityComparer<ITeam>.Default.Equals(Team, dto.Team);
+                   GoalsAgainst == dto.GoalsAgainst;                                                                                               
         }
 
         public override int GetHashCode()
@@ -125,6 +115,26 @@ namespace JodyCore2.Data.Dto
             return hash.ToHashCode();
         }
 
+        public override string ToString()
+        {
+            var format = "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}";
 
+            return string.Format(format,
+                   Identifier,
+                   ParentStandings,
+                   Team,
+                   Rank,
+                   Division,
+                   Name,
+                   RegulationWins,
+                   OverTimeWins,
+                   ShootOutWins,
+                   RegulationLoses,
+                   OverTimeLoses,
+                   ShootoutLoses,
+                   Ties,
+                   GoalsFor,
+                   GoalsAgainst);
+        }
     }
 }

@@ -8,6 +8,10 @@ namespace JodyCore2.Data.Repositories
     //remember to control when you call something like ToList.  This is when a query will execute
     public class BaseRepository<T>:IBaseRepository<T> where T: class, IBaseDto
     {
+        public virtual IQueryable<T> WithAllObjects(IQueryable<T> query)
+        {
+            return query;
+        }
 
         public virtual IQueryable<T> AlwaysInclude(IQueryable<T> query)
         {

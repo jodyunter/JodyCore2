@@ -66,7 +66,7 @@ namespace JodyCore2.Test.Data
 
             using (var context = new JodyContext())
             {
-                var compareData = Repository.GetByIdentifier(createdData.Identifier, context).FirstOrDefault();
+                var compareData = Repository.WithAllObjects(Repository.GetByIdentifier(createdData.Identifier, context)).FirstOrDefault();
                 Assert.AreEqual(createdData, compareData);
             }
 
