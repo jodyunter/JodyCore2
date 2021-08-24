@@ -16,6 +16,7 @@ namespace JodyCore2.ConsoleApp.Views
             return string.Format(BASIC_FORMAT,
                 "R", "Name", "W", "L", "T", "Pts", "GP", "GF", "GA", "GD");
         }
+
         public static string RecordView(IStandingsRecordViewModel model)
         {
             return string.Format(BASIC_FORMAT,

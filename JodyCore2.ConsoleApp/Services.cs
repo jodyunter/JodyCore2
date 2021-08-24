@@ -24,7 +24,7 @@ namespace JodyCore2.ConsoleApp
             TeamService = new TeamService(teamRepository, gameRepository);
             GameService = new GameService(teamRepository, gameRepository);
             SchedulingService = new SchedulingService();
-            StandingsService = new StandingsService(standingsRepository, teamRepository);
+            StandingsService = new StandingsService(standingsRepository, teamRepository, gameRepository);
         }
         
     }

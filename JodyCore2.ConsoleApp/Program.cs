@@ -41,8 +41,8 @@ namespace JodyCore2.ConsoleApp
                 gameService.Create(g.Year, g.Day, g.Home, g.Away);
             });
 
-            gameService.PlayGamesOnDay(1, 1);
-            gameService.PlayGamesOnDay(1, 9);
+            var gamesList = gameService.PlayGamesOnDay(1, 1);
+            gamesList.ToList().AddRange(gameService.PlayGamesOnDay(1, 9));
 
 
             gameService.GetGames(1, 1, 9).OrderBy(g => g.Day).ToList().ForEach(g =>
@@ -50,16 +50,14 @@ namespace JodyCore2.ConsoleApp
                 Console.WriteLine(GameView.GetGameSummaryView(g));
             });
 
+            
             var a = standingsService.Create("First", 1, 1, 1, 200, "Test Me Out", "Permier", teams);
+
+            standingsService.ProcessGames(a.Identifier, gamesList.Select(g => g.Identifier).ToList());
 
             var standings = standingsService.GetByIdentifier(a.Identifier);
 
-            Console.WriteLine(StandingsRecordView.HeaderString());
-
-            standings.Records.ToList().ForEach(r =>
-            {
-                Console.WriteLine(StandingsRecordView.RecordView(r));
-            });
+            Console.WriteLine(StandingsView.GetView(standings));
 
             Console.ReadLine();
         }

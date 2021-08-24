@@ -2,6 +2,7 @@
 using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
 using JodyCore2.Domain;
+using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Service.Mappers;
 using JodyCore2.Service.ViewModels;
 using System;
@@ -16,11 +17,13 @@ namespace JodyCore2.Service
     {
         private readonly IStandingsRepository standingsRepository;
         private readonly ITeamRepository teamRepository;
+        private readonly IGameRepository gameRepository;
 
-        public StandingsService(IStandingsRepository _standingsRepository, ITeamRepository _teamRepository)
+        public StandingsService(IStandingsRepository _standingsRepository, ITeamRepository _teamRepository, IGameRepository _gameRepository)
         {
             standingsRepository = _standingsRepository;
             teamRepository = _teamRepository;
+            gameRepository = _gameRepository;
         }
 
         public IStandingsViewModel Create(string name, int startYear, int endYear, int startDay, int endDay, string description, string division, IList<ITeamViewModel> teamsToInclude)
@@ -48,6 +51,27 @@ namespace JodyCore2.Service
             {
                 return StandingsMapper.StandingsToStandingsViewModel(standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(guid, context)).FirstOrDefault());
             }            
+        }
+
+        //TODO Need a process method
+        public IStandingsViewModel ProcessGames(Guid standingsIdentifier, IList<Guid> gamesToProcess)
+        {
+            using (var context = new JodyContext())
+            {
+                var gameDtos = gameRepository.GetAll(context).Where(g => gamesToProcess.Contains(g.Identifier) && !g.Processed);
+                var standings = standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(standingsIdentifier, context)).FirstOrDefault();
+                
+                
+
+                gameDtos.ToList().ForEach(g =>
+                {
+                    standings.DefaultProcessGame(g);
+                });
+
+                context.SaveChanges();
+
+                return StandingsMapper.StandingsToStandingsViewModel(standings);
+            }
         }
     }
 }

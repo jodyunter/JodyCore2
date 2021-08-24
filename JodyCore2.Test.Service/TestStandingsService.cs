@@ -14,5 +14,17 @@ namespace JodyCore2.Test.Service
         {
             Assert.Fail();
         }
+
+        [Test]
+        public void ShouldProcessGames()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void GetByIdentifier()
+        {
+            Assert.Fail();
+        }
     }
 }
