@@ -54,6 +54,8 @@ namespace JodyCore2.ConsoleApp
 
             var standings = standingsService.GetByIdentifier(a.Identifier);
 
+            Console.WriteLine(StandingsRecordView.HeaderString());
+
             standings.Records.ToList().ForEach(r =>
             {
                 Console.WriteLine(StandingsRecordView.RecordView(r));
