@@ -23,7 +23,7 @@ namespace JodyCore2.Test.Service
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
             }
-            gameService = new GameService(new TeamRepository(), new GameRepository());
+            gameService = new GameService(new TeamRepository(), new GameRepository(), new StandingsRepository());
         }
 
         [Test]

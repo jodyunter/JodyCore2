@@ -36,10 +36,11 @@ namespace JodyCore2.ConsoleApp
             var teams = teamService.GetAll().ToList();
 
             var scheduledGames = schedulingService.CreateScheduleGames(1, 1, teams.Select(t => t.Identifier).ToList(), 1, true);
+            var a = standingsService.Create("First", 1, 1, 1, 200, "Test Me Out", "Permier", teams);
 
             scheduledGames.ToList().ForEach(g =>
             {
-                gameService.Create(g.Year, g.Day, g.Home, g.Away);
+                standingsService.CreateStandingsGame(a.Identifier, g.Year, g.Day, g.Home, g.Away);
             });
 
             for (int i = 0; i < 10; i++)
@@ -47,15 +48,13 @@ namespace JodyCore2.ConsoleApp
                 gameService.PlayGamesOnDay(1, i + 1);
             }
 
-            gameService.GetGames(1, 1, 9).OrderBy(g => g.Day).ToList().ForEach(g =>
+            standingsService.GetStandingsGames(a.Identifier, 1, 1, 9).OrderBy(g => g.Day).ToList().ForEach(g =>
             {
                 Console.WriteLine(GameView.GetGameSummaryView(g));
             });
+                       
 
-            
-            var a = standingsService.Create("First", 1, 1, 1, 200, "Test Me Out", "Permier", teams);
-
-            standingsService.ProcessGames(a.Identifier, gameService.GetGames(1, 1, 100).Select(g => g.Identifier).ToList());
+            standingsService.ProcessGames(a.Identifier);
 
             
             var standings = standingsService.Sort(a.Identifier);

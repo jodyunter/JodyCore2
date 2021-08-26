@@ -22,7 +22,7 @@ namespace JodyCore2.ConsoleApp
             var standingsRepository = new StandingsRepository();
 
             TeamService = new TeamService(teamRepository, gameRepository);
-            GameService = new GameService(teamRepository, gameRepository);
+            GameService = new GameService(teamRepository, gameRepository, standingsRepository);
             SchedulingService = new SchedulingService();
             StandingsService = new StandingsService(standingsRepository, teamRepository, gameRepository);
         }

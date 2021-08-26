@@ -38,5 +38,6 @@ namespace JodyCore2.Service.ViewModels
             Division = division;
             Records = records;
         }
+
     }
 }

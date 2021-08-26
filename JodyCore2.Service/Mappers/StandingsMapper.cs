@@ -23,5 +23,6 @@ namespace JodyCore2.Service.Mappers
                 standings.Division,
                 records);
         }
+
     }
 }

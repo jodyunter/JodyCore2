@@ -16,25 +16,27 @@ namespace JodyCore2.Service
     {
         private readonly ITeamRepository teamRepository;
         private readonly IGameRepository gameRepository;
+        private readonly IStandingsRepository standingsRepository;
 
-        public GameService(ITeamRepository _teamRepository, IGameRepository _gameRepository)
+        public GameService(ITeamRepository _teamRepository, IGameRepository _gameRepository, IStandingsRepository _standingsRepository)
         {
             teamRepository = _teamRepository;
             gameRepository = _gameRepository;
+            standingsRepository = _standingsRepository;
         }
 
         //need to do checks like, if teams play on day        
         //todo need to allow mulitple new game creation from schedule games
-        public IGameSummaryViewModel Create(int year, int day, Guid homeId, Guid awayid)
+        public IGameSummaryViewModel Create(int year, int day, Guid homeId, Guid awayId)
         {
             using (var context = new JodyContext())
             {
                 var homeTeam = teamRepository.GetByIdentifier(homeId, context).FirstOrDefault();
-                var awayTeam = teamRepository.GetByIdentifier(awayid, context).FirstOrDefault();
+                var awayTeam = teamRepository.GetByIdentifier(awayId, context).FirstOrDefault();
                                 
                 if (homeTeam == null || awayTeam == null)
                 {
-                    throw new ApplicationException(string.Format("Home or Away Team Does not exist. Home identifier is {0}.  Away Identifier is {1}", homeId, awayid));
+                    throw new ApplicationException(string.Format("Home or Away Team Does not exist. Home identifier is {0}.  Away Identifier is {1}", homeId, awayId));
                 }
                 
                 var game = new GameDto(Guid.NewGuid(), year, day, homeTeam, awayTeam, 0, 0, false, false, true);
@@ -45,7 +47,7 @@ namespace JodyCore2.Service
                 return GameMapper.GameToGameSummaryViewModel(game);
             }
                 
-        }        
+        }
 
         public IList<IGameSummaryViewModel> GetGames(int year, int firstDay, int lastDay)
         {
