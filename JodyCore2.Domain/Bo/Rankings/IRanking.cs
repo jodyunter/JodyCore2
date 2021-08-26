@@ -13,5 +13,7 @@ namespace JodyCore2.Domain.Bo.Rankings
         int Rank { get; }
         IRankingGroup Group { get; }
 
+        void SetRank(int rank);
+
     }
 }

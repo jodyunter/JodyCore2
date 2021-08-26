@@ -13,7 +13,7 @@ namespace JodyCore2.Test.Domain.Bo.Standings
         [Test]
         public void ShouldGetGamesPlayed()
         {
-            var record = new StandingsRecord(Guid.NewGuid(), null, null, 1, "None", "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
+            var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
 
             Assert.AreEqual(71, record.GamesPlayed);
         }
@@ -21,7 +21,7 @@ namespace JodyCore2.Test.Domain.Bo.Standings
         [Test]
         public void ShouldGetWins()
         {
-            var record = new StandingsRecord(Guid.NewGuid(), null, null, 1, "None", "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
+            var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
 
             Assert.AreEqual(6, record.Wins);
         }
@@ -29,7 +29,7 @@ namespace JodyCore2.Test.Domain.Bo.Standings
         [Test]
         public void ShouldGetLoses()
         {
-            var record = new StandingsRecord(Guid.NewGuid(), null, null, 1, "None", "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
+            var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
 
             Assert.AreEqual(60, record.Loses);
         }
@@ -48,7 +48,7 @@ namespace JodyCore2.Test.Domain.Bo.Standings
                     r.ShootoutLoses * 1000000;                
             }
 
-            var record = new StandingsRecord(Guid.NewGuid(), null, null, 1, "None", "None", 1, 2, 3, 4, 5, 6, 7, 25, 20, pointsMethod);
+            var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 4, 5, 6, 7, 25, 20, pointsMethod);
 
             Assert.AreEqual(6543217, record.Points);
         }

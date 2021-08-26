@@ -11,8 +11,6 @@ namespace JodyCore2.Domain.Bo.Standings
         public Guid Identifier { get; set; }
         public virtual IStandings ParentStandings { get; set; }
         public virtual ITeam Team { get; set; }
-        public int Rank { get; set; }
-        public string Division { get; set; }
         public string Name { get; set; }
         public int Wins { get { return RegulationWins + OverTimeWins + ShootOutWins; } }
         public int RegulationWins { get; set; }
@@ -34,13 +32,11 @@ namespace JodyCore2.Domain.Bo.Standings
         {
             calculatePoints = this.DefaultGetPoints;
         }
-        public StandingsRecord(Guid identifier, IStandings standings, ITeam team, int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
+        public StandingsRecord(Guid identifier, IStandings standings, ITeam team, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
         {
             Identifier = identifier;
             ParentStandings = standings;
             Team = team;
-            Rank = rank;
-            Division = division;
             Name = name;
             RegulationWins = regulationWins;
             OverTimeWins = overTimeWins;
@@ -54,13 +50,11 @@ namespace JodyCore2.Domain.Bo.Standings
             calculatePoints = points;
         }
 
-        public StandingsRecord(Guid identifier, IStandings standings, ITeam team, int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst)
+        public StandingsRecord(Guid identifier, IStandings standings, ITeam team, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst)
         {
             Identifier = identifier;
             ParentStandings = standings;
             Team = team;
-            Rank = rank;
-            Division = division;
             Name = name;
             RegulationWins = regulationWins;
             OverTimeWins = overTimeWins;

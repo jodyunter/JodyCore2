@@ -11,8 +11,6 @@ namespace JodyCore2.Domain.Bo.Standings
         Guid Identifier { get; set; }
         IStandings ParentStandings { get; set; }
         ITeam Team { get; set; }
-        int Rank { get; set; }
-        string Division { get; set; }
         string Name { get; set; }
         int Wins { get; }
         int RegulationWins { get; set; }

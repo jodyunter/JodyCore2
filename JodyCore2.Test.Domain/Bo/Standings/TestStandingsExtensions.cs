@@ -14,7 +14,7 @@ namespace JodyCore2.Test.Domain.Bo.Standings
         [Test]
         public void ShouldUseDefaultGetPoints()
         {
-            var record = new StandingsRecord(Guid.NewGuid(), null, null, 1, "None", "None", 1, 2, 3, 4, 5, 6, 7, 25, 20);
+            var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 4, 5, 6, 7, 25, 20);
             Assert.AreEqual(19, record.Points);
         }
 

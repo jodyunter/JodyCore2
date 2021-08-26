@@ -22,5 +22,15 @@ namespace JodyCore2.Domain.Bo.Rankings
             Name = name;
             Rankings = rankings;
         }
+
+        public IRanking GetRankingByTeam(ITeam team)
+        {
+            return Rankings.Where(r => r.Team.Identifier == team.Identifier).First();
+        }
+
+        public void SetRank(ITeam team, int rank)
+        {
+            Rankings.Where(r => r.Team.Identifier == team.Identifier).First().SetRank(rank);
+        }
     }
 }

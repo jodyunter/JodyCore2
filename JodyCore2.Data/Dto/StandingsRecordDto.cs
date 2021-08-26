@@ -23,13 +23,11 @@ namespace JodyCore2.Data.Dto
 
         public StandingsRecordDto() { }
 
-        public StandingsRecordDto(Guid identifier, StandingsDto standings, TeamDto team, int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
+        public StandingsRecordDto(Guid identifier, StandingsDto standings, TeamDto team, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
         {
             Identifier = identifier;
             ParentStandings = standings;
             Team = team;
-            Rank = rank;
-            Division = division;
             Name = name;
             RegulationWins = regulationWins;
             OverTimeWins = overTimeWins;
@@ -43,13 +41,11 @@ namespace JodyCore2.Data.Dto
             calculatePoints = points;
         }
 
-        public StandingsRecordDto(Guid identifier, StandingsDto standings, TeamDto team, int rank, string division, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst)
+        public StandingsRecordDto(Guid identifier, StandingsDto standings, TeamDto team, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst)
         {
             Identifier = identifier;
             StandingsDto = standings;
             TeamDto = team;
-            Rank = rank;
-            Division = division;
             Name = name;
             RegulationWins = regulationWins;
             OverTimeWins = overTimeWins;
@@ -69,8 +65,6 @@ namespace JodyCore2.Data.Dto
                    Identifier.Equals(dto.Identifier) &&
                    ((ParentStandings == null && dto.ParentStandings == null) || EqualityComparer<IStandings>.Default.Equals(ParentStandings, dto.ParentStandings)) &&
                    EqualityComparer<ITeam>.Default.Equals(Team, dto.Team) &&
-                   Rank == dto.Rank &&
-                   Division == dto.Division &&
                    Name == dto.Name &&                   
                    RegulationWins == dto.RegulationWins &&
                    OverTimeWins == dto.OverTimeWins &&
@@ -89,8 +83,6 @@ namespace JodyCore2.Data.Dto
             hash.Add(Identifier);
             hash.Add(ParentStandings);
             hash.Add(Team);
-            hash.Add(Rank);
-            hash.Add(Division);
             hash.Add(Name);
             hash.Add(Wins);
             hash.Add(RegulationWins);
@@ -117,14 +109,12 @@ namespace JodyCore2.Data.Dto
 
         public override string ToString()
         {
-            var format = "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}";
+            var format = "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}";
 
             return string.Format(format,
                    Identifier,
                    ParentStandings,
                    Team,
-                   Rank,
-                   Division,
                    Name,
                    RegulationWins,
                    OverTimeWins,

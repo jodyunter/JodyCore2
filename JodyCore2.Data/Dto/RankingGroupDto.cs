@@ -28,5 +28,11 @@ namespace JodyCore2.Data.Dto
             Name = name;
             RankingsDto = rankings;
         }
+
+        public RankingGroupDto(Guid identifier, StandingsDto standings, string name, IList<RankingDto> rankings) : this(identifier, name, rankings)
+        {
+            StandingsDto = standings;
+        }
     }
 }
+

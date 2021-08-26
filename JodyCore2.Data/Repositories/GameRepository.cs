@@ -35,5 +35,9 @@ namespace JodyCore2.Data.Repositories
                         .Include(g => g.AwayDto);
         }
 
+        public IQueryable<GameDto> GetByStandings(Guid standingsIdentifier, JodyContext context)
+        {
+            return context.Games.Where(g => g.StandingsDto.Identifier == standingsIdentifier);
+        }
     }
 }

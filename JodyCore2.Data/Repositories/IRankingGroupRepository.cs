@@ -9,5 +9,6 @@ namespace JodyCore2.Data.Repositories
 {
     public interface IRankingGroupRepository:IBaseRepository<RankingGroupDto>
     {
+        IQueryable<RankingGroupDto> GetByStandings(Guid standingsIdentifier, JodyContext context);
     }
 }

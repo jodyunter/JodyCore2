@@ -10,9 +10,14 @@ namespace JodyCore2.Service.Mappers
 {
     public static class StandingsMapper
     {
-        public static IStandingsViewModel StandingsToStandingsViewModel(IStandings standings)
+        public static IStandingsViewModel StandingsToStandingsViewModel(IStandings standings, IStandingsRankingGroup rankingGroup)
         {
-            var records = standings.Records.Select(s => StandingsRecordMapper.StandingsRecordToStandingsRecordViewModel(s)).ToList();
+            var records = standings.Records.Select(s =>
+                StandingsRecordMapper.StandingsRecordToStandingsRecordViewModel(s,
+                rankingGroup.GetRankingByTeam(s.Team).Rank,
+                rankingGroup.Name)
+
+            ).ToList();
             return new StandingsViewModel(standings.Identifier,
                 standings.Name,
                 standings.StartYear,

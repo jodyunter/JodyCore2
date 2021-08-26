@@ -18,7 +18,7 @@ namespace JodyCore2.Test.Data
 
             return new StandingsRecordDto(Guid.NewGuid(),
                 standings,
-                team, 1, "Top Division", "My Name", 1, 2, 3, 4, 5, 6, 7, 8, 9);
+                team, "My Name", 1, 2, 3, 4, 5, 6, 7, 8, 9);
         }
 
         public override IList<StandingsRecordDto> SetupDeleteData(JodyContext context)

@@ -24,5 +24,10 @@ namespace JodyCore2.Domain.Bo.Rankings
             Rank = rank;
             Group = group;
         }
+
+        public void SetRank(int rank)
+        {
+            Rank = rank;
+        }
     }
 }

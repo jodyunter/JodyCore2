@@ -11,5 +11,8 @@ namespace JodyCore2.Domain.Bo.Rankings
         Guid Identifier { get; }
         string Name { get; }
         IList<IRanking> Rankings { get; }
+
+        IRanking GetRankingByTeam(ITeam team);
+        void SetRank(ITeam team, int rank);
     }
 }

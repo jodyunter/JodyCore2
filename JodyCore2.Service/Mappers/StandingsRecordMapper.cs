@@ -10,15 +10,15 @@ namespace JodyCore2.Service.Mappers
 {
     public static class StandingsRecordMapper
     {
-        public static IStandingsRecordViewModel StandingsRecordToStandingsRecordViewModel(IStandingsRecord record)
+        public static IStandingsRecordViewModel StandingsRecordToStandingsRecordViewModel(IStandingsRecord record, int rank, string division)
         {
             return new StandingsRecordViewModel(record.Identifier,
                 record.ParentStandings.Identifier,
                 record.ParentStandings.Name,
                 record.Team.Identifier,
                 record.Team.Name,
-                record.Rank,
-                record.Division,
+                rank,
+                division,
                 record.Name,
                 record.Wins,
                 record.RegulationWins,
