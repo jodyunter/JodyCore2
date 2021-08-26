@@ -45,7 +45,7 @@ namespace JodyCore2.Service
                 return GameMapper.GameToGameSummaryViewModel(game);
             }
                 
-        }
+        }        
 
         public IList<IGameSummaryViewModel> GetGames(int year, int firstDay, int lastDay)
         {
