@@ -13,7 +13,7 @@ namespace JodyCore2.ConsoleApp.Views
         {
             var result = StandingsRecordView.HeaderString();
 
-            model.Records.ToList().ForEach(r =>
+            model.Records.OrderBy(r => r.Rank).ToList().ForEach(r =>
             {
                 result += "\n" + StandingsRecordView.RecordView(r);
             });

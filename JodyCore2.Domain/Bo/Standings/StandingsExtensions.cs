@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace JodyCore2.Domain.Bo.Standings
 {
@@ -7,7 +8,7 @@ namespace JodyCore2.Domain.Bo.Standings
         public static int DefaultGetPoints(this IStandingsRecord record, IStandingsRecord thatRecord)
         {
             return record.Wins * 2 + record.Ties;
-        }
+        }    
      
         public static void DefaultProcessGame(this IStandings standings, IGame game)
         {

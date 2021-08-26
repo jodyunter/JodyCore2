@@ -1,4 +1,4 @@
-﻿using JodyCore2.Domain;
+﻿using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Service.ViewModels;
 using System;
 using System.Collections.Generic;

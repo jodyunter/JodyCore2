@@ -1,7 +1,6 @@
 ﻿using JodyCore2.Data;
 using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
-using JodyCore2.Domain;
 using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Service.Mappers;
 using JodyCore2.Service.ViewModels;
@@ -45,11 +44,34 @@ namespace JodyCore2.Service
             }
         }
 
+        public IStandingsViewModel Sort(Guid guid)
+        {
+            using (var context = new JodyContext())
+            {
+                var standings = standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(guid, context)).FirstOrDefault();
+                var sortedRecords = standings.Records.ToList().OrderByDescending(r => r.Points)
+                            .ThenBy(r => r.GamesPlayed)
+                            .ThenByDescending(r => r.Wins)
+                            .ThenByDescending(r => r.GoalDifference)
+                            .ThenByDescending(r => r.GoalsFor).ToList();
+
+                for (int i = 0; i < sortedRecords.Count(); i++)
+                {
+                    sortedRecords[i].Rank = i + 1;
+                }
+
+                context.SaveChanges();
+
+                return StandingsMapper.StandingsToStandingsViewModel(standings);
+            }
+        }
+
         public IStandingsViewModel GetByIdentifier(Guid guid)
         {
             using (var context = new JodyContext())
             {
-                return StandingsMapper.StandingsToStandingsViewModel(standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(guid, context)).FirstOrDefault());
+                var standings = standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(guid, context)).FirstOrDefault();
+                return StandingsMapper.StandingsToStandingsViewModel(standings);
             }            
         }
 

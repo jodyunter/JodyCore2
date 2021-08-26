@@ -24,6 +24,7 @@ namespace JodyCore2.Service
         }
 
         //need to do checks like, if teams play on day        
+        //todo need to allow mulitple new game creation from schedule games
         public IGameSummaryViewModel Create(int year, int day, Guid homeId, Guid awayid)
         {
             using (var context = new JodyContext())

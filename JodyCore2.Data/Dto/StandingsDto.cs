@@ -1,5 +1,4 @@
-﻿using JodyCore2.Domain;
-using JodyCore2.Domain.Bo.Standings;
+﻿using JodyCore2.Domain.Bo.Standings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
