@@ -1,22 +1,42 @@
 ﻿using JodyCore2.Domain;
 using JodyCore2.Domain.Bo;
+using JodyCore2.Domain.Bo.Standings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JodyCore2.Data.Dto
 {
-    public class GameDto:Game, IGame, IBaseDto
+    public class GameDto:Game, IGame, IStandingsGame, IBaseDto
     {
         public int Id { get; set; }
         public TeamDto HomeDto { get; set; }
         public TeamDto AwayDto { get; set; }
+        public StandingsDto StandingsDto { get; set; }
+
         [NotMapped]
         public override ITeam Home { get { return HomeDto; } set { HomeDto = (TeamDto)value; } }
         [NotMapped]
         public override ITeam Away { get { return AwayDto; } set { AwayDto = (TeamDto)value; } }
+        [NotMapped]
+        public IStandings Standings { get { return StandingsDto; } set { StandingsDto = (StandingsDto)value; } }
 
         public GameDto() { }
+
+        public GameDto(Guid identifier, StandingsDto standingsDto, int year, int day, TeamDto home, TeamDto away, int homeScore, int awayScore, bool complete, bool processed, bool canTie)
+        {
+            Identifier = identifier;
+            Day = day;
+            Year = year;
+            HomeDto = home;
+            AwayDto = away;
+            HomeScore = homeScore;
+            AwayScore = awayScore;
+            Complete = complete;
+            Processed = processed;
+            CanTie = canTie;
+            StandingsDto = standingsDto;
+        }
 
         public GameDto(Guid identifier, int year, int day, TeamDto home, TeamDto away, int homeScore, int awayScore, bool complete, bool processed, bool canTie)
         {            
@@ -30,6 +50,7 @@ namespace JodyCore2.Data.Dto
             Complete = complete;
             Processed = processed;
             CanTie = canTie;
+            StandingsDto = null;
         }
 
         public override bool Equals(object obj)
@@ -44,7 +65,8 @@ namespace JodyCore2.Data.Dto
                    AwayScore == dto.AwayScore &&
                    Complete == dto.Complete &&
                    Processed == dto.Processed &&
-                   CanTie == dto.CanTie;
+                   CanTie == dto.CanTie &&
+                   ((StandingsDto == null && dto.StandingsDto == null) || (StandingsDto.Identifier == dto.StandingsDto.Identifier));
         }
 
         public override int GetHashCode()

@@ -158,5 +158,11 @@ namespace JodyCore2.Test.Data
             }
         }
 
+        [Test]
+        public void ShouldTestWithStandingsDto()
+        {
+            Assert.Fail();
+        }
+
     }
 }

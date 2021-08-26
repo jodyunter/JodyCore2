@@ -72,7 +72,7 @@ namespace JodyCore2.Service
 
                 return games.Select(g => GameMapper.GameToGameSummaryViewModel(g)).ToList();
             }
-        }
+        }        
 
         public IGameSummaryViewModel Play(Guid gameId)
         {
