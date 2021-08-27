@@ -28,47 +28,48 @@ namespace JodyCore2.ConsoleApp
             var schedulingService = services.SchedulingService;
             var standingsService = services.StandingsService;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 21; i++)
             {
                 teamService.Create("Team " + i, 5);
             }
 
             var allTeams = teamService.GetAll().ToList();
-            var teams = allTeams.GetRange(3, 5);
+            var teams = allTeams.GetRange(10, 11);
+            var teams2 = allTeams.GetRange(0, 10);
 
             var scheduledGames1 = schedulingService.CreateScheduleGames(1, 1, teams.Select(t => t.Identifier).ToList(), 1, true);
             var lastDay = scheduledGames1.Max(d => d.Day);
-            var scheduledGames2 = schedulingService.CreateScheduleGames(1, lastDay + 1, teams.Select(t => t.Identifier).ToList(), 1, true);
+            var scheduledGames2 = schedulingService.CreateScheduleGames(1, 1, teams2.Select(t => t.Identifier).ToList(), 1, true);
 
-
-            var scheduledGames = new List<IScheduleGameViewModel>();
-            scheduledGames.AddRange(scheduledGames1);
-            scheduledGames.AddRange(scheduledGames2);
-
+            
             var a = standingsService.Create("First", 1, 1, 1, 200, "Test Me Out", "Permier", teams);
+            var b = standingsService.Create("Second", 1, 1, 1, 200, "Test Me Out", "Lower", teams2);
 
-            scheduledGames.ToList().ForEach(g =>
+            scheduledGames1.ToList().ForEach(g =>
             {
                 standingsService.CreateStandingsGame(a.Identifier, g.Year, g.Day, g.Home, g.Away);
             });
 
-            for (int i = 0; i < 20; i++)
+            scheduledGames2.ToList().ForEach(g =>
+            {
+                standingsService.CreateStandingsGame(b.Identifier, g.Year, g.Day, g.Home, g.Away);
+            });
+
+
+            for (int i = 0; i < 22; i++)
             {
                 gameService.PlayGamesOnDay(1, i + 1);
-            }
-
-            standingsService.GetStandingsGames(a.Identifier, 1, 1, 9).OrderBy(g => g.Day).ToList().ForEach(g =>
-            {
-                Console.WriteLine(GameView.GetGameSummaryView(g));
-            });
+            }            
                        
-
             standingsService.ProcessGames(a.Identifier);
+            standingsService.ProcessGames(b.Identifier);
 
-            
+
             var standings = standingsService.Sort(a.Identifier);
-            
+            var standings2 = standingsService.Sort(b.Identifier);
+
             Console.WriteLine(StandingsView.GetView(standings));
+            Console.WriteLine(StandingsView.GetView(standings2));
 
             Console.ReadLine();
         }
