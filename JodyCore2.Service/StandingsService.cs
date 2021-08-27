@@ -118,7 +118,7 @@ namespace JodyCore2.Service
         {
             using (var context = new JodyContext())
             {
-                return gameRepository.GetByYearAndDayRange(year, firstDay, lastDay, context).Where(g => g.Identifier == standingsIdentifier).Select(g => GameMapper.GameToGameSummaryViewModel(g)).ToList();
+                return gameRepository.GetByYearAndDayRange(year, firstDay, lastDay, context).Where(g => g.StandingsDto.Identifier == standingsIdentifier).Select(g => GameMapper.GameToGameSummaryViewModel(g)).ToList();
             }
         }
 

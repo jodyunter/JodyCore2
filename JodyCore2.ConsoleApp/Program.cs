@@ -33,9 +33,18 @@ namespace JodyCore2.ConsoleApp
                 teamService.Create("Team " + i, 5);
             }
 
-            var teams = teamService.GetAll().ToList();
+            var allTeams = teamService.GetAll().ToList();
+            var teams = allTeams.GetRange(3, 5);
 
-            var scheduledGames = schedulingService.CreateScheduleGames(1, 1, teams.Select(t => t.Identifier).ToList(), 1, true);
+            var scheduledGames1 = schedulingService.CreateScheduleGames(1, 1, teams.Select(t => t.Identifier).ToList(), 1, true);
+            var lastDay = scheduledGames1.Max(d => d.Day);
+            var scheduledGames2 = schedulingService.CreateScheduleGames(1, lastDay + 1, teams.Select(t => t.Identifier).ToList(), 1, true);
+
+
+            var scheduledGames = new List<IScheduleGameViewModel>();
+            scheduledGames.AddRange(scheduledGames1);
+            scheduledGames.AddRange(scheduledGames2);
+
             var a = standingsService.Create("First", 1, 1, 1, 200, "Test Me Out", "Permier", teams);
 
             scheduledGames.ToList().ForEach(g =>
@@ -43,7 +52,7 @@ namespace JodyCore2.ConsoleApp
                 standingsService.CreateStandingsGame(a.Identifier, g.Year, g.Day, g.Home, g.Away);
             });
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 gameService.PlayGamesOnDay(1, i + 1);
             }
