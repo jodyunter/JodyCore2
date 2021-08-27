@@ -28,6 +28,7 @@ namespace JodyCore2.Service
             rankingGroupRepository = _rankingGroupRepository;
         }
 
+        //todo eventually this will come from a configuration item that is already stored in the database
         public IStandingsViewModel Create(string name, int startYear, int endYear, int startDay, int endDay, string description, string division, IList<ITeamViewModel> teamsToInclude)
         {
             //todo CHECSK ON NAME ETC

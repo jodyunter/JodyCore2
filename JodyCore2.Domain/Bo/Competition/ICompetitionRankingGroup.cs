@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Domain.Bo.Playoff
+namespace JodyCore2.Domain.Bo.Competition
 {
-    public interface IPlayoffSeries
+    public interface ICompetitionRankingGroup
     {
-
     }
 }

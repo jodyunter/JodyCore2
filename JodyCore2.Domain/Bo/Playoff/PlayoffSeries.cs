@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo.Playoff
 {
-    class PlayoffSeries
+    public class PlayoffSeries
     {
     }
 }
