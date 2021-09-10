@@ -1,5 +1,5 @@
 ﻿using JodyCore2.Domain.Bo;
-using JodyCore2.Service.Util;
+using JodyCore2.Domain.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Domain.Bo.Games
 {
-    public class GameTests
+    public class TestGame
     {
         [Fact]
         public void ShouldPlayGame()

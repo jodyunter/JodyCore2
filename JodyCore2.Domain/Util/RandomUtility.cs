@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Service.Util
+namespace JodyCore2.Domain.Util
 {
     public static class RandomUtility
     {
