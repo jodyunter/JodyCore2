@@ -1,4 +1,4 @@
-﻿using JodyCore2.Domain.Bo.Competition;
+﻿using JodyCore2.Domain.Bo.Competitions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo.Standings
 {
-    public class Standings:Competition.Competition, IStandings, IBO
+    public class Standings: Competitions.Competition, IStandings, IBO
     {
         public string Division { get; set; }
         public virtual IList<IStandingsRecord> Records { get; set; }                

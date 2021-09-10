@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Domain.Bo.Competition
+namespace JodyCore2.Data.Repositories.Rankings
 {
-    public interface ICompetitionRankingGroup:IRankingGroup
+    public interface IRankingGroupRepository : IBaseRankingGroupRepository<RankingGroup>
     {
-        ICompetition Competition { get; }
     }
 }

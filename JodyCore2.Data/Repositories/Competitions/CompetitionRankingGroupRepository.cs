@@ -1,4 +1,6 @@
-﻿using JodyCore2.Domain.Bo.Competition;
+﻿using JodyCore2.Data.Repositories.Competitions;
+using JodyCore2.Data.Repositories.Rankings;
+using JodyCore2.Domain.Bo.Competitions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

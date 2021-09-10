@@ -1,5 +1,6 @@
 ﻿using JodyCore2.Data;
 using JodyCore2.Data.Repositories;
+using JodyCore2.Data.Repositories.Standing;
 using JodyCore2.Domain.Bo;
 using JodyCore2.Domain.Bo.Standings;
 using System;

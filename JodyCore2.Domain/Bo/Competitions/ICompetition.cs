@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Domain.Bo.Competition
+namespace JodyCore2.Domain.Bo.Competitions
 {
     //todo:  Generalize the playoff and standings as competitions
     //todo:  Rankings could be moved higher up as a competition ranking.
     public interface ICompetition
-    {        
+    {
         Guid Identifier { get; }
         string Name { get; }
         int StartYear { get; }

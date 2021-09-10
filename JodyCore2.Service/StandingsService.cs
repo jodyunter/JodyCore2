@@ -1,5 +1,4 @@
 ﻿using JodyCore2.Data;
-using JodyCore2.Data.Repositories;
 using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Service.Mappers;
 using JodyCore2.Service.ViewModels;
@@ -10,7 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Threading.Tasks;
 using JodyCore2.Domain.Bo.Rankings;
-using JodyCore2.Domain.Bo.Competition;
+using JodyCore2.Domain.Bo.Competitions;
+using JodyCore2.Data.Repositories.Teams;
+using JodyCore2.Data.Repositories.Competitions;
+using JodyCore2.Data.Repositories.Standing;
 
 namespace JodyCore2.Service
 {

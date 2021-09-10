@@ -5,8 +5,8 @@ using System;
 using JodyCore2.Domain.Bo;
 using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Domain.Bo.Rankings;
-using JodyCore2.Domain.Bo.Competition;
 using System.Collections.Generic;
+using JodyCore2.Domain.Bo.Competitions;
 
 namespace JodyCore2.Data
 {

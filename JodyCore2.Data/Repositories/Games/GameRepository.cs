@@ -1,9 +1,6 @@
 ﻿using JodyCore2.Domain.Bo;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
-namespace JodyCore2.Data.Repositories
+namespace JodyCore2.Data.Repositories.Games
 {
     public class GameRepository : BaseGameRepository<Game>, IGameRepository
     {

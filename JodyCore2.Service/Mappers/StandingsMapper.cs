@@ -1,4 +1,4 @@
-﻿using JodyCore2.Domain.Bo.Competition;
+﻿using JodyCore2.Domain.Bo.Competitions;
 using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Service.ViewModels;
 using System;

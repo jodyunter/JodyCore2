@@ -1,4 +1,9 @@
 ﻿using JodyCore2.Data.Repositories;
+using JodyCore2.Data.Repositories.Competitions;
+using JodyCore2.Data.Repositories.Games;
+using JodyCore2.Data.Repositories.Rankings;
+using JodyCore2.Data.Repositories.Standing;
+using JodyCore2.Data.Repositories.Teams;
 using JodyCore2.Service;
 using System;
 using System.Collections.Generic;

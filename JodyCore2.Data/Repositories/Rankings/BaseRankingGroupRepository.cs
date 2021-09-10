@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Data.Repositories
+namespace JodyCore2.Data.Repositories.Rankings
 {
-    public interface IBaseRankingGroupRepository<T>:IBaseRepository<T> where T : class, IRankingGroup, IBO
+    public class BaseRankingGroupRepository<T> : BaseRepository<T>, IBaseRankingGroupRepository<T> where T : class, IRankingGroup, IBO
     {
     }
 }

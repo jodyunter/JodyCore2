@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Data.Repositories
+namespace JodyCore2.Data.Repositories.Standing
 {
-    public class StandingsRecordRepository:BaseRepository<StandingsRecord>, IStandingsRecordRepository
+    public class StandingsRecordRepository : BaseRepository<StandingsRecord>, IStandingsRecordRepository
     {
         public override IQueryable<StandingsRecord> WithAllObjects(IQueryable<StandingsRecord> query)
         {

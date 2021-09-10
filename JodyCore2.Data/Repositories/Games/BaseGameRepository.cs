@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Data.Repositories
+namespace JodyCore2.Data.Repositories.Games
 {
-    public class BaseGameRepository<T>:BaseRepository<T>, IBaseGameRepository<T> where T : class, IGame, IBO
+    public class BaseGameRepository<T> : BaseRepository<T>, IBaseGameRepository<T> where T : class, IGame, IBO
     {
         public IQueryable<T> GetByYearAndDayRange(int year, int firstDay, int? lastDay, JodyContext context)
         {

@@ -1,7 +1,7 @@
 ﻿using JodyCore2.Domain.Bo;
 using System.Linq;
 
-namespace JodyCore2.Data.Repositories
+namespace JodyCore2.Data.Repositories.Teams
 {
     public class TeamRepository : BaseRepository<Team>, ITeamRepository
     {
