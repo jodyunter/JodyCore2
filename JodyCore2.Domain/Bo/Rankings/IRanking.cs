@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo.Rankings
-{    
+{
     public interface IRanking
     {
         Guid Identifier { get;  }

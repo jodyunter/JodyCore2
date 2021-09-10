@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace JodyCore2.Test.Xunit.Data.Repositories
+namespace JodyCore2.Test.Xunit.Data.Repositories.Standing
 {
     public class TestStandingsRepository
     {

@@ -16,5 +16,18 @@ namespace JodyCore2.Domain.Bo
             Name = name;
             Skill = skill;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Team team &&
+                   Identifier.Equals(team.Identifier) &&
+                   Name == team.Name &&
+                   Skill == team.Skill;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Identifier, Name, Skill);
+        }
     }
 }

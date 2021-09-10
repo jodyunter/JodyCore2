@@ -1,16 +1,16 @@
 ﻿using JodyCore2.Data;
 using JodyCore2.Data.Repositories;
 using JodyCore2.Domain.Bo;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
-namespace JodyCore2.Test.Data
+namespace JodyCore2.Test.Xunit.Data.Repositories
 {
-    public abstract class TestBaseRepository<T> where T : class, IBO
+    public abstract class TestBaseRepository<T> where T: class, IBO
     {
         public abstract IBaseRepository<T> SetupRepository();
         public abstract T SetupCreateData(JodyContext context);
@@ -18,11 +18,9 @@ namespace JodyCore2.Test.Data
         public abstract IList<T> SetupGetAllData(JodyContext context);
         public abstract IList<T> SetupDeleteData(JodyContext context);
 
-
         public IBaseRepository<T> Repository { get; set; }
 
-        [SetUp]
-        public void Setup()
+        protected TestBaseRepository()
         {
             Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Integration");
             Environment.SetEnvironmentVariable("CONNECTION_STRING", "DefaultConnectionString");
@@ -36,23 +34,23 @@ namespace JodyCore2.Test.Data
             }
         }
 
-        [TearDown]
-        public void TearDown()
+        protected void Dispose()
         {
+            // Do "global" teardown here; Called after every test method.
             using (var context = new JodyContext())
             {
                 context.Database.EnsureDeleted();
             }
         }
 
-        [Test]
+        [Fact]
         public void ShouldCreate()
         {
             T createdData = null;
 
             using (var context = new JodyContext())
             {
-                createdData = SetupCreateData(context);                
+                createdData = SetupCreateData(context);
 
                 context.SaveChanges();
             }
@@ -67,12 +65,12 @@ namespace JodyCore2.Test.Data
             using (var context = new JodyContext())
             {
                 var compareData = Repository.WithAllObjects(Repository.GetByIdentifier(createdData.Identifier, context)).FirstOrDefault();
-                Assert.AreEqual(createdData, compareData);
+                Assert.Equal(createdData, compareData);
             }
 
         }
 
-        [Test]
+        [Fact]
         public void ShouldUpdate()
         {
             T createdData = null;
@@ -97,12 +95,12 @@ namespace JodyCore2.Test.Data
             using (var context = new JodyContext())
             {
                 var currentData = Repository.WithAllObjects(Repository.GetByIdentifier(createdData.Identifier, context)).FirstOrDefault();
-                Assert.AreNotEqual(currentData, createdData);
-                Assert.AreEqual(currentData, updatedData);
+                Assert.NotEqual(currentData, createdData);
+                Assert.Equal(currentData, updatedData);
             }
         }
 
-        [Test]
+        [Fact]
         public void ShouldGetAll()
         {
             var setupData = new List<T>();
@@ -118,19 +116,19 @@ namespace JodyCore2.Test.Data
             {
                 var values = Repository.WithAllObjects(Repository.GetAll(context));
 
-                Assert.AreEqual(10, values.Count());
-                Assert.AreEqual(context.Set<T>().Count(), values.Count());
+                Assert.StrictEqual(10, values.Count());
+                Assert.StrictEqual(context.Set<T>().Count(), values.Count());
 
                 setupData.ForEach(d =>
                 {
-                    Assert.IsTrue(values.Contains(d));
+                    Assert.True(values.Contains(d));
                 });
 
             }
 
         }
 
-        [Test]
+        [Fact]
         public void ShouldDelete()
         {
             IList<T> createdData = null;
@@ -143,7 +141,7 @@ namespace JodyCore2.Test.Data
             }
 
             using (var context = new JodyContext())
-            {                
+            {
 
                 Repository.Delete(createdData[0], context);
 
@@ -154,10 +152,11 @@ namespace JodyCore2.Test.Data
             {
                 var currentData = Repository.GetAll(context);
 
-                Assert.AreEqual(createdData.Count - 1, currentData.Count());
+                Assert.StrictEqual(createdData.Count - 1, currentData.Count());
 
                 Assert.Null(currentData.Where(g => g.Identifier == createdData[0].Identifier).FirstOrDefault());
             }
         }
     }
 }
+

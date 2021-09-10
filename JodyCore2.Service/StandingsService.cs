@@ -140,7 +140,7 @@ namespace JodyCore2.Service
 
                 var standings = standingsRepository.GetByIdentifier(standingsIdentifier, context).FirstOrDefault();
 
-                var game = new CompetitionGame(Guid.NewGuid(), standings, year, day, homeTeam, awayTeam, 0, 0, false, false, true);
+                var game = new CompetitionGame(Guid.NewGuid(), standings, day, year, homeTeam, awayTeam, 0, 0, false, false, true);
 
                 gameRepository.Create(game, context);
 

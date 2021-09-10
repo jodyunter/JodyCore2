@@ -1,5 +1,4 @@
-﻿using JodyCore2.Domain;
-using JodyCore2.Domain.Bo;
+﻿using JodyCore2.Domain.Bo;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

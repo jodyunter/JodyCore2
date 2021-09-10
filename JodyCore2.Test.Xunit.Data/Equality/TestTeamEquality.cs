@@ -42,7 +42,7 @@ namespace JodyCore2.Test.Xunit.Data.Equality
         }
         [Theory]
         [MemberData(nameof(GetDataForTeamTest))]        
-        public void TestTeamEqualityTest(Team team1, Team team2, bool expected)
+        public void TeamEqualityTest(Team team1, Team team2, bool expected)
         {
 
             var result = team1.Equals(team2);

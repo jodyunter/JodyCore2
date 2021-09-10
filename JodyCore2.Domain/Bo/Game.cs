@@ -32,6 +32,7 @@ namespace JodyCore2.Domain.Bo
             AwayScore = awayScore;
             Complete = complete;
             Processed = processed;
+            CanTie = canTie;
         }
 
         public void Play(Random r)
@@ -59,6 +60,37 @@ namespace JodyCore2.Domain.Bo
         public void Process()
         {
             Processed = true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Game game &&
+                   Identifier.Equals(game.Identifier) &&
+                   Day == game.Day &&
+                   Year == game.Year &&
+                   EqualityComparer<ITeam>.Default.Equals(Home, game.Home) &&
+                   EqualityComparer<ITeam>.Default.Equals(Away, game.Away) &&
+                   HomeScore == game.HomeScore &&
+                   AwayScore == game.AwayScore &&
+                   Complete == game.Complete &&
+                   Processed == game.Processed &&
+                   CanTie == game.CanTie;
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(Identifier);
+            hash.Add(Day);
+            hash.Add(Year);
+            hash.Add(Home);
+            hash.Add(Away);
+            hash.Add(HomeScore);
+            hash.Add(AwayScore);
+            hash.Add(Complete);
+            hash.Add(Processed);
+            hash.Add(CanTie);
+            return hash.ToHashCode();
         }
     }
 }

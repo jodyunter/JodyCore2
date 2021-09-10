@@ -67,5 +67,50 @@ namespace JodyCore2.Domain.Bo.Standings
             GoalsAgainst = goalsAgainst;
             calculatePoints = this.DefaultGetPoints;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is StandingsRecord record &&
+                   Identifier.Equals(record.Identifier) &&
+                   ParentStandings.Identifier.Equals(record.ParentStandings.Identifier) &&
+                   Team.Identifier.Equals(record.Team.Identifier) &&
+                   Name == record.Name &&
+                   Wins == record.Wins &&
+                   RegulationWins == record.RegulationWins &&
+                   OverTimeWins == record.OverTimeWins &&
+                   ShootOutWins == record.ShootOutWins &&
+                   Loses == record.Loses &&
+                   RegulationLoses == record.RegulationLoses &&
+                   OverTimeLoses == record.OverTimeLoses &&
+                   ShootoutLoses == record.ShootoutLoses &&
+                   Ties == record.Ties &&
+                   GoalsFor == record.GoalsFor &&
+                   GoalsAgainst == record.GoalsAgainst;                                     
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(Identifier);
+            hash.Add(ParentStandings);
+            hash.Add(Team);
+            hash.Add(Name);
+            hash.Add(Wins);
+            hash.Add(RegulationWins);
+            hash.Add(OverTimeWins);
+            hash.Add(ShootOutWins);
+            hash.Add(Loses);
+            hash.Add(RegulationLoses);
+            hash.Add(OverTimeLoses);
+            hash.Add(ShootoutLoses);
+            hash.Add(Ties);
+            hash.Add(GoalsFor);
+            hash.Add(GoalsAgainst);
+            hash.Add(Points);
+            hash.Add(calculatePoints);
+            hash.Add(GoalDifference);
+            hash.Add(GamesPlayed);
+            return hash.ToHashCode();
+        }
     }
 }

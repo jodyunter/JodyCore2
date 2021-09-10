@@ -166,7 +166,7 @@ namespace JodyCore2.Test.Xunit.Data.Equality
         }
         [Theory]
         [MemberData(nameof(GetDataForGameTest))]        
-        public void TestGameEqualityTest(string testDescription, Game game1, Game game2, bool expected)
+        public void GameEqualityTest(string testDescription, Game game1, Game game2, bool expected)
         {
 
             var result = game1.Equals(game2);

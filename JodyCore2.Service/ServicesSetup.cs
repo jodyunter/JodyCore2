@@ -1,5 +1,4 @@
-﻿using JodyCore2.Data.Repositories;
-using JodyCore2.Data.Repositories.Games;
+﻿using JodyCore2.Data.Repositories.Games;
 using JodyCore2.Data.Repositories.Teams;
 using Microsoft.Extensions.DependencyInjection;
 using System;

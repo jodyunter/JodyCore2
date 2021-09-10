@@ -1,5 +1,4 @@
-﻿using JodyCore2.Domain;
-using JodyCore2.Domain.Bo;
+﻿using JodyCore2.Domain.Bo;
 using System.Linq;
 
 namespace JodyCore2.Data.Repositories.Games

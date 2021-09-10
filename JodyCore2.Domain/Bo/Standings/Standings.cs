@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo.Standings
 {
-    public class Standings: Competitions.Competition, IStandings, IBO
+    public class Standings: Competition, IStandings, IBO
     {
         public string Division { get; set; }
         public virtual IList<IStandingsRecord> Records { get; set; }                

@@ -83,7 +83,7 @@ namespace JodyCore2.Test.Xunit.Data.Equality
         }
         [Theory]
         [MemberData(nameof(GetDataForStandingsTest))]        
-        public void TestGameEquality(string testDescription, Standings rec1, Standings rec2, bool expected)
+        public void StandingsEqualityTest(string testDescription, Standings rec1, Standings rec2, bool expected)
         {
 
             var result = rec1.Equals(rec2);

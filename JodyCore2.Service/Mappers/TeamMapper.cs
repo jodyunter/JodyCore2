@@ -1,4 +1,4 @@
-﻿using JodyCore2.Domain;
+﻿using JodyCore2.Domain.Bo;
 using JodyCore2.Service.ViewModels;
 
 namespace JodyCore2.Service.Mappers
