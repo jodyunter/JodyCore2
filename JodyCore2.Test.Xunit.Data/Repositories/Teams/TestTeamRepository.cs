@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Test.Xunit.Data.Repositories
+namespace JodyCore2.Test.Xunit.Data.Repositories.Teams
 {
-    public class TestTeamRepository:TestBaseRepository<Team>
+    public class TestTeamRepository : TestBaseRepository<Team>
     {
         ITeamRepository teamRepository;
         IGameRepository gameRepository;

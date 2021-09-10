@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Service", "JodyCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Domain", "JodyCore2.Test.Domain\JodyCore2.Test.Domain.csproj", "{9C276BD4-CA2A-4947-91CF-98CB64DB38A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Data", "JodyCore2.Test.Data\JodyCore2.Test.Data.csproj", "{A63D1C89-AA18-4096-9981-B6ADB1F33BD9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Service", "JodyCore2.Test.Service\JodyCore2.Test.Service.csproj", "{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Api", "JodyCore2.Api\JodyCore2.Api.csproj", "{A62BB3C6-20FA-4732-B573-F4BEDD2E1F99}"
@@ -33,7 +31,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Xunit.Domain", "JodyCore2.Test.Xunit.Domain\JodyCore2.Test.Xunit.Domain.csproj", "{00350E1E-7741-4AEC-84C8-0F42E629DBCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JodyCore2.Test.Xunit.Data", "JodyCore2.Test.Xunit.Data\JodyCore2.Test.Xunit.Data.csproj", "{EDA87469-7475-412A-AE19-5135E4898E82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JodyCore2.Test.Xunit.Data", "JodyCore2.Test.Xunit.Data\JodyCore2.Test.Xunit.Data.csproj", "{EDA87469-7475-412A-AE19-5135E4898E82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +59,6 @@ Global
 		{9C276BD4-CA2A-4947-91CF-98CB64DB38A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C276BD4-CA2A-4947-91CF-98CB64DB38A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C276BD4-CA2A-4947-91CF-98CB64DB38A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A63D1C89-AA18-4096-9981-B6ADB1F33BD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A63D1C89-AA18-4096-9981-B6ADB1F33BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A63D1C89-AA18-4096-9981-B6ADB1F33BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A63D1C89-AA18-4096-9981-B6ADB1F33BD9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5039AFEC-0C72-4AE5-A4C7-EC7641A05937}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,43 +1,43 @@
 ﻿using JodyCore2.Domain.Bo.Standings;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
-namespace JodyCore2.Test.Domain.Bo.Standings
+namespace JodyCore2.Test.Xunit.Domain.Bo.Standing
 {
     public class TestStandingsRecord
     {
-        [Test]
+        [Fact]
         public void ShouldGetGamesPlayed()
         {
             var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
 
-            Assert.AreEqual(71, record.GamesPlayed);
+            Assert.StrictEqual(71, record.GamesPlayed);
         }
 
-        [Test]
+        [Fact]
         public void ShouldGetWins()
         {
             var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
 
-            Assert.AreEqual(6, record.Wins);
+            Assert.StrictEqual(6, record.Wins);
         }
 
-        [Test]
+        [Fact]
         public void ShouldGetLoses()
         {
             var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 10, 20, 30, 5, 25, 20, null);
 
-            Assert.AreEqual(60, record.Loses);
+            Assert.StrictEqual(60, record.Loses);
         }
 
-        [Test]
+        [Fact]
         public void ShouldCalculatePoints()
         {
-            int pointsMethod (IStandingsRecord r)
+            int pointsMethod(IStandingsRecord r)
             {
                 return r.Ties +
                     r.RegulationWins * 10 +
@@ -45,12 +45,12 @@ namespace JodyCore2.Test.Domain.Bo.Standings
                     r.ShootOutWins * 1000 +
                     r.RegulationLoses * 10000 +
                     r.OverTimeLoses * 100000 +
-                    r.ShootoutLoses * 1000000;                
+                    r.ShootoutLoses * 1000000;
             }
 
             var record = new StandingsRecord(Guid.NewGuid(), null, null, "None", 1, 2, 3, 4, 5, 6, 7, 25, 20, pointsMethod);
 
-            Assert.AreEqual(6543217, record.Points);
+            Assert.StrictEqual(6543217, record.Points);
         }
     }
 }

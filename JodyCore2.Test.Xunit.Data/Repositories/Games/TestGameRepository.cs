@@ -3,7 +3,7 @@ using JodyCore2.Data.Repositories;
 using JodyCore2.Data.Repositories.Games;
 using JodyCore2.Data.Repositories.Teams;
 using JodyCore2.Domain.Bo;
-using JodyCore2.Test.Xunit.Data.Repositories;
+using JodyCore2.Test.Xunit.Data.Repositories.Teams;
 using System;
 using System.Collections.Generic;
 using System.Linq;

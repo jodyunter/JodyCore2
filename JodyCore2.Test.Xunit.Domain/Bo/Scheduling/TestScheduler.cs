@@ -6,7 +6,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 {
-    public class SchedulerTests
+    public class TestScheduler
     {
         [Theory]
         [InlineData(1, 10, 2)]
