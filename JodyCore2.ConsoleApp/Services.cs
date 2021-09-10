@@ -22,10 +22,13 @@ namespace JodyCore2.ConsoleApp
             var standingsRepository = new StandingsRepository();
             var rankingGroupRepository = new RankingGroupRepository();
 
+            var competitionGameRepository = new CompetitionGameRepository();
+            var competitionRankingGroupRepository = new CompetitionRankingGroupRepository();
+
             TeamService = new TeamService(teamRepository, gameRepository);
             GameService = new GameService(teamRepository, gameRepository, standingsRepository);
             SchedulingService = new SchedulingService();
-            StandingsService = new StandingsService(standingsRepository, teamRepository, gameRepository, rankingGroupRepository);
+            StandingsService = new StandingsService(standingsRepository, teamRepository, competitionGameRepository, competitionRankingGroupRepository);
         }
         
     }

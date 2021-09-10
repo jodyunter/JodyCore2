@@ -1,5 +1,4 @@
 ﻿using JodyCore2.Data;
-using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
 using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Service.Mappers;
@@ -10,6 +9,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Threading.Tasks;
+using JodyCore2.Domain.Bo.Rankings;
+using JodyCore2.Domain.Bo.Competition;
 
 namespace JodyCore2.Service
 {
@@ -17,10 +18,10 @@ namespace JodyCore2.Service
     {
         private readonly IStandingsRepository standingsRepository;
         private readonly ITeamRepository teamRepository;
-        private readonly IGameRepository gameRepository;
-        private readonly IRankingGroupRepository rankingGroupRepository;
+        private readonly ICompetitionGameRepository gameRepository;
+        private readonly ICompetitionRankingGroupRepository rankingGroupRepository;
 
-        public StandingsService(IStandingsRepository _standingsRepository, ITeamRepository _teamRepository, IGameRepository _gameRepository, IRankingGroupRepository _rankingGroupRepository)
+        public StandingsService(IStandingsRepository _standingsRepository, ITeamRepository _teamRepository, ICompetitionGameRepository _gameRepository, ICompetitionRankingGroupRepository _rankingGroupRepository)
         {
             standingsRepository = _standingsRepository;
             teamRepository = _teamRepository;
@@ -34,19 +35,19 @@ namespace JodyCore2.Service
             //todo CHECSK ON NAME ETC
             using (var context = new JodyContext()) 
             {
-                var standings = new StandingsDto(Guid.NewGuid(), name, startYear, endYear, startDay, endDay, description, division, null);
+                var standings = new Standings(Guid.NewGuid(), name, startYear, endYear, startDay, endDay, description, division, null);
 
                 var teamDtoList = teamsToInclude.Select(t => teamRepository.GetByIdentifier(t.Identifier, context).FirstOrDefault()).ToList();
-                var standingsRecordList = teamDtoList.Select(ta => new StandingsRecordDto(Guid.NewGuid(), standings, ta, ta.Name, 0, 0, 0, 0, 0, 0, 0, 0, 0)).ToList();
+                var standingsRecordList = teamDtoList.Select(ta => new StandingsRecord(Guid.NewGuid(), standings, ta, ta.Name, 0, 0, 0, 0, 0, 0, 0, 0, 0)).ToList();
 
                 standings.Records = standingsRecordList.ToList<IStandingsRecord>();
 
                 context.Add(standings);
                 //create the default rankings
-                var rankings = new RankingGroupDto(Guid.NewGuid(), standings, division, new List<RankingDto>());
+                var rankings = new CompetitionRankingGroup(Guid.NewGuid(), standings, division, new List<ICompetitionRanking>());
                 teamDtoList.ForEach(team =>
                 {
-                    rankings.RankingsDto.Add(new RankingDto(Guid.NewGuid(), team, 1, rankings));
+                    rankings.Rankings.Add(new CompetitionRanking(Guid.NewGuid(), team, 1, rankings));
                 });
 
                 context.Add(rankings);
@@ -63,7 +64,7 @@ namespace JodyCore2.Service
             {
                 var standings = standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(guid, context)).FirstOrDefault();
                 //todo add a get by standings method
-                var rankingGroup = rankingGroupRepository.GetByStandings(standings.Identifier, context).FirstOrDefault();
+                var rankingGroup = rankingGroupRepository.GetByCompetition(standings.Identifier, context).FirstOrDefault();
 
                 var sortedRecords = standings.Records.ToList().OrderByDescending(r => r.Points)
                             .ThenBy(r => r.GamesPlayed)
@@ -88,7 +89,7 @@ namespace JodyCore2.Service
             using (var context = new JodyContext())
             {
                 var standings = standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(guid, context)).FirstOrDefault();
-                var rankingGroup = rankingGroupRepository.GetAll(context).Where(rg => rg.Standings.Identifier == standings.Identifier).FirstOrDefault();
+                var rankingGroup = rankingGroupRepository.GetAll(context).Where(rg => rg.Competition.Identifier == standings.Identifier).FirstOrDefault();
                 return StandingsMapper.StandingsToStandingsViewModel(standings, rankingGroup);
             }            
         }
@@ -100,17 +101,17 @@ namespace JodyCore2.Service
             {
                 var standings = standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(standingsIdentifier, context)).FirstOrDefault();
                 //todo make this simpler
-                var gameDtos = gameRepository.GetByStandings(standings.Identifier, context).Where(g => !g.Processed && g.Complete);
+                var gameDtos = gameRepository.GetByCompetition(standings.Identifier, context).Where(g => !g.Processed && g.Complete);
                 
                                
                 gameDtos.ToList().ForEach(g =>
                 {
-                    standings.DefaultProcessGame(g);
+                    standings.ProcessGame(g);
                 });
 
                 context.SaveChanges();
 
-                var rankingGroup = rankingGroupRepository.GetByStandings(standings.Identifier, context).FirstOrDefault();
+                var rankingGroup = rankingGroupRepository.GetByCompetition(standings.Identifier, context).FirstOrDefault();
 
                 return StandingsMapper.StandingsToStandingsViewModel(standings, rankingGroup);
             }
@@ -119,7 +120,7 @@ namespace JodyCore2.Service
         {
             using (var context = new JodyContext())
             {
-                return gameRepository.GetByYearAndDayRange(year, firstDay, lastDay, context).Where(g => g.StandingsDto.Identifier == standingsIdentifier).Select(g => GameMapper.GameToGameSummaryViewModel(g)).ToList();
+                return gameRepository.GetByYearAndDayRange(year, firstDay, lastDay, context).Where(g => g.Competition.Identifier == standingsIdentifier).Select(g => GameMapper.GameToGameSummaryViewModel(g)).ToList();
             }
         }
 
@@ -137,7 +138,7 @@ namespace JodyCore2.Service
 
                 var standings = standingsRepository.GetByIdentifier(standingsIdentifier, context).FirstOrDefault();
 
-                var game = new GameDto(Guid.NewGuid(), standings, year, day, homeTeam, awayTeam, 0, 0, false, false, true);
+                var game = new CompetitionGame(Guid.NewGuid(), standings, year, day, homeTeam, awayTeam, 0, 0, false, false, true);
 
                 gameRepository.Create(game, context);
 

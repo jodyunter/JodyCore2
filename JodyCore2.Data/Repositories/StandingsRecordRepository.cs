@@ -1,4 +1,4 @@
-﻿using JodyCore2.Data.Dto;
+﻿using JodyCore2.Domain.Bo.Standings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories
 {
-    public class StandingsRecordRepository:BaseRepository<StandingsRecordDto>, IStandingsRecordRepository
+    public class StandingsRecordRepository:BaseRepository<StandingsRecord>, IStandingsRecordRepository
     {
-        public override IQueryable<StandingsRecordDto> WithAllObjects(IQueryable<StandingsRecordDto> query)
+        public override IQueryable<StandingsRecord> WithAllObjects(IQueryable<StandingsRecord> query)
         {
-            return query.Include(s => s.TeamDto)
-                        .Include(s => s.StandingsDto);
+            return query.Include(s => s.Team)
+                        .Include(s => s.ParentStandings);
         }
     }
 }

@@ -10,12 +10,20 @@ namespace JodyCore2.Domain.Bo.Competition
     //todo:  Rankings could be moved higher up as a competition ranking.
     public interface ICompetition
     {        
-        Guid Identifier { get; set; }
-        string Name { get; set; }
-        int StartYear { get; set; }
-        int EndYear { get; set; }
-        int StartDay { get; set; }
-        int EndDay { get; set; }
-        string Description { get; set; }
+        Guid Identifier { get; }
+        string Name { get; }
+        int StartYear { get; }
+        int EndYear { get; }
+        int StartDay { get; }
+        int EndDay { get; }
+        string Description { get; }
+        CompetitionType CompetitionType { get; }
+        void ProcessGame(ICompetitionGame game);
+    }
+    public enum CompetitionType
+    {
+        Standings = 0,
+        Playoff = 1
+
     }
 }

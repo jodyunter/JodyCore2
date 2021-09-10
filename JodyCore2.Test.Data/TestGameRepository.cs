@@ -1,6 +1,6 @@
 ﻿using JodyCore2.Data;
-using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
+using JodyCore2.Domain.Bo;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,23 +10,23 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Data
 {
-    public class TestGameRepository:TestBaseRepository<GameDto>
+    public class TestGameRepository:TestBaseRepository<Game>
     {
         IGameRepository gameRepository;
         ITeamRepository teamRepository;
 
-        public override GameDto SetupCreateData(JodyContext context)
+        public override Game SetupCreateData(JodyContext context)
         {
-            var home = new TeamDto(Guid.NewGuid(), "Team 1", 5);
-            var away = new TeamDto(Guid.NewGuid(), "Team 2", 5);
+            var home = new Team(Guid.NewGuid(), "Team 1", 5);
+            var away = new Team(Guid.NewGuid(), "Team 2", 5);
 
-            return new GameDto(Guid.NewGuid(), 25, 5, home, away, 25, 36, true, false, true);
+            return new Game(Guid.NewGuid(), 25, 5, home, away, 25, 36, true, false, true);
         }
 
-        public override GameDto SetupUpdateData(GameDto originalData, JodyContext context)
+        public override Game SetupUpdateData(Game originalData, JodyContext context)
         {
-            var team3 = new TeamDto(Guid.NewGuid(), "Team 3", 5);
-            var team4 = new TeamDto(Guid.NewGuid(), "team 4", 5);
+            var team3 = new Team(Guid.NewGuid(), "Team 3", 5);
+            var team4 = new Team(Guid.NewGuid(), "team 4", 5);
 
             var updatedData = gameRepository.GetByIdentifier(originalData.Identifier, context).FirstOrDefault();
 
@@ -36,18 +36,18 @@ namespace JodyCore2.Test.Data
             return updatedData;
         }
 
-        public override IList<GameDto> SetupDeleteData(JodyContext context)
+        public override IList<Game> SetupDeleteData(JodyContext context)
         {
             return SetupGetAllData(context);
         }
-        public override IList<GameDto> SetupGetAllData(JodyContext context)
+        public override IList<Game> SetupGetAllData(JodyContext context)
         {
             var teams = TestTeamRepository.SetupGenericTeams(20, context, teamRepository);
-            var list = new List<GameDto>();
+            var list = new List<Game>();
 
             for (int i = 0; i < 10; i++)
             {
-                var gameDto = new GameDto(Guid.NewGuid(), 15, 1, teams[i], teams[i + 10], 0, 0, false, false, true);
+                var gameDto = new Game(Guid.NewGuid(), 15, 1, teams[i], teams[i + 10], 0, 0, false, false, true);
                 gameRepository.Create(gameDto, context);
 
                 list.Add(gameDto);
@@ -56,7 +56,7 @@ namespace JodyCore2.Test.Data
             return list;
         }
 
-        public override IBaseRepository<GameDto> SetupRepository()
+        public override IBaseRepository<Game> SetupRepository()
         {
             teamRepository = new TeamRepository();
             gameRepository =  new GameRepository();
@@ -66,24 +66,24 @@ namespace JodyCore2.Test.Data
 
         public void SetupGameData(JodyContext context)
         {
-            var gameDtos = new List<GameDto>()
+            var gameDtos = new List<Game>()
             {
-                new GameDto(Guid.NewGuid(), 1, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, true, false, true),
-                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, true, false, true),
-                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
-                new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
-                new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
-                new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
-                new GameDto(Guid.NewGuid(), 2, 2, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 1, 1, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 1, 2, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 1, 3, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 2, 1, null, null, 0, 0, true, false, true),
+                new Game(Guid.NewGuid(), 2, 1, null, null, 0, 0, true, false, true),
+                new Game(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 2, 1, null, null, 0, 0, false, false, true),
+                new Game(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
+                new Game(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
+                new Game(Guid.NewGuid(), 2, 2, null, null, 0, 0, true, false, true),
+                new Game(Guid.NewGuid(), 2, 2, null, null, 0, 0, false, false, true),
             };
 
             gameRepository.Create(gameDtos, context);
@@ -159,7 +159,7 @@ namespace JodyCore2.Test.Data
         }
 
         [Test]
-        public void ShouldTestWithStandingsDto()
+        public void ShouldTestWithStandings()
         {
             Assert.Fail();
         }

@@ -1,6 +1,6 @@
 ﻿using JodyCore2.Data;
-using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
+using JodyCore2.Domain.Bo;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Data
 {
-    public class TestTeamRepository:TestBaseRepository<TeamDto>
+    public class TestTeamRepository:TestBaseRepository<Team>
     {
         ITeamRepository teamRepository;
         IGameRepository gameRepository;
 
-        public override TeamDto SetupCreateData(JodyContext context)
+        public override Team SetupCreateData(JodyContext context)
         {
-            return new TeamDto(Guid.NewGuid(), "My Team", 25);
+            return new Team(Guid.NewGuid(), "My Team", 25);
         }
 
-        public override TeamDto SetupUpdateData(TeamDto originalData, JodyContext context)
+        public override Team SetupUpdateData(Team originalData, JodyContext context)
         {
             var updatedData = Repository.GetByIdentifier(originalData.Identifier, context).First();
             updatedData.Name = "New Name";
@@ -29,16 +29,16 @@ namespace JodyCore2.Test.Data
             return updatedData;
         }
 
-        public override IList<TeamDto> SetupDeleteData(JodyContext context)
+        public override IList<Team> SetupDeleteData(JodyContext context)
         {
             return SetupGetAllData(context);
         }
-        public override IList<TeamDto> SetupGetAllData(JodyContext context)
+        public override IList<Team> SetupGetAllData(JodyContext context)
         {
             return SetupGenericTeams(10, context, teamRepository);            
         }
 
-        public override IBaseRepository<TeamDto> SetupRepository()
+        public override IBaseRepository<Team> SetupRepository()
         {
             teamRepository = new TeamRepository();
             gameRepository = new GameRepository();
@@ -71,15 +71,15 @@ namespace JodyCore2.Test.Data
         [Test]
         public void ShouldNotDeleteTeamWithGames()
         {
-            var team1 = new TeamDto(Guid.NewGuid(), "Team 1", 5);
-            var team2 = new TeamDto(Guid.NewGuid(), "Team 2", 5);
-            var team3 = new TeamDto(Guid.NewGuid(), "Team 3", 5);
+            var team1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new Team(Guid.NewGuid(), "Team 2", 5);
+            var team3 = new Team(Guid.NewGuid(), "Team 3", 5);
 
-            var game = new GameDto(Guid.NewGuid(), 1, 5, team1, team3, 5, 5, true, false, true);
+            var game = new Game(Guid.NewGuid(), 1, 5, team1, team3, 5, 5, true, false, true);
 
             using (var context = new JodyContext())
             {
-                teamRepository.Create(new List<TeamDto>() { team1, team2, team3 }, context);                                           
+                teamRepository.Create(new List<Team>() { team1, team2, team3 }, context);                                           
                 gameRepository.Create(game, context);
 
                 context.SaveChanges();
@@ -92,13 +92,13 @@ namespace JodyCore2.Test.Data
             }            
         }
 
-        public static IList<TeamDto> SetupGenericTeams(int count, JodyContext context, ITeamRepository teamRepository)
+        public static IList<Team> SetupGenericTeams(int count, JodyContext context, ITeamRepository teamRepository)
         {
-            var list = new List<TeamDto>();
+            var list = new List<Team>();
 
             for (int i = 0; i < count; i++)
             {
-                var teamDto = new TeamDto(Guid.NewGuid(), "Team " + i, i);
+                var teamDto = new Team(Guid.NewGuid(), "Team " + i, i);
                 list.Add(teamRepository.Create(teamDto, context));
             }
 

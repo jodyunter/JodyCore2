@@ -1,13 +1,8 @@
-﻿using JodyCore2.Data.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JodyCore2.Domain.Bo.Standings;
 
 namespace JodyCore2.Data.Repositories
 {
-    public interface IStandingsRecordRepository:IBaseRepository<StandingsRecordDto>
+    public interface IStandingsRecordRepository:IBaseRepository<StandingsRecord>
     {
     }
 }

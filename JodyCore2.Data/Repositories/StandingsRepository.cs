@@ -1,18 +1,14 @@
-﻿using JodyCore2.Data.Dto;
+﻿using JodyCore2.Domain.Bo.Standings;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories
 {
-    public class StandingsRepository:BaseRepository<StandingsDto>, IStandingsRepository
+    public class StandingsRepository:BaseRepository<Standings>, IStandingsRepository
     {
-        public override IQueryable<StandingsDto> WithAllObjects(IQueryable<StandingsDto> query)
+        public override IQueryable<Standings> WithAllObjects(IQueryable<Standings> query)
         {
-            return query.Include(s => s.RecordsDto).ThenInclude(r => r.TeamDto);                       
+            return query.Include(s => s.Records).ThenInclude(r => r.Team);                       
         }
     }
 }

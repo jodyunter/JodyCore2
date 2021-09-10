@@ -1,4 +1,5 @@
-﻿using JodyCore2.Domain.Bo.Standings;
+﻿using JodyCore2.Domain.Bo.Competition;
+using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Service.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace JodyCore2.Service.Mappers
 {
     public static class StandingsMapper
     {
-        public static IStandingsViewModel StandingsToStandingsViewModel(IStandings standings, IStandingsRankingGroup rankingGroup)
+        public static IStandingsViewModel StandingsToStandingsViewModel(IStandings standings, ICompetitionRankingGroup rankingGroup)
         {
             var records = standings.Records.Select(s =>
                 StandingsRecordMapper.StandingsRecordToStandingsRecordViewModel(s,

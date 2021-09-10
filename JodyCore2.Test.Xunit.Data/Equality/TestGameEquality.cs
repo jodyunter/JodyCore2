@@ -1,4 +1,4 @@
-﻿using JodyCore2.Data.Dto;
+﻿using JodyCore2.Domain.Bo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,150 +23,150 @@ namespace JodyCore2.Test.Xunit.Data.Equality
             yield return new object[]
             {
                 "Equal Scenario",
-                new GameDto(gameGuid1, 1, 2, 
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2, 
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
                 true
             };
             yield return new object[]
             {
                 "Different Game Guids",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
-                new GameDto(gameGuid2, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid2, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
                 false
             };
             yield return new object[]
             {
                 "Different HomeTeam Guid",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid3, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid3, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
                 false
             };
             yield return new object[]
             {
                 "Different away team Guid",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid3, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid3, "My Name", 5),
                 3,4, true, false, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
                 false
             };       
             yield return new object[]
             {
                 "Different Year",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
-                new GameDto(gameGuid1, 5, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 5, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
                 false
             };
             yield return new object[]
             {
                 "Different Day",
-                new GameDto(gameGuid1, 1, 10,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 10,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
                 false
             };
             yield return new object[]
             {
                 "Different Home Score",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 30,4, true, false, true),
                 false
             };
             yield return new object[]
             {
                 "Different Away Score",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,40, true, false, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
                 false
             };
             yield return new object[]
             {        
                 "Different Complete",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, true, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, false, true, true),
                 false
             };
             yield return new object[]
             {
                 "Different Processed",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, true, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
                 false
             };
             yield return new object[]
             {
                 "Different Can Tie",
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, true),
-                new GameDto(gameGuid1, 1, 2,
-                new TeamDto(guid1, "My Name", 5),
-                new TeamDto(guid2, "My Name", 5),
+                new Game(gameGuid1, 1, 2,
+                new Team(guid1, "My Name", 5),
+                new Team(guid2, "My Name", 5),
                 3,4, true, false, false),
                 false
             };
         }
         [Theory]
         [MemberData(nameof(GetDataForGameTest))]        
-        public void TestGameDtoEquality(string testDescription, GameDto game1, GameDto game2, bool expected)
+        public void TestGameEqualityTest(string testDescription, Game game1, Game game2, bool expected)
         {
 
             var result = game1.Equals(game2);

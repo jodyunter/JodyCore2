@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JodyCore2.Domain.Bo.Standings
+namespace JodyCore2.Domain.Bo.Competition
 {
-    public interface IStandingsGame:IGame
+    public interface ICompetitionGame:IGame
     {
-        IStandings Standings { get; }
+        ICompetition Competition { get; }
     }
 }

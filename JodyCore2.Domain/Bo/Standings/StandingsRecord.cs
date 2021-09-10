@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo.Standings
 {
-    public class StandingsRecord:IStandingsRecord
+    public class StandingsRecord:IStandingsRecord, IBO
     {
         public Guid Identifier { get; set; }
         public virtual IStandings ParentStandings { get; set; }

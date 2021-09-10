@@ -1,6 +1,6 @@
 ﻿using JodyCore2.Data;
-using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
+using JodyCore2.Domain.Bo;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Data
 {
-    public abstract class TestBaseRepository<T> where T : class, IBaseDto
+    public abstract class TestBaseRepository<T> where T : class, IBO
     {
         public abstract IBaseRepository<T> SetupRepository();
         public abstract T SetupCreateData(JodyContext context);

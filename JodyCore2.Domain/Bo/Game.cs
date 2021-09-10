@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo
 {
-    public class Game : IGame
+    public class Game : IGame, IBO
     {
         public Guid Identifier { get; set; }
         public int Day { get; set; }
@@ -17,7 +17,7 @@ namespace JodyCore2.Domain.Bo
         public int AwayScore { get; set; }
         public bool Complete { get; set; }
         public bool Processed { get; set; }
-        public bool CanTie { get; set; }
+        public bool CanTie { get; set; }        
 
         public Game() { }
 

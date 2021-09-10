@@ -2,7 +2,7 @@
 
 namespace JodyCore2.Domain.Bo
 {
-    public class Team : ITeam
+    public class Team : ITeam, IBO
     {        
         public Guid Identifier { get; set; }
         public string Name { get; set; }

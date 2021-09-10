@@ -1,4 +1,4 @@
-﻿using JodyCore2.Data.Dto;
+﻿using JodyCore2.Domain.Bo.Rankings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories
 {
-    public interface IRankingGroupRepository:IBaseRepository<RankingGroupDto>
+    public interface IRankingGroupRepository:IBaseRankingGroupRepository<RankingGroup>
     {
-        IQueryable<RankingGroupDto> GetByStandings(Guid standingsIdentifier, JodyContext context);
     }
 }

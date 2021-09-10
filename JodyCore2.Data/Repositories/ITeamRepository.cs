@@ -1,15 +1,11 @@
-﻿using JodyCore2.Data.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using JodyCore2.Domain.Bo;
 
 namespace JodyCore2.Data.Repositories
 {
-    public interface ITeamRepository:IBaseRepository<TeamDto>
+    public interface ITeamRepository:IBaseRepository<Team>
     {
-        TeamDto GetByName(string name, JodyContext context);                
+        Team GetByName(string name, JodyContext context);                
 
     }
 }

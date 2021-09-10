@@ -1,6 +1,6 @@
 ﻿using JodyCore2.Data;
-using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
+using JodyCore2.Domain.Bo;
 using JodyCore2.Service;
 using NUnit.Framework;
 using System;
@@ -30,8 +30,8 @@ namespace JodyCore2.Test.Service
         public void ShouldCreateGame()
         {
             var teamRepo = new TeamRepository();
-            var team1 = new TeamDto(Guid.NewGuid(), "Team 1", 5);
-            var team2 = new TeamDto(Guid.NewGuid(), "Team 2", 6);
+            var team1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new Team(Guid.NewGuid(), "Team 2", 6);
 
             using (var context = new JodyContext())
             {
@@ -56,8 +56,8 @@ namespace JodyCore2.Test.Service
         public void ShouldNotCreateHomeTeamDoesNotExist()
         {
             var teamRepo = new TeamRepository();
-            var team1 = new TeamDto(Guid.NewGuid(), "Team 1", 5);
-            var team2 = new TeamDto(Guid.NewGuid(), "Team 2", 6);
+            var team1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new Team(Guid.NewGuid(), "Team 2", 6);
 
             using (var context = new JodyContext())
             {                
@@ -73,8 +73,8 @@ namespace JodyCore2.Test.Service
         public void ShouldNotCreateAwyTeamDoesNotExist()
         {
             var teamRepo = new TeamRepository();
-            var team1 = new TeamDto(Guid.NewGuid(), "Team 1", 5);
-            var team2 = new TeamDto(Guid.NewGuid(), "Team 2", 6);
+            var team1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new Team(Guid.NewGuid(), "Team 2", 6);
 
             using (var context = new JodyContext())
             {
@@ -94,7 +94,7 @@ namespace JodyCore2.Test.Service
         [Test]
         public void ShouldGetGames()
         {
-            var teamList = new List<TeamDto>();
+            var teamList = new List<Team>();
 
             using (var context = new JodyContext())
             {
@@ -102,7 +102,7 @@ namespace JodyCore2.Test.Service
 
                 for (int i = 0; i < 10; i++)
                 {
-                    teamList.Add(new TeamDto(Guid.NewGuid(), "Team " + i, 5));                    
+                    teamList.Add(new Team(Guid.NewGuid(), "Team " + i, 5));                    
                 }
 
                 var repo = new TeamRepository();

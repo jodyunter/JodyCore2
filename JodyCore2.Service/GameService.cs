@@ -1,6 +1,6 @@
 ﻿using JodyCore2.Data;
-using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
+using JodyCore2.Domain.Bo;
 using JodyCore2.Service.Mappers;
 using JodyCore2.Service.Util;
 using JodyCore2.Service.ViewModels;
@@ -39,7 +39,7 @@ namespace JodyCore2.Service
                     throw new ApplicationException(string.Format("Home or Away Team Does not exist. Home identifier is {0}.  Away Identifier is {1}", homeId, awayId));
                 }
                 
-                var game = new GameDto(Guid.NewGuid(), year, day, homeTeam, awayTeam, 0, 0, false, false, true);
+                var game = new Game(Guid.NewGuid(), year, day, homeTeam, awayTeam, 0, 0, false, false, true);
                 gameRepository.Create(game, context);
 
                 context.SaveChanges();

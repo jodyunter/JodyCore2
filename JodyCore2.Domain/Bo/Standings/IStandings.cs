@@ -11,6 +11,11 @@ namespace JodyCore2.Domain.Bo.Standings
     {
         string Division { get; set; }
         IList<IStandingsRecord> Records { get; set; }
-        IStandingsRecord GetRecord(ITeam inputTeam);
+        IStandingsRecord GetRecord(ITeam inputTeam)
+        {
+            return Records.Where(t => t.Team.Identifier.Equals(inputTeam.Identifier)).First();
+        }        
+                
+                
     }
 }

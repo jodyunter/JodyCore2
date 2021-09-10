@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo.Rankings
 {
-    public class Ranking : IRanking
+    public class Ranking : IRanking, IBO
     {
         public Guid Identifier { get; set;}
 

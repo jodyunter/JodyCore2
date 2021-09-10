@@ -1,4 +1,4 @@
-﻿using JodyCore2.Data.Dto;
+﻿using JodyCore2.Domain.Bo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Linq;
 namespace JodyCore2.Data.Repositories
 {
     //remember to control when you call something like ToList.  This is when a query will execute
-    public class BaseRepository<T>:IBaseRepository<T> where T: class, IBaseDto
+    public class BaseRepository<T>:IBaseRepository<T> where T: class, IBO
     {
         public virtual IQueryable<T> WithAllObjects(IQueryable<T> query)
         {

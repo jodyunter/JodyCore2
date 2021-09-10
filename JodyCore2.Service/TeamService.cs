@@ -1,6 +1,6 @@
 ﻿using JodyCore2.Data;
-using JodyCore2.Data.Dto;
 using JodyCore2.Data.Repositories;
+using JodyCore2.Domain.Bo;
 using JodyCore2.Service.Mappers;
 using JodyCore2.Service.ViewModels;
 using System;
@@ -39,7 +39,7 @@ namespace JodyCore2.Service
                     throw new ApplicationException(string.Format("Team with name {0} already exists.", name));
                 }
 
-                var teamDto = new TeamDto(Guid.NewGuid(), name, skill);
+                var teamDto = new Team(Guid.NewGuid(), name, skill);
                 teamRepository.Create(teamDto, context);
 
                 context.SaveChanges();
@@ -120,7 +120,7 @@ namespace JodyCore2.Service
                     throw new ApplicationException(string.Format("Team with identifier {0} does not exist.", identifier));
                 }
 
-                if (gameRepository.GetAll(context).Where(g => g.HomeDto.Identifier == identifier || g.AwayDto.Identifier == identifier).FirstOrDefault() != null)
+                if (gameRepository.GetAll(context).Where(g => g.Home.Identifier == identifier || g.Away.Identifier == identifier).FirstOrDefault() != null)
                 {
                     throw new ApplicationException(string.Format("Games with Team {0} exist. Cannot delete.", identifier));
                 }

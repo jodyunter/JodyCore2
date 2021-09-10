@@ -1,4 +1,4 @@
-﻿using JodyCore2.Data.Dto;
+﻿using JodyCore2.Domain.Bo.Rankings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories
 {
-    public interface IRankingRepository:IBaseRepository<RankingDto>
+    public interface IRankingRepository:IBaseRepository<Ranking>
     {
     }
 }
