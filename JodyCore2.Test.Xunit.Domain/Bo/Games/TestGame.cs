@@ -23,5 +23,13 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Games
             Assert.StrictEqual(5, game.AwayScore);
 
         }
+
+        [Fact]
+        public void ShouldGetWinner()
+        {
+            throw new NotImplementedException();
+        }
     }
+
+
 }
