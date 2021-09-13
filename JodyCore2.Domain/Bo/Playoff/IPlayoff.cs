@@ -10,5 +10,7 @@ namespace JodyCore2.Domain.Bo.Playoff
     public interface IPlayoff:ICompetition
     {
         IList<IPlayoffSeries> Series { get; }
+        IList<IPlayoffGame> CreateNewGames();
+        void ProcessGame(IPlayoffGame game);
     }
 }
