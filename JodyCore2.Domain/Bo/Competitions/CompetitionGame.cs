@@ -18,5 +18,30 @@ namespace JodyCore2.Domain.Bo.Competitions
         {
             Competition = competition;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CompetitionGame game &&
+                   base.Equals(obj) &&                   
+                   Competition.Identifier == game.Competition.Identifier;
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(base.GetHashCode());
+            hash.Add(Identifier);
+            hash.Add(Day);
+            hash.Add(Year);
+            hash.Add(Home);
+            hash.Add(Away);
+            hash.Add(HomeScore);
+            hash.Add(AwayScore);
+            hash.Add(Complete);
+            hash.Add(Processed);
+            hash.Add(CanTie);
+            hash.Add(Competition);
+            return hash.ToHashCode();
+        }
     }
 }
