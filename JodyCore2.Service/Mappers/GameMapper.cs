@@ -10,7 +10,7 @@ namespace JodyCore2.Service.Mappers
 {
     public class GameMapper
     {
-        public static IGameSummaryViewModel GameToGameSummaryViewModel(Game game)
+        public static IGameSummaryViewModel GameToGameSummaryViewModel(IGame game)
         {
             return new GameSummaryViewModel(game.Identifier, game.Day, game.Year,
                 game.Home.Identifier, game.Home.Name, game.Away.Identifier, game.Away.Name,

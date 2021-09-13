@@ -17,14 +17,12 @@ namespace JodyCore2.Service
     public class GameService : IGameService
     {
         private readonly ITeamRepository teamRepository;
-        private readonly IGameRepository gameRepository;
-        private readonly IStandingsRepository standingsRepository;
+        private readonly IGameRepository gameRepository;        
 
-        public GameService(ITeamRepository _teamRepository, IGameRepository _gameRepository, IStandingsRepository _standingsRepository)
+        public GameService(ITeamRepository _teamRepository, IGameRepository _gameRepository)
         {
             teamRepository = _teamRepository;
-            gameRepository = _gameRepository;
-            standingsRepository = _standingsRepository;
+            gameRepository = _gameRepository;            
         }
 
         //need to do checks like, if teams play on day        
