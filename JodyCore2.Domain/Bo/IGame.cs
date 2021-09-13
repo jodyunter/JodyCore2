@@ -21,5 +21,7 @@ namespace JodyCore2.Domain.Bo
         bool CanTie { get; }
         void Play(Random r);
         void Process();
+        ITeam GetWinner();
+        ITeam GetLoser();
     }
 }

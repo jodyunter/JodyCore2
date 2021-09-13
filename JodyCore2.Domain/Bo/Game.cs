@@ -62,6 +62,40 @@ namespace JodyCore2.Domain.Bo
             Processed = true;
         }
 
+        public ITeam GetWinner()
+        {
+            if (Complete)
+            {
+                if (HomeScore > AwayScore)
+                {
+                    return Home;
+                }
+                else if (HomeScore < AwayScore)
+                {
+                    return Away;
+                }
+            }
+
+            return null;
+        }
+
+        public ITeam GetLoser()
+        {
+            if (Complete)
+            {
+                if (HomeScore < AwayScore)
+                {
+                    return Home;
+                }
+                else if (HomeScore > AwayScore)
+                {
+                    return Away;
+                }
+            }
+
+            return null;
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Game game &&
