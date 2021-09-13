@@ -11,7 +11,7 @@ namespace JodyCore2.Domain.Bo.Competitions
         public ICompetition Competition { get; set; }
 
 
-        public CompetitionGame() { }
+        public CompetitionGame():base() { }
 
         public CompetitionGame(Guid identifier, ICompetition competition, int day, int year, ITeam home, ITeam away, int homeScore, int awayScore, bool complete, bool processed, bool canTie)
             : base(identifier, day, year, home, away, homeScore, awayScore, complete, processed, canTie)

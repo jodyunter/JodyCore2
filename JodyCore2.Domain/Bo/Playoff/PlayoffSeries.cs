@@ -53,26 +53,28 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public abstract void ProcessGame(ICompetitionGame game);
 
+        public PlayoffSeries(SeriesType type) { SeriesType = type; }
+
         public ITeam GetHomeTeamForGame(int gameNumber)
         {
             int arrayNumber = gameNumber - 1;
 
-            if (HomeString.Length < arrayNumber)
+            if (HomeString.Length < gameNumber)
             {
-                if (arrayNumber % 2 == 0)
+                if (gameNumber % 2 == 0)
                 {
-                    return Team1;
+                    return Team2;
                 }
                 else
                 {
-                    return Team2;
+                    return Team1;
                 }
             }
             else
             {
                 var value = HomeString[arrayNumber];
 
-                if (value != '1' || value != '2')
+                if (!value.Equals('1') && !value.Equals('2'))
                 {
                     throw new ArgumentOutOfRangeException(string.Format("{0} contains something other than 1 or 2", HomeString));
                 }
@@ -94,6 +96,7 @@ namespace JodyCore2.Domain.Bo.Playoff
             int gameNumber = Games.Count + 1;
 
             var homeTeam = GetHomeTeamForGame(gameNumber);
+
             ITeam awayTeam = null;
 
             if (homeTeam.Identifier == Team1.Identifier)
@@ -107,7 +110,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 
             //day and year has to be done at scheduling time
             //need to have game rules!
-            var game = new CompetitionGame(Guid.NewGuid(), Playoff, -1, -1, homeTeam, awayTeam, 0, 0, false, false, false);
+            var game = new PlayoffGame(Guid.NewGuid(), Playoff, this, -1, -1, homeTeam, awayTeam, 0, 0, false, false, false);            
 
             return game;
         }

@@ -144,7 +144,7 @@ namespace JodyCore2.Test.Service
             var team1 = teamService.Create("Team 1", 5);
             var team2 = teamService.Create("Team 2", 5);
 
-            var gameService = new GameService(new TeamRepository(), new GameRepository(), new StandingsRepository());
+            var gameService = new GameService(new TeamRepository(), new GameRepository());
 
             gameService.Create(1, 1, team1.Identifier, team2.Identifier);
 

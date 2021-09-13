@@ -11,6 +11,8 @@ namespace JodyCore2.Domain.Bo.Playoff
     {
         public int RequiredWins { get; set; }
 
+        public BestOfPlayoffSeries() : base(SeriesType.BestOf) { }
+
         public override IList<ICompetitionGame> CreateGames()
         {
             if (!Complete)

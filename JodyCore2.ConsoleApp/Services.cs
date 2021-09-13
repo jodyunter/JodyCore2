@@ -31,7 +31,7 @@ namespace JodyCore2.ConsoleApp
             var competitionRankingGroupRepository = new CompetitionRankingGroupRepository();
 
             TeamService = new TeamService(teamRepository, gameRepository);
-            GameService = new GameService(teamRepository, gameRepository, standingsRepository);
+            GameService = new GameService(teamRepository, gameRepository);
             SchedulingService = new SchedulingService();
             StandingsService = new StandingsService(standingsRepository, teamRepository, competitionGameRepository, competitionRankingGroupRepository);
         }
