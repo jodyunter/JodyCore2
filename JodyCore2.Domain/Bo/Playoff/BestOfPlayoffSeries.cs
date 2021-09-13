@@ -39,6 +39,7 @@ namespace JodyCore2.Domain.Bo.Playoff
             {
                 throw new ApplicationException("Trying to create games for a complete series.");
             }
+            return null;
         }
 
         public override ITeam GetLoser()
