@@ -9,10 +9,11 @@ namespace JodyCore2.Domain.Bo.Playoff
 {
     public interface IPlayoff:ICompetition
     {
-        IList<IPlayoffSeries> Series { get; }        
-        void ProcessGame(IPlayoffGame game);
-        IList<IPlayoffSeries> GetByRound(int round);
+        IList<IPlayoffSeries> Series { get; }                        
+        IList<ICompetitionRankingGroup> RankingGroups { get; }
         bool IsRoundComplete(int round);
-        bool IsRoundReady(int round);        
+        bool IsRoundReady(int round);    
+        int CurrentRound { get; }
+        IList<IPlayoffSeries> GetByRound(int round);
     }
 }

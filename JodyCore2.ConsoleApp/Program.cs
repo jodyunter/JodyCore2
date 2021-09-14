@@ -15,19 +15,20 @@ namespace JodyCore2.ConsoleApp
         {
             Environment.SetEnvironmentVariable("CONNECTION_STRING", "consoleConnectionString");
             Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "console");            
-
+            /*
             using (var context = new JodyContext())
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
             }
 
+            
             var services = new Services();
             var teamService = services.TeamService;
             var gameService = services.GameService;
             var schedulingService = services.SchedulingService;
             var standingsService = services.StandingsService;
-
+            
             for (int i = 0; i < 21; i++)
             {
                 teamService.Create("Team " + i, 5);
@@ -70,8 +71,14 @@ namespace JodyCore2.ConsoleApp
 
             Console.WriteLine(StandingsView.GetView(standings));
             Console.WriteLine(StandingsView.GetView(standings2));
+            */
+
+            var test = new TestPlayoffs();
+            test.run();
 
             Console.ReadLine();
+
+
         }
     }
 }

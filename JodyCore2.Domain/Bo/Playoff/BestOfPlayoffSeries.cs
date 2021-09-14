@@ -51,7 +51,7 @@ namespace JodyCore2.Domain.Bo.Playoff
             }
             else
             {
-                throw new ApplicationException(SERIES_COMPLETE_CANT_CREATE_GAMES);
+                //do nothing don't throw an error
             }
             return newGames;
         }

@@ -9,13 +9,13 @@ namespace JodyCore2.Domain.Bo.Playoff
 {
     public abstract class PlayoffSeries : IPlayoffSeries, IBO
     {
-        public Guid Identifier { get; set; }   
-        
+        public Guid Identifier { get; set; }
+        public string Name { get; set; }
+        public int Round { get; set; }
+
         public IPlayoff Playoff { get; set; }
         public ITeam Team1 { get; set; }
-        public ITeam Team2 { get; set; }
-
-        public int Round { get; set; }
+        public ITeam Team2 { get; set; }        
 
         public ICompetitionRankingGroup Team1FromGroup { get; set; }
 
@@ -55,7 +55,11 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public abstract void ProcessGame(ICompetitionGame game);
 
-        public PlayoffSeries(SeriesType type):this() { SeriesType = type; }
+        public PlayoffSeries(SeriesType type):this()
+        { 
+            SeriesType = type;
+            Games = new List<IPlayoffGame>();
+        }
         public PlayoffSeries() { Identifier = Guid.NewGuid(); }
 
         public ITeam GetHomeTeamForGame(int gameNumber)

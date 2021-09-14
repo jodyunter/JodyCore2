@@ -10,11 +10,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
     {
         public const int NO_TEAM_VALUE = -1;
 
-        public IList<ScheduleGame> ScheduleGames(int year, int startingDay, IList<ITeam> teams)
-        {
-            return null;
-        }
-
+        //make sure this gets tested
         public static Dictionary<int, IList<ScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<Guid> teams)
         {
             int totalTeams = teams.Count;
@@ -184,8 +180,38 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
             return aTeamPlaysinList;
         }
+
+        public static bool DoTeamsPlayInList(IList<IGame> games, IList<Guid> teams)
+        {
+            bool aTeamPlaysinList = false;
+
+            teams.ToList().ForEach(t =>
+            {
+                var teamPlaysInLlist = Scheduler.DoesTeamPlayInList(games, t);
+                if (teamPlaysInLlist)
+                    aTeamPlaysinList = true;
+            });
+
+            return aTeamPlaysinList;
+        }
+
         //TODO: Test these!
         public static bool DoesTeamPlayInList(IList<ScheduleGame> games, Guid team)
+        {
+            bool doesPlay = false;
+
+            for (int i = 0; (i < games.Count) && !doesPlay; i++)
+            {
+                if (DoesTeamPlayInGame(games[i], team))
+                {
+                    doesPlay = true;
+                }
+            }
+
+            return doesPlay;
+        }
+
+        public static bool DoesTeamPlayInList(IList<IGame> games, Guid team)
         {
             bool doesPlay = false;
 
@@ -203,6 +229,16 @@ namespace JodyCore2.Domain.Bo.Scheduling
         public static bool DoesTeamPlayInGame(ScheduleGame game, Guid team)
         {
             if (game.Home.Equals(team) || game.Away.Equals(team))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool DoesTeamPlayInGame(IGame game, Guid team)
+        {
+            if (game.Home.Identifier.Equals(team) || game.Away.Identifier.Equals(team))
             {
                 return true;
             }

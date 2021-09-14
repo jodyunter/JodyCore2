@@ -15,5 +15,11 @@ namespace JodyCore2.ConsoleApp.Views
 
             return string.Format(formatter, model.Day, model.HomeTeamName, model.HomeScore, model.AwayTeamName, model.AwayScore);
         }
+        public static string GetPlayoffGameSummaryView(IPlayoffGameSummaryViewModel model)
+        {
+            string formatter = "({5}) {0}. {1} - {2} : {3} - {4}";
+
+            return string.Format(formatter, model.Day, model.HomeTeamName, model.HomeScore, model.AwayTeamName, model.AwayScore, model.Series);
+        }
     }
 }
