@@ -56,7 +56,6 @@ namespace JodyCore2.Domain.Bo.Playoff
                 //the game should have it's series already so ti should be able to process it
                 playoffGame.Series.ProcessGame(game);
             }
-
         }
 
   

@@ -12,7 +12,7 @@ namespace JodyCore2.Domain.Bo.Playoff
         IList<IPlayoffSeries> Series { get; }                        
         IList<ICompetitionRankingGroup> RankingGroups { get; }
         bool IsRoundComplete(int round);
-        bool IsRoundReady(int round);    
+        bool IsRoundReady(int round);                
         int CurrentRound { get; }
         IList<IPlayoffSeries> GetByRound(int round);
     }
