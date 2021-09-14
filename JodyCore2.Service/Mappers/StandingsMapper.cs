@@ -21,10 +21,8 @@ namespace JodyCore2.Service.Mappers
             ).ToList();
             return new StandingsViewModel(standings.Identifier,
                 standings.Name,
-                standings.StartYear,
-                standings.EndYear,
-                standings.StartDay,
-                standings.EndDay,
+                standings.StartYear,                
+                standings.StartDay,                
                 standings.Description,
                 standings.Division,
                 records);

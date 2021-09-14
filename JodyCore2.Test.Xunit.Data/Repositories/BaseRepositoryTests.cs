@@ -10,7 +10,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Data.Repositories
 {
-    public abstract class TestBaseRepository<T> where T: class, IBO
+    public abstract class BaseRepositoryTests<T> where T: class, IBO
     {
         public abstract IBaseRepository<T> SetupRepository();
         public abstract T SetupCreateData(JodyContext context);
@@ -20,7 +20,7 @@ namespace JodyCore2.Test.Xunit.Data.Repositories
 
         public IBaseRepository<T> Repository { get; set; }
 
-        protected TestBaseRepository()
+        protected BaseRepositoryTests()
         {
             Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Integration");
             Environment.SetEnvironmentVariable("CONNECTION_STRING", "DefaultConnectionString");

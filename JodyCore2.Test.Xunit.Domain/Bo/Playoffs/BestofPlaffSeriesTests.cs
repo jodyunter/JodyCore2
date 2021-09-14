@@ -3,9 +3,6 @@ using JodyCore2.Domain.Bo.Competitions;
 using JodyCore2.Domain.Bo.Playoff;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
@@ -150,7 +147,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             series.HomeString = "";
 
             
-            yield return new object[] { series, 0, 0, new List<IPlayoffGame>(), 2 };
+            yield return new object[] { series, 0, 0, new List<IPlayoffGame>(), 2 }; 
             yield return new object[] { series, 1, 0, new List<IPlayoffGame>(), 1 };
             yield return new object[] { series, 2, 0, new List<IPlayoffGame>(), 0 };
             yield return new object[] { series, 0, 0, new List<IPlayoffGame>(), 2 };
@@ -190,14 +187,81 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             Assert.StrictEqual(expectedNewGames, newGames.Count);
         }
 
+        [Fact]
         public void ShouldNotCreateGamesUnprocessedGamesExist()
         {
+            var team1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new Team(Guid.NewGuid(), "Team 2", 5);
 
+            var series = new BestOfPlayoffSeries();
+            series.Team1 = team1;
+            series.Team2 = team2;
+            series.Complete = false;
+            series.RequiredWins = 2;
+            series.HomeString = "";
+            var inCompleteGame1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 3, true, false, false);
+            series.Games = new List<IPlayoffGame>() { inCompleteGame1 };
+
+            var exception = Assert.Throws<ApplicationException>(() => series.CreateGames());
+            Assert.Equal(BestOfPlayoffSeries.UNPROCESSED_GAMES_EXIST, exception.Message);
         }
 
-        public void ShouldProcessGame()
+        [Fact]
+        public void ShouldNotCreateGamesSeriesComplete()
         {
-            throw new NotImplementedException();
+            var team1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new Team(Guid.NewGuid(), "Team 2", 5);
+
+            var series = new BestOfPlayoffSeries();
+            series.Team1 = team1;
+            series.Team2 = team2;
+            series.Complete = false;
+            series.RequiredWins = 2;
+            series.HomeString = "";
+            series.Complete = true; //key value in this test
+
+            var inCompleteGame1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 3, true, false, false);
+            series.Games = new List<IPlayoffGame>() { inCompleteGame1 };
+
+            var exception = Assert.Throws<ApplicationException>(() => series.CreateGames());
+            Assert.Equal(BestOfPlayoffSeries.SERIES_COMPLETE_CANT_CREATE_GAMES, exception.Message);
+        }
+
+        public static IEnumerable<object[]> GetDataForProcessGame()
+        {
+            var team1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new Team(Guid.NewGuid(), "Team 2", 5);
+
+            var series = new BestOfPlayoffSeries();
+            series.RequiredWins = 3;
+
+            series.Team1 = team1;
+            series.Team2 = team2;
+
+            var game1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 5, 4, true, false, false);
+            var game2 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 5, 4, true, false, false);
+            var game3 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team2, team1, 5, 4, true, false, false);
+            var game4 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team2, team1, 5, 4, true, false, false);
+            var game5 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 5, 4, true, false, false);
+
+            yield return new object[] { series, game1, 1, 0, false };
+            yield return new object[] { series, game2, 2, 0, false };
+            yield return new object[] { series, game3, 2, 1, false };
+            yield return new object[] { series, game4, 2, 2, false };
+            yield return new object[] { series, game5, 3, 2, true };            
+        }
+
+        [Theory]
+        [MemberData(nameof(GetDataForProcessGame))]
+        public void ShouldProcessGame(PlayoffSeries series, IPlayoffGame gameToProcess, int expectedTeam1Score, int expectedTeam2Score, bool expectedCompleteValue)
+        {
+
+            series.ProcessGame(gameToProcess);
+
+            Assert.StrictEqual(series.Team1Score, expectedTeam1Score);
+            Assert.StrictEqual(series.Team2Score, expectedTeam2Score);
+            Assert.StrictEqual(expectedCompleteValue, series.Complete);
+            Assert.True(gameToProcess.Processed);
         }
 
         [Fact]

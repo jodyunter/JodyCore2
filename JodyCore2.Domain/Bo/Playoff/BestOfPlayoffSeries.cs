@@ -15,6 +15,8 @@ namespace JodyCore2.Domain.Bo.Playoff
         public static string WRONG_TEAMS_FOR_SERIES = "Teams in game are not in this series.";
         public static string NOT_PLAYOFF_GAME = "This is not a playoff game!";
         public static string SERIES_COMPLETE_CANT_PROCESS_GAMES = "Can't process a game when series is complete.";
+        public static string UNPROCESSED_GAMES_EXIST = "Can't create new games for series, if some games are unprocessed.";
+        public static string SERIES_COMPLETE_CANT_CREATE_GAMES = "Trying to create games for a complete series.";
 
         public int RequiredWins { get; set; }
 
@@ -29,7 +31,7 @@ namespace JodyCore2.Domain.Bo.Playoff
                 var unprocessedGames = Games.Where(g => g.Complete && !g.Processed).ToList();
                 if (unprocessedGames.Count > 0)
                 {
-                    throw new ApplicationException("Can't create new games for series, if some games are unprocessed.");
+                    throw new ApplicationException(UNPROCESSED_GAMES_EXIST);
                 }
 
                 var currentInCompleteGames = Games.Where(g => !g.Complete).ToList().Count;
@@ -49,7 +51,7 @@ namespace JodyCore2.Domain.Bo.Playoff
             }
             else
             {
-                throw new ApplicationException("Trying to create games for a complete series.");
+                throw new ApplicationException(SERIES_COMPLETE_CANT_CREATE_GAMES);
             }
             return newGames;
         }
@@ -138,6 +140,9 @@ namespace JodyCore2.Domain.Bo.Playoff
                             {
                                 throw new ApplicationException(WRONG_TEAMS_FOR_SERIES);
                             }
+
+                            game.Process();
+                            this.IsComplete(); //be sure to check and set if complete
                         }
                         else
                         {

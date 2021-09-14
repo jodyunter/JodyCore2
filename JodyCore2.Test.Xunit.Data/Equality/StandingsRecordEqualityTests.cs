@@ -9,7 +9,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Data.Equality
 {
-    public class TestStandingsRecordEquality
+    public class StandingsRecordEqualityTests
     {
         public static IEnumerable<object[]> GetDataForStandingsRecordTest()
         {

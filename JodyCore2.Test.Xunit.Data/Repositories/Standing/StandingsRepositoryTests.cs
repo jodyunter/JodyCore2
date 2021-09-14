@@ -10,7 +10,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Data.Repositories.Standing
 {
-    public class TestStandingsRepository : TestBaseRepository<Standings>
+    public class StandingsRepositoryTests : BaseRepositoryTests<Standings>
     {
         public override Standings SetupCreateData(JodyContext context)
         {

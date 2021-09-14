@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Xunit.Data.Repositories.Standing
 {
-    public class TestStandingsRecordRepository : TestBaseRepository<StandingsRecord>
+    public class StandingsRecordRepositoryTests : BaseRepositoryTests<StandingsRecord>
     {
         public override StandingsRecord SetupCreateData(JodyContext context)
         {

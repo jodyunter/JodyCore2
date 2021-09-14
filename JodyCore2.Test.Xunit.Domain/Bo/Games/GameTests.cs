@@ -9,7 +9,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Domain.Bo.Games
 {
-    public class TestGame
+    public class GameTests
     {
         [Fact]
         public void ShouldPlayGame()

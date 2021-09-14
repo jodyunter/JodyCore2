@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Service.Mappers
 {
-    public class TestStandingsMapper
+    public class ScheduleGameMapperTests
     {
         [Test]
-        public void ShouldTest()
+        public void ShouldMapScheduleGameToScheduleGameViewModel()
         {
-            Assert.Fail();
+
+        }
+
+        [Test]
+        public void ShouldMapScheduleGameViewModelToScheduleGame()
+        {
+
         }
     }
 }

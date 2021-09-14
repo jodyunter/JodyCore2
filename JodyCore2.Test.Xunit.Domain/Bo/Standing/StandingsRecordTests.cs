@@ -8,7 +8,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Domain.Bo.Standing
 {
-    public class TestStandingsRecord
+    public class StandingsRecordTests
     {
         [Fact]
         public void ShouldGetGamesPlayed()

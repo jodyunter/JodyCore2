@@ -13,7 +13,7 @@ namespace JodyCore2.Test.Xunit.Data
 
         public static IStandings CreateStandingsNoRecords()
         {
-            return new Standings(Guid.NewGuid(), "Standings Name", 1, 1, 1, 250, "Test", "Test this", new List<IStandingsRecord>());
+            return new Standings(Guid.NewGuid(), "Standings Name", 1, 1, 1, "Test", "Test this", new List<IStandingsRecord>(), false, false, false, false);
         }
     }
 
@@ -21,15 +21,15 @@ namespace JodyCore2.Test.Xunit.Data
     {
         public TestCompetition(CompetitionType type):base(type) { CompetitionType = type; }
 
-        public TestCompetition(Guid identifier, string name, int startYear, int endYear, int startDay, int endDay, string description, CompetitionType type) : this(type)
+        public TestCompetition(Guid identifier, string name, int startYear, int startDay, int order, string description, bool setup, bool started, bool complete, bool processed, CompetitionType type) 
+            :base(identifier, name, startYear, startDay, order, description, setup, started, complete, processed, type)
+        { 
+
+        }
+
+        public override IList<ICompetitionGame> CreateGames()
         {
-            Identifier = identifier;
-            Name = name;
-            StartYear = startYear;
-            EndYear = endYear;
-            StartDay = startDay;
-            EndDay = endDay;
-            Description = description;
+            throw new NotImplementedException();
         }
 
         public override void ProcessGame(ICompetitionGame game)

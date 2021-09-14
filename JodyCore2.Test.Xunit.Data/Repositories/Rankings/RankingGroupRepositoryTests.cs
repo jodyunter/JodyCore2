@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Xunit.Data.Repositories.Rankings
 {
-    public class TestRankingGroupRepository : TestBaseRepository<RankingGroup>
+    public class RankingGroupRepositoryTests : BaseRepositoryTests<RankingGroup>
     {
         public override RankingGroup SetupCreateData(JodyContext context)
         {

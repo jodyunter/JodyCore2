@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Xunit.Data.Repositories.Teams
 {
-    public class TestTeamRepository : TestBaseRepository<Team>
+    public class TestTeamRepository : BaseRepositoryTests<Team>
     {
         ITeamRepository teamRepository;
         IGameRepository gameRepository;

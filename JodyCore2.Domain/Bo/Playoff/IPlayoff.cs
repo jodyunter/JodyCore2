@@ -11,5 +11,8 @@ namespace JodyCore2.Domain.Bo.Playoff
     {
         IList<IPlayoffSeries> Series { get; }        
         void ProcessGame(IPlayoffGame game);
+        IList<IPlayoffSeries> GetByRound(int round);
+        bool IsRoundComplete(int round);
+        bool IsRoundReady(int round);        
     }
 }

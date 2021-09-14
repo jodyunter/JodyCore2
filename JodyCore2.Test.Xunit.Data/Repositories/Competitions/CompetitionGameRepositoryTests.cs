@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Xunit.Data.Repositories.Competitions
 {
-    public class TestCompetitionGameRepository : TestBaseRepository<CompetitionGame>
+    public class CompetitionGameRepositoryTests : BaseRepositoryTests<CompetitionGame>
     {
         public override CompetitionGame SetupCreateData(JodyContext context)
         {

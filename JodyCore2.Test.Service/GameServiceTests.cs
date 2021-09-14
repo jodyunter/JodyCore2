@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Service
 {
-    public class TestGameService:BaseIntegrationTest
+    public class GameServiceTests:BaseIntegrationTest
     {
         IGameService gameService;
 

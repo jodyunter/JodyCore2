@@ -5,7 +5,7 @@ using System;
 
 namespace JodyCore2.Test.Service.Mappers
 {
-    public class TestTeamMapper
+    public class TeamMapperTests
     {
         [Test]
         public void ShouldMapTeamViewModelToTeam()

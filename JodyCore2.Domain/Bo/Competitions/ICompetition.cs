@@ -12,13 +12,16 @@ namespace JodyCore2.Domain.Bo.Competitions
     {
         Guid Identifier { get; }
         string Name { get; }
-        int StartYear { get; }
-        int EndYear { get; }
+        int StartYear { get; }        
         int StartDay { get; }
-        int EndDay { get; }
+        int Order { get; }
         string Description { get; }
+        bool Setup { get; }
+        bool Started { get; }
+        bool Complete { get; }
+        bool Processed { get; }
         CompetitionType CompetitionType { get; }
-        void ProcessGame(ICompetitionGame game);
+        void ProcessGame(ICompetitionGame game);        
     }
     public enum CompetitionType
     {

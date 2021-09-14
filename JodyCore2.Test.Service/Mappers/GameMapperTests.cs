@@ -5,7 +5,7 @@ using System;
 
 namespace JodyCore2.Test.Service.Mappers
 {
-    public class TestGameMapper
+    public class GameMapperTests
     {
         [Test]
         public void ShouldMapGameToGameSummaryViewModel()

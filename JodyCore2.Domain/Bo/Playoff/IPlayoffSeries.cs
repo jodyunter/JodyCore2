@@ -11,6 +11,7 @@ namespace JodyCore2.Domain.Bo.Playoff
     public interface IPlayoffSeries: IBO
     {
         IPlayoff Playoff { get;  }
+        int Round { get;  }
         ITeam Team1 { get; }
         ITeam Team2 { get; }
         ICompetitionRankingGroup Team1FromGroup { get; }

@@ -15,6 +15,8 @@ namespace JodyCore2.Domain.Bo.Playoff
         public ITeam Team1 { get; set; }
         public ITeam Team2 { get; set; }
 
+        public int Round { get; set; }
+
         public ICompetitionRankingGroup Team1FromGroup { get; set; }
 
         public int Team1FromRank { get; set; }

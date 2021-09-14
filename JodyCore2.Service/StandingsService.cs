@@ -37,7 +37,7 @@ namespace JodyCore2.Service
             //todo CHECSK ON NAME ETC
             using (var context = new JodyContext()) 
             {
-                var standings = new Standings(Guid.NewGuid(), name, startYear, endYear, startDay, endDay, description, division, null);
+                var standings = new Standings(Guid.NewGuid(), name, startYear, startDay, 1, description, division, null, false, false, false, false);
 
                 var teamDtoList = teamsToInclude.Select(t => teamRepository.GetByIdentifier(t.Identifier, context).FirstOrDefault()).ToList();
                 var standingsRecordList = teamDtoList.Select(ta => new StandingsRecord(Guid.NewGuid(), standings, ta, ta.Name, 0, 0, 0, 0, 0, 0, 0, 0, 0)).ToList();

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Service
 {
-    public class TestTeamService:BaseIntegrationTest
+    public class TeamServiceTests:BaseIntegrationTest
     {
         ITeamService teamService;
         

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Test.Service
 {
-    public class TestStandingsService
+    public class StandingsServiceTests
     {
         [Test]
         public void ShouldCreateStandings()

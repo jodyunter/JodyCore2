@@ -8,7 +8,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Data.Equality
 {
-    public class TestGameEquality
+    public class GameEqualityTests
     {
         public static IEnumerable<object[]> GetDataForGameTest()
         {

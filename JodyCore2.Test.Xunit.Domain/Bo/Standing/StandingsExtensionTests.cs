@@ -7,7 +7,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Domain.Bo.Standing
 {
-    public class TestStandings
+    public class StandingsExtensionTests
     {
         [Fact]
         public void NoTestYet()

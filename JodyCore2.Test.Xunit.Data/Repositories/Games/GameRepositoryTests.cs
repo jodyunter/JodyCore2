@@ -11,7 +11,7 @@ using Xunit;
 
 namespace JodyCore2.Test.Xunit.Data.Repositories.Games
 {
-    public class TestGameRepository:TestBaseRepository<Game>
+    public class GameRepositoryTests:BaseRepositoryTests<Game>
     {
         IGameRepository gameRepository;
         ITeamRepository teamRepository;
