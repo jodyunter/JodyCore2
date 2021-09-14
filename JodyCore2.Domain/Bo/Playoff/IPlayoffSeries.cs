@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace JodyCore2.Domain.Bo.Playoff
 {
 
-    public interface IPlayoffSeries
+    public interface IPlayoffSeries: IBO
     {
         IPlayoff Playoff { get;  }
         ITeam Team1 { get; }

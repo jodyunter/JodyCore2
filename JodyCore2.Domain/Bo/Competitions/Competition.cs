@@ -17,6 +17,7 @@ namespace JodyCore2.Domain.Bo.Competitions
         public string Description { get; set; }
         public CompetitionType CompetitionType { get; set; }
         public abstract void ProcessGame(ICompetitionGame game);
+        public abstract IList<ICompetitionGame> CreateGames();
 
         public Competition(CompetitionType type) { CompetitionType = type; }
 

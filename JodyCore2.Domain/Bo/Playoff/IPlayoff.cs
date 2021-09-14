@@ -9,8 +9,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 {
     public interface IPlayoff:ICompetition
     {
-        IList<IPlayoffSeries> Series { get; }
-        IList<IPlayoffGame> CreateNewGames();
+        IList<IPlayoffSeries> Series { get; }        
         void ProcessGame(IPlayoffGame game);
     }
 }

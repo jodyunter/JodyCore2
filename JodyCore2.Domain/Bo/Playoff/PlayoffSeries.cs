@@ -53,7 +53,8 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public abstract void ProcessGame(ICompetitionGame game);
 
-        public PlayoffSeries(SeriesType type) { SeriesType = type; }
+        public PlayoffSeries(SeriesType type):this() { SeriesType = type; }
+        public PlayoffSeries() { Identifier = Guid.NewGuid(); }
 
         public ITeam GetHomeTeamForGame(int gameNumber)
         {
