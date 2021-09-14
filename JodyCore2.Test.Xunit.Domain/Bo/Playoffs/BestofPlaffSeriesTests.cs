@@ -137,9 +137,14 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             Assert.StrictEqual(expectedComplete, series.IsComplete());
         }
 
-        public void ShouldCreateGames()
+        public void ShouldCreateGames(ITeam team1, ITeam team2, int team1Score, int team2Score, int requiredWins, IList<IPlayoffGame> currentGames)
         {
             throw new NotImplementedException();
+        }
+
+        public void ShouldNotCreateGamesUnprocessedGamesExist()
+        {
+
         }
 
         public void ShouldProcessGame()
@@ -150,7 +155,21 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
         [Fact]
         public void ShouldNotProcessGameSeriesComplete()
         {
-            throw new NotImplementedException();
+            var badseries = new BestOfPlayoffSeries();
+
+            var series = new BestOfPlayoffSeries();
+            series.Team1 = new Team(Guid.NewGuid(), "Test 1", 5);
+            series.Team2 = new Team(Guid.NewGuid(), "Test 2", 5);
+            series.RequiredWins = 3;
+            series.Complete = true;
+            series.Team1Score = 2;
+            series.Team2Score = 1;
+
+            var game = new CompetitionGame(Guid.NewGuid(), null, 1, 5, series.Team1, series.Team2, 5, 3, true, false, true);
+
+
+            var exception = Assert.Throws<ApplicationException>(() => series.ProcessGame(game));
+            Assert.Equal(BestOfPlayoffSeries.SERIES_COMPLETE_CANT_PROCESS_GAMES, exception.Message);
         }
 
         [Fact]
