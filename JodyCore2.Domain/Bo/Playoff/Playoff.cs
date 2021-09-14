@@ -58,6 +58,77 @@ namespace JodyCore2.Domain.Bo.Playoff
             }
         }
 
-  
+        public override void SetupCompetition()
+        {
+            //apply teams to all series that already are setup
+            SetupSeriesTeams();
+        }    
+
+        public void SetupSeriesTeams()
+        {
+            Series.ToList().ForEach(series =>
+            {
+                SetupSeriesTeams(series);
+            });
+        }
+        public void SetupSeriesTeams(IPlayoffSeries series)
+        {
+            if (series.Team1 == null)
+            {
+                series.SetTeam1(GetTeamFromGroup(series.Team1FromGroup, series.Team1FromRank));                
+            }
+            if (series.Team2 == null)
+            {
+                series.SetTeam2(GetTeamFromGroup(series.Team2FromGroup, series.Team2FromRank));
+            }
+        }
+
+        public ITeam GetTeamFromGroup(ICompetitionRankingGroup group, int rank)
+        {
+            var ranking = group.GetByRank(rank);
+            if (ranking!= null)
+            {
+                return ranking.Team;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public override void StartCompetition()
+        {
+            SetupSeriesTeams();
+        }
+
+        public bool IsCurrentRoundComplete()
+        {
+            return IsRoundComplete(CurrentRound);
+        }
+
+        public void ProcessEndOfCurrentRound()
+        {
+            if (IsCurrentRoundComplete())
+            {
+                SetupSeriesTeams();
+                bool inCompleteSeriesExists = false;
+                Series.ToList().ForEach(s =>
+                {
+                    if (!s.Complete) inCompleteSeriesExists = true;
+                });
+                if (!inCompleteSeriesExists)
+                {
+                    Complete = true;
+                }
+                else if (IsRoundReady(CurrentRound + 1))
+                {
+                    CurrentRound++;
+                }
+                else
+                {
+                    throw new ApplicationException("Could not prepare next round, wtf?");
+                }
+            }
+        }
     }
 }

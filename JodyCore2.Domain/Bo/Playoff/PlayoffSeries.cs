@@ -45,6 +45,8 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public string HomeString { get; set; }
 
+        public bool Processed { get; set; }
+
         public abstract IList<ICompetitionGame> CreateGames();
 
         public abstract ITeam GetLoser();
@@ -54,6 +56,24 @@ namespace JodyCore2.Domain.Bo.Playoff
         public abstract bool IsComplete();
 
         public abstract void ProcessGame(ICompetitionGame game);
+
+        public virtual void SetTeam1(ITeam team)
+        {
+            Team1 = team;
+        }
+
+        public virtual void SetTeam2(ITeam team)
+        {
+            Team2 = team;
+        }
+
+        public void Process()
+        {
+            var winner = GetWinner();
+            var loser = GetLoser();
+            
+            Processed = true;
+        }
 
         public PlayoffSeries(SeriesType type):this()
         { 

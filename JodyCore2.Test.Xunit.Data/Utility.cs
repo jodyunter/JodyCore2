@@ -36,5 +36,15 @@ namespace JodyCore2.Test.Xunit.Data
         {
             throw new NotImplementedException();
         }
+
+        public override void SetupCompetition()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void StartCompetition()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

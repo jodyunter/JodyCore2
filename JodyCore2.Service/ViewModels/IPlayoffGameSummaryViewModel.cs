@@ -8,6 +8,8 @@ namespace JodyCore2.Service.ViewModels
 {
     public interface IPlayoffGameSummaryViewModel:IGameSummaryViewModel
     {
+        Guid SeriesIdentifier { get; }
         string Series { get;  }
+        int Round { get; }
     }
 }

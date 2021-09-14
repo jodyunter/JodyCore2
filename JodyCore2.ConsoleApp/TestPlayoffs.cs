@@ -42,39 +42,58 @@ namespace JodyCore2.ConsoleApp
             {
                 Round = 1,
                 Playoff = playoff,
-                Team1 = team1,
-                Team2 = team2,
                 RequiredWins = 4,
-                Name = "Series 1"
+                Name = "Series 1",
+                Team1FromGroup = rankingGroup,
+                Team1FromRank = 1,
+                Team2FromGroup = rankingGroup,
+                Team2FromRank = 4
             };
 
             var series2 = new BestOfPlayoffSeries
             {
                 Round = 1,
                 Playoff = playoff,
-                Team1 = team3,
-                Team2 = team4,
                 RequiredWins = 4,
-                Name = "Series 2"
+                Name = "Series 2",
+                Team1FromGroup = rankingGroup,
+                Team1FromRank = 2,
+                Team2FromGroup = rankingGroup,
+                Team2FromRank = 3
+            };
+
+            var series3 = new BestOfPlayoffSeries
+            {
+                Round = 2,
+                Playoff = playoff,
+                RequiredWins = 4,
+                Name = "Final"
+
             };
 
 
             playoff.Series.Add(series1);
             playoff.Series.Add(series2);
 
-            while (!playoff.IsRoundComplete(playoff.CurrentRound))
-            {
-                var games = playoff.CreateGames();
-                //var random = new Random(554211);
-                var random = new Random();
-                games.ToList().ForEach(g =>
-                {
-                    g.Play(random);
-                    playoff.ProcessGame(g);
-                    Console.WriteLine(PrintPlayoffGame((IPlayoffGame)g));
-                });
-            }
+            playoff.SetupCompetition();
 
+            while (!playoff.Complete)
+            {
+                while (!playoff.IsRoundComplete(playoff.CurrentRound))
+                {
+                    var games = playoff.CreateGames();
+                    //var random = new Random(554211);
+                    var random = new Random();
+                    games.ToList().ForEach(g =>
+                    {
+                        g.Play(random);
+                        playoff.ProcessGame(g);
+                        Console.WriteLine(PrintPlayoffGame((IPlayoffGame)g));
+                    });
+                }
+
+                playoff.ProcessEndOfCurrentRound();
+            }
 
             Console.WriteLine(PrintSeries(series1));
             Console.WriteLine(PrintSeries(series2));
@@ -82,13 +101,13 @@ namespace JodyCore2.ConsoleApp
 
         public static string PrintSeries(IPlayoffSeries series)
         {
-            string format = "{0}. {1} - {2} : {3} - {4}";
-            return string.Format(format, series.Name, series.Team1.Name, series.Team1Score, series.Team2Score, series.Team2.Name);
+            string format = "R{5} {0}. {1} - {2} : {3} - {4}";
+            return string.Format(format, series.Name, series.Team1.Name, series.Team1Score, series.Team2Score, series.Team2.Name, series.Round);
         }
         
         public static string PrintPlayoffGame(IPlayoffGame g)
         {
-            return GameView.GetPlayoffGameSummaryView(new PlayoffGameSummaryViewModel(g.Identifier, g.Series.Name, g.Day, g.Year, g.Home.Identifier, g.Home.Name,
+            return GameView.GetPlayoffGameSummaryView(new PlayoffGameSummaryViewModel(g.Identifier, g.Series.Identifier, g.Series.Name, g.Series.Round, g.Day, g.Year, g.Home.Identifier, g.Home.Name,
                         g.Away.Identifier, g.Away.Name, g.HomeScore, g.AwayScore, g.Complete));
         }
     }

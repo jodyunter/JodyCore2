@@ -13,6 +13,7 @@ namespace JodyCore2.Domain.Bo.Rankings
         IList<IRanking> Rankings { get; }
 
         IRanking GetRankingByTeam(ITeam team);
+        IRanking GetByRank(int rank);
         void SetRank(ITeam team, int rank);
     }
 }
