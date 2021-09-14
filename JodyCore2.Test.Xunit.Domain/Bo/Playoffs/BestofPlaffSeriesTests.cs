@@ -137,9 +137,57 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             Assert.StrictEqual(expectedComplete, series.IsComplete());
         }
 
-        public void ShouldCreateGames(ITeam team1, ITeam team2, int team1Score, int team2Score, int requiredWins, IList<IPlayoffGame> currentGames)
+        public static IEnumerable<object[]> GetDataForCreateGames()
         {
-            throw new NotImplementedException();
+            var team1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var team2 = new Team(Guid.NewGuid(), "Team 2", 5);
+
+            var series = new BestOfPlayoffSeries();
+            series.Team1 = team1;
+            series.Team2 = team2;
+            series.Complete = false;
+            series.RequiredWins = 2;
+            series.HomeString = "";
+
+            
+            yield return new object[] { series, 0, 0, new List<IPlayoffGame>(), 2 };
+            yield return new object[] { series, 1, 0, new List<IPlayoffGame>(), 1 };
+            yield return new object[] { series, 2, 0, new List<IPlayoffGame>(), 0 };
+            yield return new object[] { series, 0, 0, new List<IPlayoffGame>(), 2 };
+            yield return new object[] { series, 0, 1, new List<IPlayoffGame>(), 1 };
+            yield return new object[] { series, 0, 2, new List<IPlayoffGame>(), 0 };
+            yield return new object[] { series, 1, 1, new List<IPlayoffGame>(), 1 };
+            yield return new object[] { series, 2, 1, new List<IPlayoffGame>(), 0 };
+            yield return new object[] { series, 1, 2, new List<IPlayoffGame>(), 0 };
+
+            var inCompleteGame1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 0, false, false, false);
+            var inCompleteGame2 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 0, false, false, false);
+
+            yield return new object[] { series, 0, 0, new List<IPlayoffGame>() { inCompleteGame1 }, 1 };
+            yield return new object[] { series, 0, 0, new List<IPlayoffGame>() { inCompleteGame1, inCompleteGame2 }, 0 };
+
+            yield return new object[] { series, 1, 0, new List<IPlayoffGame>() { inCompleteGame1 }, 0 };
+            yield return new object[] { series, 1, 1, new List<IPlayoffGame>() { inCompleteGame1 }, 0 };
+
+            var completeGame1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 0, true, true, false);
+            var completeGame2 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 0, true, true, false);
+
+            yield return new object[] { series, 1, 0, new List<IPlayoffGame>() { completeGame1 }, 1 };
+            yield return new object[] { series, 1, 1, new List<IPlayoffGame>() { completeGame1, completeGame1 }, 1 };
+            yield return new object[] { series, 1, 1, new List<IPlayoffGame>() { completeGame1, inCompleteGame2 }, 0 };
+        }
+
+        [Theory]
+        [MemberData(nameof(GetDataForCreateGames))]
+        public void ShouldCreateGames(PlayoffSeries series, int team1Score, int team2Score, IList<IPlayoffGame> currentGames, int expectedNewGames)
+        {
+            series.Team1Score = team1Score;
+            series.Team2Score = team2Score;
+            series.Games = currentGames;
+
+            var newGames = series.CreateGames();
+
+            Assert.StrictEqual(expectedNewGames, newGames.Count);
         }
 
         public void ShouldNotCreateGamesUnprocessedGamesExist()

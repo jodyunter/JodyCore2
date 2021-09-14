@@ -59,6 +59,7 @@ namespace JodyCore2.Domain.Bo.Playoff
         public ITeam GetHomeTeamForGame(int gameNumber)
         {
             int arrayNumber = gameNumber - 1;
+            if (HomeString == null) HomeString = "";
 
             if (HomeString.Length < gameNumber)
             {
