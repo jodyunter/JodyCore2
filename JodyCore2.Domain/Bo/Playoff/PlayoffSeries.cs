@@ -71,6 +71,18 @@ namespace JodyCore2.Domain.Bo.Playoff
         {
             var winner = GetWinner();
             var loser = GetLoser();
+
+            if (WinnerGoesTo != null)
+            {
+                var winnerRank = WinnerRankFrom.GetRankingByTeam(winner).Rank;
+                WinnerGoesTo.SetRank(winner, winnerRank);
+            }
+            
+            if (LoserGoesTo != null)
+            {
+                var loserRank = LoserRankFrom.GetRankingByTeam(loser).Rank;
+                LoserGoesTo.SetRank(loser, loserRank);
+            }
             
             Processed = true;
         }

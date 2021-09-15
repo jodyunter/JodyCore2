@@ -15,5 +15,7 @@ namespace JodyCore2.Domain.Bo.Rankings
         IRanking GetRankingByTeam(ITeam team);
         IRanking GetByRank(int rank);
         void SetRank(ITeam team, int rank);
+        void AddRank(ITeam team, int rank);
+        IRanking GetByOrder(int rank);
     }
 }

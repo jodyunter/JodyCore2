@@ -30,8 +30,32 @@ namespace JodyCore2.Domain.Bo.Rankings
 
         public void SetRank(ITeam team, int rank)
         {
+            var currentRank = Rankings.Where(r => r.Team.Identifier == team.Identifier).FirstOrDefault();
+                
+            if (currentRank == null)
+            {
+                AddRank(team, rank);
+            }
+            else
+            {
+                currentRank.SetRank(rank);
+            }
+                
+        }        
 
-            Rankings.Where(r => r.Team.Identifier == team.Identifier).First().SetRank(rank);
+        public virtual IRanking GetByOrder(int rank)
+        {
+            if (Rankings.Count() < rank)
+            {
+                return null;
+            }
+
+            return Rankings.OrderBy(t => t.Rank).ToArray()[rank - 1];
+        }
+
+        public virtual void AddRank(ITeam team, int rank)
+        {
+            Rankings.Add(new Ranking(Guid.NewGuid(), team, rank, this));
         }
 
         public IRanking GetByRank(int rank)

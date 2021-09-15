@@ -36,6 +36,8 @@ namespace JodyCore2.ConsoleApp
             rankingGroup.Rankings.Add(new CompetitionRanking(Guid.NewGuid(), team3, 3, rankingGroup));
             rankingGroup.Rankings.Add(new CompetitionRanking(Guid.NewGuid(), team4, 4, rankingGroup));
 
+            var finalGroup = new CompetitionRankingGroup(Guid.NewGuid(), playoff, "Final", new List<ICompetitionRanking>());            
+
             playoff.RankingGroups.Add(rankingGroup);
 
             var series1 = new BestOfPlayoffSeries
@@ -47,7 +49,9 @@ namespace JodyCore2.ConsoleApp
                 Team1FromGroup = rankingGroup,
                 Team1FromRank = 1,
                 Team2FromGroup = rankingGroup,
-                Team2FromRank = 4
+                Team2FromRank = 4,
+                WinnerGoesTo = finalGroup,
+                WinnerRankFrom = rankingGroup
             };
 
             var series2 = new BestOfPlayoffSeries
@@ -59,7 +63,9 @@ namespace JodyCore2.ConsoleApp
                 Team1FromGroup = rankingGroup,
                 Team1FromRank = 2,
                 Team2FromGroup = rankingGroup,
-                Team2FromRank = 3
+                Team2FromRank = 3,
+                WinnerGoesTo = finalGroup,
+                WinnerRankFrom = rankingGroup
             };
 
             var series3 = new BestOfPlayoffSeries
@@ -67,13 +73,18 @@ namespace JodyCore2.ConsoleApp
                 Round = 2,
                 Playoff = playoff,
                 RequiredWins = 4,
-                Name = "Final"
-
+                Name = "Final",
+                Team1FromGroup = finalGroup,
+                Team1FromRank = 1,
+                Team2FromGroup = finalGroup,
+                Team2FromRank = 2
+                
             };
 
 
             playoff.Series.Add(series1);
             playoff.Series.Add(series2);
+            playoff.Series.Add(series3);
 
             playoff.SetupCompetition();
 
@@ -95,8 +106,10 @@ namespace JodyCore2.ConsoleApp
                 playoff.ProcessEndOfCurrentRound();
             }
 
+
             Console.WriteLine(PrintSeries(series1));
             Console.WriteLine(PrintSeries(series2));
+            Console.WriteLine(PrintSeries(series3));
         }
 
         public static string PrintSeries(IPlayoffSeries series)

@@ -61,12 +61,12 @@ namespace JodyCore2.Domain.Bo.Playoff
         public override void SetupCompetition()
         {
             //apply teams to all series that already are setup
-            SetupSeriesTeams();
+            SetupSeriesTeams(CurrentRound);
         }    
 
-        public void SetupSeriesTeams()
+        public void SetupSeriesTeams(int roundNumber)
         {
-            Series.ToList().ForEach(series =>
+            Series.Where(s => s.Round == roundNumber).ToList().ForEach(series =>
             {
                 SetupSeriesTeams(series);
             });
@@ -83,9 +83,10 @@ namespace JodyCore2.Domain.Bo.Playoff
             }
         }
 
+        //instead of getting the specific rank, we should ORDER and pick the team in that order
         public ITeam GetTeamFromGroup(ICompetitionRankingGroup group, int rank)
         {
-            var ranking = group.GetByRank(rank);
+            var ranking = group.GetByOrder(rank);
             if (ranking!= null)
             {
                 return ranking.Team;
@@ -98,7 +99,8 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public override void StartCompetition()
         {
-            SetupSeriesTeams();
+            CurrentRound = 1;
+            SetupSeriesTeams(1);
         }
 
         public bool IsCurrentRoundComplete()
@@ -109,24 +111,29 @@ namespace JodyCore2.Domain.Bo.Playoff
         public void ProcessEndOfCurrentRound()
         {
             if (IsCurrentRoundComplete())
-            {
-                SetupSeriesTeams();
-                bool inCompleteSeriesExists = false;
+            {                
+                bool inCompleteSeriesExists = false;           
+                //check to see if the Playoff is complete and to process complete and unprocessed series.
                 Series.ToList().ForEach(s =>
                 {
                     if (!s.Complete) inCompleteSeriesExists = true;
+                    else
+                    {
+                        if (!s.Processed && s.IsComplete())
+                        {
+                            s.Process();
+                        }
+                    }
                 });
+
                 if (!inCompleteSeriesExists)
                 {
                     Complete = true;
                 }
-                else if (IsRoundReady(CurrentRound + 1))
-                {
-                    CurrentRound++;
-                }
                 else
                 {
-                    throw new ApplicationException("Could not prepare next round, wtf?");
+                    CurrentRound += 1;
+                    SetupSeriesTeams(CurrentRound);
                 }
             }
         }
