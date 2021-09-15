@@ -13,5 +13,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
         public int Day { get; }
         public ITeam Home { get; }
         public ITeam Away { get; }
+        void SetYear(int year);
+        void SetDay(int day);
     }
 }

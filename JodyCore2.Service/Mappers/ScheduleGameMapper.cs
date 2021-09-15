@@ -10,7 +10,7 @@ namespace JodyCore2.Service.Mappers
 {
     public static class ScheduleGameMapper
     {
-        public static IScheduleGameViewModel ScheduleGameToScheduleGameViewModel(ScheduleGame game)
+        public static IScheduleGameViewModel ScheduleGameToScheduleGameViewModel(IScheduleGame game)
         {
             return new ScheduleGameViewModel(game.Identifier, game.Year, game.Day, game.Home, game.Away);
         }

@@ -109,7 +109,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForCountTests))]
-        public void ShouldCountTeamsInList(IList<ITeam> teamList, IList<ScheduleGame> games, int teamPositionToCheck, int expectedHome, int expectedAway)
+        public void ShouldCountTeamsInList(IList<ITeam> teamList, IList<IScheduleGame> games, int teamPositionToCheck, int expectedHome, int expectedAway)
         {
 
             var counts = Scheduler.CountOfGamesPlayedInList(games, teamList[teamPositionToCheck]);
@@ -133,7 +133,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForDoesTeamPlayInGame))]
-        public void TestDoTeamsPlayInGame(ScheduleGame game, ITeam team, bool expectedResult)
+        public void TestDoTeamsPlayInGame(IScheduleGame game, ITeam team, bool expectedResult)
         {
             Assert.Equal(expectedResult, Scheduler.DoesTeamPlayInGame(game, team));
         }
@@ -147,7 +147,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
             var guid5 = new Team(Guid.NewGuid(), "Team 5", 5);
             var guid6 = new Team(Guid.NewGuid(), "Team 6", 5);
 
-            var games = new List<ScheduleGame>()
+            var games = new List<IScheduleGame>()
             {
                 new ScheduleGame(Guid.NewGuid(), 1, 1, guid1, guid2),
                 new ScheduleGame(Guid.NewGuid(), 1, 1, guid3, guid4)
@@ -164,7 +164,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForDoesTeamPlayInList))]
-        public void TestDoesTeamPlayInList(IList<ScheduleGame> games, ITeam team, bool expectedResults)
+        public void TestDoesTeamPlayInList(IList<IScheduleGame> games, ITeam team, bool expectedResults)
         {
             Assert.Equal(expectedResults, Scheduler.DoesTeamPlayInList(games, team));
         }
@@ -192,7 +192,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForDoesATeamPlayInList))]
-        public void TestDoesATeamPlayInLilst(IList<ScheduleGame> games, IList<ITeam> teams, bool expectedResults)
+        public void TestDoesATeamPlayInLilst(IList<IScheduleGame> games, IList<ITeam> teams, bool expectedResults)
         {
             Assert.Equal(expectedResults, Scheduler.DoTeamsPlayInList(games, teams));
         }
@@ -236,7 +236,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
                     { 2, 3 },
                     { 4, 5 }
                 }, teams,
-                new List<ScheduleGame>()
+                new List<IScheduleGame>()
                 {
                     new ScheduleGame(Guid.NewGuid(), 5, 2, teams[0], teams[1]),
                     new ScheduleGame(Guid.NewGuid(), 5, 2, teams[2], teams[3]),
@@ -254,7 +254,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
                     {8, 3 },
                     {2, 5 }
                 }, teams,
-                new List<ScheduleGame>()
+                new List<IScheduleGame>()
                 {
                     new ScheduleGame(Guid.NewGuid(), 5, 2, teams[5], teams[9]),
                     new ScheduleGame(Guid.NewGuid(), 5, 2, teams[8], teams[3]),
@@ -266,7 +266,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForCreateGamesFromMatrix))]
-        public void ShouldCreateGamesFromMatrix(int[,] matrix, IList<ITeam> teams, IList<ScheduleGame> expectedGames, int count)
+        public void ShouldCreateGamesFromMatrix(int[,] matrix, IList<ITeam> teams, IList<IScheduleGame> expectedGames, int count)
         {
             var games = Scheduler.CreateGamesFromMatrix(matrix, teams, 5, 2);
 

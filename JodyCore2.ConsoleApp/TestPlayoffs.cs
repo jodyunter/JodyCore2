@@ -2,6 +2,7 @@
 using JodyCore2.Domain.Bo;
 using JodyCore2.Domain.Bo.Competitions;
 using JodyCore2.Domain.Bo.Playoff;
+using JodyCore2.Domain.Bo.Scheduling;
 using JodyCore2.Service.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -62,19 +63,32 @@ namespace JodyCore2.ConsoleApp
             playoff.SetupCompetition();
             playoff.StartCompetition();
 
+            var scheduledGames = new Dictionary<int, IList<IScheduleGame>>();
+            var lastDayPlayed = 0;
+
             while (!playoff.Complete)
             {
                 while (!playoff.IsRoundComplete(playoff.CurrentRound))
                 {
+                    //create needed games
                     var games = playoff.CreateGames();
+                    //schedule them
+                    Scheduler.AddGamesToSchedule(games.ToList<IScheduleGame>(), playoff.StartYear, lastDayPlayed + 1, scheduledGames);
+                    
+                    //get ready for next day to play
+                    lastDayPlayed += 1;
+
                     //var random = new Random(554211);
                     var random = new Random();
-                    games.ToList().ForEach(g =>
+                    scheduledGames[lastDayPlayed].ToList().ForEach(sg =>
                     {
+                        var g = (IPlayoffGame)sg;
                         g.Play(random);
                         playoff.ProcessGame(g);
-                        Console.WriteLine(PrintPlayoffGame((IPlayoffGame)g));
+                        Console.WriteLine(PrintPlayoffGame(g));
                     });
+
+                    Console.ReadLine();
                 }
 
                 playoff.ProcessEndOfCurrentRound();

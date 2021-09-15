@@ -22,5 +22,15 @@ namespace JodyCore2.Domain.Bo.Scheduling
             Home = home;
             Away = away;
         }
+
+        public void SetYear(int year)
+        {
+            Year = year;
+        }
+
+        public void SetDay(int day)
+        {
+            Day = day;
+        }
     }
 }

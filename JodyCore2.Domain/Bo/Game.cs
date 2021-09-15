@@ -35,6 +35,16 @@ namespace JodyCore2.Domain.Bo
             CanTie = canTie;
         }
 
+        public void SetYear(int year)
+        {
+            Year = year;
+        }
+
+        public void SetDay(int day)
+        {
+            Day = day;
+        }
+
         public void Play(Random r)
         {
             var homeScore = r.Next(6);

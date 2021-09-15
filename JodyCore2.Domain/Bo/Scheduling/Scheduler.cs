@@ -9,27 +9,84 @@ namespace JodyCore2.Domain.Bo.Scheduling
     public class Scheduler
     {
         public const int NO_TEAM_VALUE = -1;
-                
+                    
+        //no test?
+
+        public static void AddGamesToSchedule(IList<IScheduleGame> games, int year, int startingDay, IDictionary<int, IList<IScheduleGame>> currentGames)
+        {
+            //convert currentGames into a dictionary
+            games.ToList().ForEach(g =>
+            {
+                int dayToAddGameOn = startingDay;
+                bool added = false;
+
+                while (!added)
+                {
+
+                    if (!currentGames.ContainsKey(dayToAddGameOn))
+                    {
+                        currentGames[dayToAddGameOn] = new List<IScheduleGame>();
+                    }
+
+                    if (DoTeamsPlayInList(currentGames[dayToAddGameOn], new List<ITeam>() { g.Home, g.Away }))
+                    {
+                        dayToAddGameOn++;
+                    }
+                    else
+                    {
+                        g.SetDay(dayToAddGameOn);
+                        g.SetYear(year);
+                        currentGames[dayToAddGameOn].Add(g);
+                        added = true;
+                    }
+                }
+            });
+        }
+        public static void AddGamesToSchedule(IList<IScheduleGame> games, int year, int startingDay, IList<IScheduleGame> currentGames)
+        {
+            var dictionary = new Dictionary<int, IList<IScheduleGame>>();
+
+            currentGames.ToList().ForEach(cg =>
+            {
+                if (!dictionary.ContainsKey(cg.Day) && cg.Day >= startingDay) //we only care about days we can create games on
+                {
+                    dictionary[cg.Day] = new List<IScheduleGame>();
+                }
+
+                dictionary[cg.Day] = new List<IScheduleGame>();
+            });
+
+            AddGamesToSchedule(games, year, startingDay, dictionary);
+
+            var newList = new List<IScheduleGame>();
+
+            dictionary.Keys.ToList().ForEach(key =>
+            {
+                newList.AddRange(dictionary[key]);
+            });
+
+            games = newList;
+        }
         //make sure this gets tested
-        public static Dictionary<int, IList<ScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<ITeam> teams)
+        public static Dictionary<int, IList<IScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<ITeam> teams)
         {
             int totalTeams = teams.Count;
 
             int extraMatches = totalTeams % 2;
             int totalDays = totalTeams - 1 + extraMatches; //a perfect schedule has each team playing everyday, but if it's odd number of teams, they get a day of rest.
 
-            var games = new Dictionary<int, IList<ScheduleGame>>();
+            var games = new Dictionary<int, IList<IScheduleGame>>();
 
             //initialize the matrix
             int[,] matrix = SetupMatrix(totalTeams, extraMatches);
 
-            var gameList = new Dictionary<int, IList<ScheduleGame>>();
+            var gameList = new Dictionary<int, IList<IScheduleGame>>();
 
             for (int day = startingDay; day < (startingDay + totalDays); day++)
             {
                 if (!gameList.ContainsKey(day))
                 {
-                    gameList.Add(day, new List<ScheduleGame>());
+                    gameList.Add(day, new List<IScheduleGame>());
                 }                
 
                 if (day != startingDay)
@@ -46,9 +103,9 @@ namespace JodyCore2.Domain.Bo.Scheduling
             return games;
         }
 
-        public static IList<ScheduleGame> CreateGamesFromMatrix(int[,] matrix, IList<ITeam> teams, int year, int day)
+        public static IList<IScheduleGame> CreateGamesFromMatrix(int[,] matrix, IList<ITeam> teams, int year, int day)
         {
-            var games = new List<ScheduleGame>();
+            var games = new List<IScheduleGame>();
             
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
@@ -57,6 +114,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
                     var home = teams[matrix[i, 0]];
                     var away = teams[matrix[i, 1]];
 
+                    //this needs to be a passed in method
                     var game = new ScheduleGame(Guid.NewGuid(), year, day, home, away);
 
                     games.Add(game);
@@ -143,7 +201,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
         //some validation functions
 
         //home,away
-        public static int[] CountOfGamesPlayedInList(IList<ScheduleGame> games, ITeam team)
+        public static int[] CountOfGamesPlayedInList(IList<IScheduleGame> games, ITeam team)
         {
             int[] count = new int[2];
 
@@ -167,7 +225,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
         }
 
-        public static bool DoTeamsPlayInList(IList<ScheduleGame> games, IList<ITeam> teams)
+        public static bool DoTeamsPlayInList(IList<IScheduleGame> games, IList<ITeam> teams)
         {
             bool aTeamPlaysinList = false;
 
@@ -182,7 +240,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
         }
 
         //TODO: Test these!
-        public static bool DoesTeamPlayInList(IList<ScheduleGame> games, ITeam team)
+        public static bool DoesTeamPlayInList(IList<IScheduleGame> games, ITeam team)
         {
             bool doesPlay = false;
 
@@ -197,7 +255,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
             return doesPlay;
         }
 
-        public static bool DoesTeamPlayInGame(ScheduleGame game, ITeam team)
+        public static bool DoesTeamPlayInGame(IScheduleGame game, ITeam team)
         {
             if (game.Home.Equals(team) || game.Away.Equals(team))
             {

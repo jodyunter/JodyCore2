@@ -9,11 +9,11 @@ namespace JodyCore2.Domain.Bo.Scheduling
     public class Schedule
     {
         public int Year { get; set; }
-        public IDictionary<int, IList<ScheduleGame>> Games { get; set; }
+        public IDictionary<int, IList<IScheduleGame>> Games { get; set; }
 
         //need something to deal with existing vs new games
         //current idea is to have the games with an identifier not be created
-        public void AddDayOfGamesToSchedule(IList<ScheduleGame> games, int dayToStartAt)
+        public void AddDayOfGamesToSchedule(IList<IScheduleGame> games, int dayToStartAt)
         {
             int day = -1;
 
@@ -50,7 +50,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
             else
             {
                 //set the games in the list to the appropriate day
-                games.ToList().ForEach(g => g.Day = dayToStartAt);
+                games.ToList().ForEach(g => g.SetDay(dayToStartAt));
                 //add the games to the schedule
                 Games.Add(dayToStartAt, games);
             }
