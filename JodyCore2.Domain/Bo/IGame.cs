@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JodyCore2.Domain.Bo.Scheduling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,13 +8,8 @@ using System.Threading.Tasks;
 namespace JodyCore2.Domain.Bo
 {
     //todo add a game stats class to keep track of all game stats
-    public interface IGame
-    {
-        Guid Identifier { get; }
-        int Day { get; }
-        int Year { get; }
-        ITeam Home { get; }
-        ITeam Away { get; }
+    public interface IGame:IScheduleGame
+    {        
         int HomeScore { get; }
         int AwayScore { get; }
         bool Complete { get; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JodyCore2.Domain.Bo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace JodyCore2.Service.ViewModels
         Guid Identifier { get; set; }
         int Year { get; set; }
         int Day { get; set; }
-        Guid Home { get; set; }
-        Guid Away { get; set; }
+        ITeam Home { get; set; }
+        ITeam Away { get; set; }
     }
 }

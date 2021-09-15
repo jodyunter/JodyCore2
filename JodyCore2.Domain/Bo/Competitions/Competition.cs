@@ -21,8 +21,22 @@ namespace JodyCore2.Domain.Bo.Competitions
         public CompetitionType CompetitionType { get; set; }
         public abstract void ProcessGame(ICompetitionGame game);
         public abstract IList<ICompetitionGame> CreateGames();
-        public abstract void SetupCompetition();
-        public abstract void StartCompetition();      
+        public virtual void SetupCompetition()
+        {
+            Setup = true;
+        }
+        public virtual void StartCompetition()
+        {
+            Started = true;
+        }
+        public virtual void CompleteCompetition()
+        {
+            Complete = true;
+        }
+        public virtual void ProcessCompetition()
+        {
+            Processed = true;
+        }
 
 
         public Competition(CompetitionType type) { CompetitionType = type; }

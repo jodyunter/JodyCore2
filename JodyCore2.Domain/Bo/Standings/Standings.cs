@@ -69,15 +69,5 @@ namespace JodyCore2.Domain.Bo.Standings
             hash.Add(Division);            
             return hash.ToHashCode();
         }
-
-        public override void SetupCompetition()
-        {
-            Setup = true;
-        }
-
-        public override void StartCompetition()
-        {
-            Started = true;
-        }
     }
 }

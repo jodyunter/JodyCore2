@@ -22,6 +22,22 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public BestOfPlayoffSeries() : base(SeriesType.BestOf) { }
 
+        public BestOfPlayoffSeries(Guid identifier, IPlayoff playoff, string name, int round, int requiredWins, ITeam team1, ITeam team2,
+            ICompetitionRankingGroup team1FromGroup, int team1FromRank,
+            ICompetitionRankingGroup team2FromGroup, int team2FromRank,
+            ICompetitionRankingGroup winnerGoesTo, ICompetitionRankingGroup winnerRankFrom,
+            ICompetitionRankingGroup loserGoesTo, ICompetitionRankingGroup loserRankFrom,
+            IList<IPlayoffGame> games,
+            int team1Score, int team2Score, string homeString,
+            bool processed, bool complete):base(identifier, playoff, name, round, team1, team2, 
+                team1FromGroup, team1FromRank, team2FromGroup, team2FromRank,
+                winnerGoesTo,winnerRankFrom, loserGoesTo, loserRankFrom, games, 
+                team1Score, team2Score, homeString, processed, complete, SeriesType.BestOf)
+            
+        {
+            RequiredWins = requiredWins;
+        }
+
         public override IList<ICompetitionGame> CreateGames()
         {
             var newGames = new List<ICompetitionGame>();

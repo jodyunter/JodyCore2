@@ -62,6 +62,8 @@ namespace JodyCore2.Domain.Bo.Playoff
         {
             //apply teams to all series that already are setup
             SetupSeriesTeams(CurrentRound);
+            base.SetupCompetition();
+            
         }    
 
         public void SetupSeriesTeams(int roundNumber)
@@ -101,6 +103,7 @@ namespace JodyCore2.Domain.Bo.Playoff
         {
             CurrentRound = 1;
             SetupSeriesTeams(1);
+            base.StartCompetition();
         }
 
         public bool IsCurrentRoundComplete()
@@ -118,7 +121,7 @@ namespace JodyCore2.Domain.Bo.Playoff
                 {
                     if (!s.Complete) inCompleteSeriesExists = true;
                     else
-                    {
+                    {                        
                         if (!s.Processed && s.IsComplete())
                         {
                             s.Process();

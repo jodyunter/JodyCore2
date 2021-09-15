@@ -9,9 +9,9 @@ namespace JodyCore2.Domain.Bo.Scheduling
     public class Scheduler
     {
         public const int NO_TEAM_VALUE = -1;
-
+                
         //make sure this gets tested
-        public static Dictionary<int, IList<ScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<Guid> teams)
+        public static Dictionary<int, IList<ScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<ITeam> teams)
         {
             int totalTeams = teams.Count;
 
@@ -46,7 +46,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
             return games;
         }
 
-        public static IList<ScheduleGame> CreateGamesFromMatrix(int[,] matrix, IList<Guid> teams, int year, int day)
+        public static IList<ScheduleGame> CreateGamesFromMatrix(int[,] matrix, IList<ITeam> teams, int year, int day)
         {
             var games = new List<ScheduleGame>();
             
@@ -143,7 +143,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
         //some validation functions
 
         //home,away
-        public static int[] CountOfGamesPlayedInList(IList<ScheduleGame> games, Guid team)
+        public static int[] CountOfGamesPlayedInList(IList<ScheduleGame> games, ITeam team)
         {
             int[] count = new int[2];
 
@@ -167,21 +167,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
         }
 
-        public static bool DoTeamsPlayInList(IList<ScheduleGame> games, IList<Guid> teams)
-        {
-            bool aTeamPlaysinList = false;
-
-            teams.ToList().ForEach(t =>
-            {
-                var teamPlaysInLlist = Scheduler.DoesTeamPlayInList(games, t);
-                if (teamPlaysInLlist)
-                    aTeamPlaysinList = true;
-            });
-
-            return aTeamPlaysinList;
-        }
-
-        public static bool DoTeamsPlayInList(IList<IGame> games, IList<Guid> teams)
+        public static bool DoTeamsPlayInList(IList<ScheduleGame> games, IList<ITeam> teams)
         {
             bool aTeamPlaysinList = false;
 
@@ -196,7 +182,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
         }
 
         //TODO: Test these!
-        public static bool DoesTeamPlayInList(IList<ScheduleGame> games, Guid team)
+        public static bool DoesTeamPlayInList(IList<ScheduleGame> games, ITeam team)
         {
             bool doesPlay = false;
 
@@ -211,22 +197,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
             return doesPlay;
         }
 
-        public static bool DoesTeamPlayInList(IList<IGame> games, Guid team)
-        {
-            bool doesPlay = false;
-
-            for (int i = 0; (i < games.Count) && !doesPlay; i++)
-            {
-                if (DoesTeamPlayInGame(games[i], team))
-                {
-                    doesPlay = true;
-                }
-            }
-
-            return doesPlay;
-        }
-
-        public static bool DoesTeamPlayInGame(ScheduleGame game, Guid team)
+        public static bool DoesTeamPlayInGame(ScheduleGame game, ITeam team)
         {
             if (game.Home.Equals(team) || game.Away.Equals(team))
             {
@@ -236,14 +207,5 @@ namespace JodyCore2.Domain.Bo.Scheduling
             return false;
         }
 
-        public static bool DoesTeamPlayInGame(IGame game, Guid team)
-        {
-            if (game.Home.Identifier.Equals(team) || game.Away.Identifier.Equals(team))
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }

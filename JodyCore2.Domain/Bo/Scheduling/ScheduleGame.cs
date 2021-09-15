@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo.Scheduling
 {
-    public class ScheduleGame
+    public class ScheduleGame:IScheduleGame
     {        
         public Guid Identifier { get; set; }
         public int Year { get; set; }
         public int Day { get; set; }
-        public Guid Home { get; set; }
-        public Guid Away { get; set; }
+        public ITeam Home { get; set; }
+        public ITeam Away { get; set; }
 
-        public ScheduleGame(Guid identifier, int year, int day, Guid home, Guid away)
+        public ScheduleGame(Guid identifier, int year, int day, ITeam home, ITeam away)
         {
             Identifier = identifier;
             Year = year;

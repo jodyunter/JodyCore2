@@ -94,6 +94,39 @@ namespace JodyCore2.Domain.Bo.Playoff
         }
         public PlayoffSeries() { Identifier = Guid.NewGuid(); }
 
+        protected PlayoffSeries(Guid identifier, IPlayoff playoff, string name, int round, ITeam team1, ITeam team2,
+            ICompetitionRankingGroup team1FromGroup, int team1FromRank,
+            ICompetitionRankingGroup team2FromGroup, int team2FromRank,
+            ICompetitionRankingGroup winnerGoesTo, ICompetitionRankingGroup winnerRankFrom, 
+            ICompetitionRankingGroup loserGoesTo, ICompetitionRankingGroup loserRankFrom, 
+            IList<IPlayoffGame> games, 
+            int team1Score, int team2Score, string homeString, 
+            bool processed, bool complete, 
+            SeriesType seriesType)
+        {
+            Identifier = identifier;
+            Playoff = playoff;
+            Name = name;
+            Round = round;
+            Team1 = team1;
+            Team2 = team2;
+            Team1FromGroup = team1FromGroup;
+            Team1FromRank = team1FromRank;
+            Team2FromGroup = team2FromGroup;
+            Team2FromRank = team2FromRank;
+            WinnerGoesTo = winnerGoesTo;
+            WinnerRankFrom = winnerRankFrom;
+            LoserGoesTo = loserGoesTo;
+            LoserRankFrom = loserRankFrom;
+            Games = games;
+            Team1Score = team1Score;
+            Team2Score = team2Score;
+            HomeString = homeString;
+            Processed = processed;
+            Complete = complete;
+            SeriesType = seriesType;
+        }
+
         public ITeam GetHomeTeamForGame(int gameNumber)
         {
             int arrayNumber = gameNumber - 1;

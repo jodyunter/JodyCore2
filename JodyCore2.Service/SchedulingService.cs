@@ -1,4 +1,5 @@
-﻿using JodyCore2.Domain.Bo.Scheduling;
+﻿using JodyCore2.Domain.Bo;
+using JodyCore2.Domain.Bo.Scheduling;
 using JodyCore2.Service.Mappers;
 using JodyCore2.Service.ViewModels;
 using System;
@@ -11,7 +12,7 @@ namespace JodyCore2.Service
 {
     public class SchedulingService:ISchedulingService
     {
-        public IList<IScheduleGameViewModel> CreateScheduleGames(int year, int startingDay, IList<Guid> teams, int rounds, bool homeAndAway)
+        public IList<IScheduleGameViewModel> CreateScheduleGames(int year, int startingDay, IList<ITeam> teams, int rounds, bool homeAndAway)
         {
             var games = Scheduler.ScheduleRoundRobin(year, startingDay, teams);
 

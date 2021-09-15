@@ -1,6 +1,8 @@
-﻿namespace JodyCore2.Domain.Bo.Competitions
+﻿using JodyCore2.Domain.Bo.Scheduling;
+
+namespace JodyCore2.Domain.Bo.Competitions
 {
-    public interface ICompetitionGame : IGame
+    public interface ICompetitionGame : IGame, IScheduleGame
     {
         ICompetition Competition { get; }
     }

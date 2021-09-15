@@ -40,53 +40,27 @@ namespace JodyCore2.ConsoleApp
 
             playoff.RankingGroups.Add(rankingGroup);
 
-            var series1 = new BestOfPlayoffSeries
-            {
-                Round = 1,
-                Playoff = playoff,
-                RequiredWins = 4,
-                Name = "Series 1",
-                Team1FromGroup = rankingGroup,
-                Team1FromRank = 1,
-                Team2FromGroup = rankingGroup,
-                Team2FromRank = 4,
-                WinnerGoesTo = finalGroup,
-                WinnerRankFrom = rankingGroup
-            };
+            var series1 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 1", 1, 1, null, null,
+                            rankingGroup, 1, rankingGroup, 4, 
+                            finalGroup, rankingGroup, null, null,
+                            new List<IPlayoffGame>(), 0, 0, "", false, false);
+            
+            var series2 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 2", 1, 1, null, null,
+                            rankingGroup, 2, rankingGroup, 3,
+                            finalGroup, rankingGroup, null, null,
+                            new List<IPlayoffGame>(), 0, 0, "", false, false);
 
-            var series2 = new BestOfPlayoffSeries
-            {
-                Round = 1,
-                Playoff = playoff,
-                RequiredWins = 4,
-                Name = "Series 2",
-                Team1FromGroup = rankingGroup,
-                Team1FromRank = 2,
-                Team2FromGroup = rankingGroup,
-                Team2FromRank = 3,
-                WinnerGoesTo = finalGroup,
-                WinnerRankFrom = rankingGroup
-            };
-
-            var series3 = new BestOfPlayoffSeries
-            {
-                Round = 2,
-                Playoff = playoff,
-                RequiredWins = 4,
-                Name = "Final",
-                Team1FromGroup = finalGroup,
-                Team1FromRank = 1,
-                Team2FromGroup = finalGroup,
-                Team2FromRank = 2
-                
-            };
-
+            var series3 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 3", 2, 2, null, null,
+                            finalGroup, 1, finalGroup, 2,
+                            null, null, null, null,
+                            new List<IPlayoffGame>(), 0, 0, "", false, false);
 
             playoff.Series.Add(series1);
             playoff.Series.Add(series2);
             playoff.Series.Add(series3);
 
             playoff.SetupCompetition();
+            playoff.StartCompetition();
 
             while (!playoff.Complete)
             {
@@ -105,7 +79,6 @@ namespace JodyCore2.ConsoleApp
 
                 playoff.ProcessEndOfCurrentRound();
             }
-
 
             Console.WriteLine(PrintSeries(series1));
             Console.WriteLine(PrintSeries(series2));

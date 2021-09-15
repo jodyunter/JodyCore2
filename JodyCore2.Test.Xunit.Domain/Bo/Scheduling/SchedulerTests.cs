@@ -1,4 +1,5 @@
-﻿using JodyCore2.Domain.Bo.Scheduling;
+﻿using JodyCore2.Domain.Bo;
+using JodyCore2.Domain.Bo.Scheduling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,17 +72,17 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         public static IEnumerable<object[]> GetDataForCountTests()
         {
-            var teamList = new List<Guid>()
+            var teamList = new List<ITeam>()
             {
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid()
+                new Team(Guid.NewGuid(), "Team 1", 5),
+                new Team(Guid.NewGuid(), "Team 2", 5),
+                new Team(Guid.NewGuid(), "Team 3", 5),
+                new Team(Guid.NewGuid(), "Team 4", 5),
+                new Team(Guid.NewGuid(), "Team 5", 5),
+                new Team(Guid.NewGuid(), "Team 6", 5),
+                new Team(Guid.NewGuid(), "Team 7", 5),
+                new Team(Guid.NewGuid(), "Team 8", 5),
+                new Team(Guid.NewGuid(), "Team 9", 5)
             };
 
             var games = new List<ScheduleGame>()
@@ -108,7 +109,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForCountTests))]
-        public void ShouldCountTeamsInList(IList<Guid> teamList, IList<ScheduleGame> games, int teamPositionToCheck, int expectedHome, int expectedAway)
+        public void ShouldCountTeamsInList(IList<ITeam> teamList, IList<ScheduleGame> games, int teamPositionToCheck, int expectedHome, int expectedAway)
         {
 
             var counts = Scheduler.CountOfGamesPlayedInList(games, teamList[teamPositionToCheck]);
@@ -119,9 +120,9 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
         }
         public static IEnumerable<object[]> GetDataForDoesTeamPlayInGame()
         {
-            var guid1 = Guid.NewGuid();
-            var guid2 = Guid.NewGuid();
-            var guid3 = Guid.NewGuid();
+            var guid1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var guid2 = new Team(Guid.NewGuid(), "Team 2", 5);
+            var guid3 = new Team(Guid.NewGuid(), "Team 3", 5);
 
             var game = new ScheduleGame(Guid.NewGuid(), 1, 1, guid1, guid2);
 
@@ -132,19 +133,19 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForDoesTeamPlayInGame))]
-        public void TestDoTeamsPlayInGame(ScheduleGame game, Guid team, bool expectedResult)
+        public void TestDoTeamsPlayInGame(ScheduleGame game, ITeam team, bool expectedResult)
         {
             Assert.Equal(expectedResult, Scheduler.DoesTeamPlayInGame(game, team));
         }
 
         public static IEnumerable<object[]> GetDataForDoesTeamPlayInList()
         {
-            var guid1 = Guid.NewGuid();
-            var guid2 = Guid.NewGuid();
-            var guid3 = Guid.NewGuid();
-            var guid4 = Guid.NewGuid();
-            var guid5 = Guid.NewGuid();
-            var guid6 = Guid.NewGuid();
+            var guid1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var guid2 = new Team(Guid.NewGuid(), "Team 2", 5);
+            var guid3 = new Team(Guid.NewGuid(), "Team 3", 5);
+            var guid4 = new Team(Guid.NewGuid(), "Team 4", 5);
+            var guid5 = new Team(Guid.NewGuid(), "Team 5", 5);
+            var guid6 = new Team(Guid.NewGuid(), "Team 6", 5);
 
             var games = new List<ScheduleGame>()
             {
@@ -163,19 +164,19 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForDoesTeamPlayInList))]
-        public void TestDoesTeamPlayInList(IList<ScheduleGame> games, Guid team, bool expectedResults)
+        public void TestDoesTeamPlayInList(IList<ScheduleGame> games, ITeam team, bool expectedResults)
         {
             Assert.Equal(expectedResults, Scheduler.DoesTeamPlayInList(games, team));
         }
 
         public static IEnumerable<object[]> GetDataForDoesATeamPlayInList()
         {
-            var guid1 = Guid.NewGuid();
-            var guid2 = Guid.NewGuid();
-            var guid3 = Guid.NewGuid();
-            var guid4 = Guid.NewGuid();
-            var guid5 = Guid.NewGuid();
-            var guid6 = Guid.NewGuid();
+            var guid1 = new Team(Guid.NewGuid(), "Team 1", 5);
+            var guid2 = new Team(Guid.NewGuid(), "Team 2", 5);
+            var guid3 = new Team(Guid.NewGuid(), "Team 3", 5);
+            var guid4 = new Team(Guid.NewGuid(), "Team 4", 5);
+            var guid5 = new Team(Guid.NewGuid(), "Team 5", 5);
+            var guid6 = new Team(Guid.NewGuid(), "Team 6", 5);
 
             var games = new List<ScheduleGame>()
             {
@@ -183,15 +184,15 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
                 new ScheduleGame(Guid.NewGuid(), 1, 1, guid3, guid4)
             };
 
-            yield return new object[] { games, new List<Guid>() { guid1, guid2, guid3, guid4, guid5, guid6 }, true };
-            yield return new object[] { games, new List<Guid>() { guid1, guid2, guid3 }, true };
-            yield return new object[] { games, new List<Guid>() { guid5, guid6 }, false };
+            yield return new object[] { games, new List<ITeam>() { guid1, guid2, guid3, guid4, guid5, guid6 }, true };
+            yield return new object[] { games, new List<ITeam>() { guid1, guid2, guid3 }, true };
+            yield return new object[] { games, new List<ITeam>() { guid5, guid6 }, false };
 
         }
 
         [Theory]
         [MemberData(nameof(GetDataForDoesATeamPlayInList))]
-        public void TestDoesATeamPlayInLilst(IList<ScheduleGame> games, IList<Guid> teams, bool expectedResults)
+        public void TestDoesATeamPlayInLilst(IList<ScheduleGame> games, IList<ITeam> teams, bool expectedResults)
         {
             Assert.Equal(expectedResults, Scheduler.DoTeamsPlayInList(games, teams));
         }
@@ -213,18 +214,18 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         public static IEnumerable<object[]> GetDataForCreateGamesFromMatrix()
         {
-            var teams = new List<Guid>()
+            var teams = new List<ITeam>()
             {
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid()
+                new Team(Guid.NewGuid(), "Team 1", 5),
+                new Team(Guid.NewGuid(), "Team 2", 5),
+                new Team(Guid.NewGuid(), "Team 3", 5),
+                new Team(Guid.NewGuid(), "Team 4", 5),
+                new Team(Guid.NewGuid(), "Team 5", 5),
+                new Team(Guid.NewGuid(), "Team 6", 5),
+                new Team(Guid.NewGuid(), "Team 7", 5),
+                new Team(Guid.NewGuid(), "Team 8", 5),
+                new Team(Guid.NewGuid(), "Team 9", 5),
+                new Team(Guid.NewGuid(), "Team 10", 5)
             };
 
             yield return new object[]
@@ -265,7 +266,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 
         [Theory]
         [MemberData(nameof(GetDataForCreateGamesFromMatrix))]
-        public void ShouldCreateGamesFromMatrix(int[,] matrix, IList<Guid> teams, IList<ScheduleGame> expectedGames, int count)
+        public void ShouldCreateGamesFromMatrix(int[,] matrix, IList<ITeam> teams, IList<ScheduleGame> expectedGames, int count)
         {
             var games = Scheduler.CreateGamesFromMatrix(matrix, teams, 5, 2);
 
@@ -281,18 +282,18 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
         [Fact]
         public void ShouldCreateRoundRobin()
         {
-            var teams = new List<Guid>()
-            { 
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                Guid.NewGuid()
+            var teams = new List<ITeam>()
+            {
+                new Team(Guid.NewGuid(), "Team 1", 5),
+                new Team(Guid.NewGuid(), "Team 2", 5),
+                new Team(Guid.NewGuid(), "Team 3", 5),
+                new Team(Guid.NewGuid(), "Team 4", 5),
+                new Team(Guid.NewGuid(), "Team 5", 5),
+                new Team(Guid.NewGuid(), "Team 6", 5),
+                new Team(Guid.NewGuid(), "Team 7", 5),
+                new Team(Guid.NewGuid(), "Team 8", 5),
+                new Team(Guid.NewGuid(), "Team 9", 5),
+                new Team(Guid.NewGuid(), "Team 10", 5)
             };
 
             int expectedDays = 9;

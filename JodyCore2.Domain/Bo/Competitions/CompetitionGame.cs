@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JodyCore2.Domain.Bo.Scheduling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,6 @@ namespace JodyCore2.Domain.Bo.Competitions
     public class CompetitionGame : Game, ICompetitionGame
     {
         public ICompetition Competition { get; set; }
-
 
         public CompetitionGame():base() { }
 

@@ -21,7 +21,11 @@ namespace JodyCore2.Domain.Bo.Competitions
         bool Complete { get; }
         bool Processed { get; }
         CompetitionType CompetitionType { get; }
-        void ProcessGame(ICompetitionGame game);        
+        void ProcessGame(ICompetitionGame game);
+        void StartCompetition();
+        void SetupCompetition();
+        void CompleteCompetition();
+        void ProcessCompetition();
     }
     public enum CompetitionType
     {
