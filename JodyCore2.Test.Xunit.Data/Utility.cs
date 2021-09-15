@@ -27,7 +27,7 @@ namespace JodyCore2.Test.Xunit.Data
 
         }
 
-        public override IList<ICompetitionGame> CreateGames()
+        public override IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> games)
         {
             throw new NotImplementedException();
         }

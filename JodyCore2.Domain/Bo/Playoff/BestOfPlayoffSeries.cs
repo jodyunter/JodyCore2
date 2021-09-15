@@ -26,31 +26,30 @@ namespace JodyCore2.Domain.Bo.Playoff
             ICompetitionRankingGroup team1FromGroup, int team1FromRank,
             ICompetitionRankingGroup team2FromGroup, int team2FromRank,
             ICompetitionRankingGroup winnerGoesTo, ICompetitionRankingGroup winnerRankFrom,
-            ICompetitionRankingGroup loserGoesTo, ICompetitionRankingGroup loserRankFrom,
-            IList<IPlayoffGame> games,
+            ICompetitionRankingGroup loserGoesTo, ICompetitionRankingGroup loserRankFrom,            
             int team1Score, int team2Score, string homeString,
             bool processed, bool complete):base(identifier, playoff, name, round, team1, team2, 
                 team1FromGroup, team1FromRank, team2FromGroup, team2FromRank,
-                winnerGoesTo,winnerRankFrom, loserGoesTo, loserRankFrom, games, 
+                winnerGoesTo,winnerRankFrom, loserGoesTo, loserRankFrom, 
                 team1Score, team2Score, homeString, processed, complete, SeriesType.BestOf)
             
         {
             RequiredWins = requiredWins;
         }
 
-        public override IList<ICompetitionGame> CreateGames()
+        public override IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> seriesGames)
         {
             var newGames = new List<ICompetitionGame>();
 
             if (!Complete)
             {
-                var unprocessedGames = Games.Where(g => g.Complete && !g.Processed).ToList();
+                var unprocessedGames = seriesGames.Where(g => g.Complete && !g.Processed).ToList();
                 if (unprocessedGames.Count > 0)
                 {
                     throw new ApplicationException(UNPROCESSED_GAMES_EXIST);
                 }
 
-                var currentInCompleteGames = Games.Where(g => !g.Complete).ToList().Count;
+                var currentInCompleteGames = seriesGames.Where(g => !g.Complete).ToList().Count;
 
                 var team1RequiredWins = RequiredWins - Team1Score;
                 var team2RequiredWins = RequiredWins - Team2Score;
@@ -61,7 +60,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 
                 for (int i = 0; i < neededGames; i++)
                 {
-                    var newGame = CreateGame();
+                    var newGame = CreateGame(seriesGames);
                     newGames.Add(newGame);
                 }
             }

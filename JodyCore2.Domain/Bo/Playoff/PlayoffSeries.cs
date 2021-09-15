@@ -31,9 +31,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public ICompetitionRankingGroup LoserGoesTo { get; set; }
 
-        public ICompetitionRankingGroup LoserRankFrom { get; set; }
-
-        public IList<IPlayoffGame> Games { get; set; }
+        public ICompetitionRankingGroup LoserRankFrom { get; set; }        
 
         public int Team1Score { get; set; }
 
@@ -47,7 +45,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public bool Processed { get; set; }
 
-        public abstract IList<ICompetitionGame> CreateGames();
+        public abstract IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> games);
 
         public abstract ITeam GetLoser();
 
@@ -89,8 +87,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public PlayoffSeries(SeriesType type):this()
         { 
-            SeriesType = type;
-            Games = new List<IPlayoffGame>();
+            SeriesType = type;            
         }
         public PlayoffSeries() { Identifier = Guid.NewGuid(); }
 
@@ -98,8 +95,7 @@ namespace JodyCore2.Domain.Bo.Playoff
             ICompetitionRankingGroup team1FromGroup, int team1FromRank,
             ICompetitionRankingGroup team2FromGroup, int team2FromRank,
             ICompetitionRankingGroup winnerGoesTo, ICompetitionRankingGroup winnerRankFrom, 
-            ICompetitionRankingGroup loserGoesTo, ICompetitionRankingGroup loserRankFrom, 
-            IList<IPlayoffGame> games, 
+            ICompetitionRankingGroup loserGoesTo, ICompetitionRankingGroup loserRankFrom,              
             int team1Score, int team2Score, string homeString, 
             bool processed, bool complete, 
             SeriesType seriesType)
@@ -117,8 +113,7 @@ namespace JodyCore2.Domain.Bo.Playoff
             WinnerGoesTo = winnerGoesTo;
             WinnerRankFrom = winnerRankFrom;
             LoserGoesTo = loserGoesTo;
-            LoserRankFrom = loserRankFrom;
-            Games = games;
+            LoserRankFrom = loserRankFrom;            
             Team1Score = team1Score;
             Team2Score = team2Score;
             HomeString = homeString;
@@ -164,9 +159,11 @@ namespace JodyCore2.Domain.Bo.Playoff
                 }
             }
         }
-        public ICompetitionGame CreateGame()
+        public ICompetitionGame CreateGame(IList<ICompetitionGame> seriesGames)
         {
-            int gameNumber = Games.Count + 1;
+            int gameNumber = seriesGames.Count();
+
+            if (gameNumber == 0) gameNumber = 1;
 
             var homeTeam = GetHomeTeamForGame(gameNumber);
 

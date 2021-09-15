@@ -22,8 +22,7 @@ namespace JodyCore2.Domain.Bo.Playoff
         ICompetitionRankingGroup WinnerGoesTo { get; }
         ICompetitionRankingGroup WinnerRankFrom { get; }
         ICompetitionRankingGroup LoserGoesTo { get; }
-        ICompetitionRankingGroup LoserRankFrom { get; }
-        IList<IPlayoffGame> Games { get; }
+        ICompetitionRankingGroup LoserRankFrom { get; }        
         int Team1Score { get; } //for some playoff types this is games won, others could be total goals
         int Team2Score { get; }
         ITeam GetWinner();
@@ -33,9 +32,9 @@ namespace JodyCore2.Domain.Bo.Playoff
         SeriesType SeriesType { get; }
         void ProcessGame(ICompetitionGame game);
         bool IsComplete();
-        IList<ICompetitionGame> CreateGames();
+        IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> seriesGames);
         string HomeString { get; } //this says which team will be home/away
-        ICompetitionGame CreateGame();
+        ICompetitionGame CreateGame(IList<ICompetitionGame> seriesGames);
         void SetTeam1(ITeam team);
         void SetTeam2(ITeam team);
         void Process();        

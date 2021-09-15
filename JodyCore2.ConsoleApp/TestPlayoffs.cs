@@ -41,20 +41,20 @@ namespace JodyCore2.ConsoleApp
 
             playoff.RankingGroups.Add(rankingGroup);
 
-            var series1 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 1", 1, 1, null, null,
+            var series1 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 1", 1, 4, null, null,
                             rankingGroup, 1, rankingGroup, 4, 
                             finalGroup, rankingGroup, null, null,
-                            new List<IPlayoffGame>(), 0, 0, "", false, false);
+                            0, 0, "", false, false);
             
-            var series2 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 2", 1, 1, null, null,
+            var series2 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 2", 1, 4, null, null,
                             rankingGroup, 2, rankingGroup, 3,
                             finalGroup, rankingGroup, null, null,
-                            new List<IPlayoffGame>(), 0, 0, "", false, false);
+                            0, 0, "", false, false);
 
-            var series3 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 3", 2, 2, null, null,
+            var series3 = new BestOfPlayoffSeries(Guid.NewGuid(), playoff, "Series 3", 2, 4, null, null,
                             finalGroup, 1, finalGroup, 2,
                             null, null, null, null,
-                            new List<IPlayoffGame>(), 0, 0, "", false, false);
+                            0, 0, "", false, false);
 
             playoff.Series.Add(series1);
             playoff.Series.Add(series2);
@@ -63,7 +63,9 @@ namespace JodyCore2.ConsoleApp
             playoff.SetupCompetition();
             playoff.StartCompetition();
 
-            var scheduledGames = new Dictionary<int, IList<IScheduleGame>>();
+            //var scheduledGames = new Dictionary<int, IList<ICompetitionGame>>();
+            var scheduleOfGames = new List<IPlayoffGame>();
+
             var lastDayPlayed = 0;
 
             while (!playoff.Complete)
@@ -71,23 +73,27 @@ namespace JodyCore2.ConsoleApp
                 while (!playoff.IsRoundComplete(playoff.CurrentRound))
                 {
                     //create needed games
-                    var games = playoff.CreateGames();
+                    var newGames = playoff.CreateGames(scheduleOfGames.ToList<ICompetitionGame>());
                     //schedule them
-                    Scheduler.AddGamesToSchedule(games.ToList<IScheduleGame>(), playoff.StartYear, lastDayPlayed + 1, scheduledGames);
-                    
+                    var newlyScheduledGames = Scheduler.AddGamesToSchedule(newGames.ToList<IScheduleGame>(), playoff.StartYear, lastDayPlayed + 1, scheduleOfGames.ToList<IScheduleGame>());
+                    scheduleOfGames.AddRange(newlyScheduledGames.Select(a => (IPlayoffGame)a));                    
+
                     //get ready for next day to play
                     lastDayPlayed += 1;
 
                     //var random = new Random(554211);
                     var random = new Random();
-                    scheduledGames[lastDayPlayed].ToList().ForEach(sg =>
-                    {
-                        var g = (IPlayoffGame)sg;
-                        g.Play(random);
-                        playoff.ProcessGame(g);
-                        Console.WriteLine(PrintPlayoffGame(g));
+                    var gameViews = new List<IGameSummaryViewModel>();
+
+                    scheduleOfGames.Where(sg => sg.Day == lastDayPlayed).ToList().ForEach(sg =>
+                    {                        
+                        sg.Play(random);
+                        playoff.ProcessGame(sg);
+                        gameViews.Add(GetPlayoffView(sg));                        
                     });
 
+                    //Console.WriteLine(PrintGameDay(gameViews, lastDayPlayed));
+                    Console.WriteLine(PrintSeriesSummary(playoff, playoff.CurrentRound));
                     Console.ReadLine();
                 }
 
@@ -99,16 +105,39 @@ namespace JodyCore2.ConsoleApp
             Console.WriteLine(PrintSeries(series3));
         }
 
+        public static string PrintSeriesSummary(IPlayoff playoff, int round)
+        {
+            string value = "Round " + round;
+            playoff.Series.Where(s => s.Round == round).ToList().ForEach(g =>
+            {
+                value += "\n" + PrintSeries(g);
+            });
+
+            return value;
+        }
+
         public static string PrintSeries(IPlayoffSeries series)
         {
             string format = "R{5} {0}. {1} - {2} : {3} - {4}";
             return string.Format(format, series.Name, series.Team1.Name, series.Team1Score, series.Team2Score, series.Team2.Name, series.Round);
         }
-        
-        public static string PrintPlayoffGame(IPlayoffGame g)
+
+        public static string PrintGameDay(IList<IGameSummaryViewModel> games, int day)
         {
-            return GameView.GetPlayoffGameSummaryView(new PlayoffGameSummaryViewModel(g.Identifier, g.Series.Identifier, g.Series.Name, g.Series.Round, g.Day, g.Year, g.Home.Identifier, g.Home.Name,
-                        g.Away.Identifier, g.Away.Name, g.HomeScore, g.AwayScore, g.Complete));
+            var result = "Day " + day;
+            games.ToList().ForEach(g =>
+            {
+                result += "\n" + GameView.GetGameSummaryView(g);
+            });
+
+            return result;
+
+        }
+        
+        public static IGameSummaryViewModel GetPlayoffView(IPlayoffGame g)
+        {
+            return new PlayoffGameSummaryViewModel(g.Identifier, g.Series.Identifier, g.Series.Name, g.Series.Round, g.Day, g.Year, g.Home.Identifier, g.Home.Name,
+                        g.Away.Identifier, g.Away.Name, g.HomeScore, g.AwayScore, g.Complete);
         }
     }
 }

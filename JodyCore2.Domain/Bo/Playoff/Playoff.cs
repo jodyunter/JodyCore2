@@ -19,16 +19,16 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public IList<IPlayoffSeries> Series { get; set; }
 
-        public override IList<ICompetitionGame> CreateGames()
+        public override IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> games)
         {
-            var games = new List<ICompetitionGame>();
+            var newGames = new List<ICompetitionGame>();
 
             Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>
             {
-                games.AddRange(s.CreateGames());
+                newGames.AddRange(s.CreateGames(games.Where(g => ((IPlayoffGame)g).Series.Identifier == s.Identifier).ToList()));
             });
 
-            return games;
+            return newGames;
         }
 
         public IList<IPlayoffSeries> GetByRound(int round)

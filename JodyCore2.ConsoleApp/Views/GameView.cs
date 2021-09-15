@@ -8,18 +8,23 @@ using System.Threading.Tasks;
 namespace JodyCore2.ConsoleApp.Views
 {
     public class GameView
-    {
+    {        
         public static string GetGameSummaryView(IGameSummaryViewModel model)
         {
-            string formatter = "{0}. {1} - {2} : {3} - {4}";
+            if (model is IPlayoffGameSummaryViewModel)
+            {
+                var pModel = (IPlayoffGameSummaryViewModel)model;
 
-            return string.Format(formatter, model.Day, model.HomeTeamName, model.HomeScore, model.AwayTeamName, model.AwayScore);
-        }
-        public static string GetPlayoffGameSummaryView(IPlayoffGameSummaryViewModel model)
-        {
-            string formatter = "R{6}. ({5}) {0}. {1} - {2} : {3} - {4}";
+                string formatter = "R{6}. ({5}) {0}. {1} - {2} : {3} - {4}";
 
-            return string.Format(formatter, model.Day, model.HomeTeamName, model.HomeScore, model.AwayTeamName, model.AwayScore, model.Series, model.Round);
+                return string.Format(formatter, model.Day, model.HomeTeamName, model.HomeScore, model.AwayTeamName, model.AwayScore, pModel.Series, pModel.Round);
+            }
+            else
+            {
+                string formatter = "{0}. {1} - {2} : {3} - {4}";
+
+                return string.Format(formatter, model.Day, model.HomeTeamName, model.HomeScore, model.AwayTeamName, model.AwayScore);
+            }
         }
     }
 }

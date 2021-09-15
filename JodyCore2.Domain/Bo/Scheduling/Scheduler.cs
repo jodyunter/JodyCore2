@@ -42,7 +42,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
                 }
             });
         }
-        public static void AddGamesToSchedule(IList<IScheduleGame> games, int year, int startingDay, IList<IScheduleGame> currentGames)
+        public static IList<IScheduleGame> AddGamesToSchedule(IList<IScheduleGame> games, int year, int startingDay, IList<IScheduleGame> currentGames)
         {
             var dictionary = new Dictionary<int, IList<IScheduleGame>>();
 
@@ -58,14 +58,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
 
             AddGamesToSchedule(games, year, startingDay, dictionary);
 
-            var newList = new List<IScheduleGame>();
-
-            dictionary.Keys.ToList().ForEach(key =>
-            {
-                newList.AddRange(dictionary[key]);
-            });
-
-            games = newList;
+            return games;
         }
         //make sure this gets tested
         public static Dictionary<int, IList<IScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<ITeam> teams)

@@ -26,7 +26,7 @@ namespace JodyCore2.Domain.Bo.Standings
             this.DefaultProcessGame(game);
         }
 
-        public override IList<ICompetitionGame> CreateGames()
+        public override IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> currentGames)
         {
             //standings games are created before standings competition starts
             //return an empty list so it can be procesed

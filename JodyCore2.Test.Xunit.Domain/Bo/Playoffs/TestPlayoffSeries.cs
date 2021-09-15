@@ -12,7 +12,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
     public class TestPlayoffSeries : PlayoffSeries
     {
         public TestPlayoffSeries() : base(SeriesType.BestOf) { }
-        public override IList<ICompetitionGame> CreateGames()
+        public override IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> games)
         {
             throw new NotImplementedException();
         }
