@@ -7,6 +7,7 @@ using JodyCore2.Domain.Bo.Standings;
 using JodyCore2.Domain.Bo.Rankings;
 using System.Collections.Generic;
 using JodyCore2.Domain.Bo.Competitions;
+using JodyCore2.Domain.Bo.Playoff;
 
 namespace JodyCore2.Data
 {
@@ -52,23 +53,26 @@ namespace JodyCore2.Data
         public DbSet<Team> Teams { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<CompetitionGame> CompetitionGames { get; set; }
+        public DbSet<PlayoffGame> PlayoffGames { get; set; }
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Standings> Standings { get; set; }        
+        public DbSet<Playoff> Playoffs { get; set; }
         public DbSet<StandingsRecord> StandingsRecords { get; set; }
+        public DbSet<PlayoffSeries> PlayoffSeries { get; set; }
         public DbSet<Ranking> Rankings { get; set; }
         public DbSet<RankingGroup> RankingGroups { get; set; }
         public DbSet<CompetitionRanking> CompetitionRankings { get; set; }
         public DbSet<CompetitionRankingGroup> CompetitionRankingGroups { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
-            modelBuilder.Entity<Team>().HasKey(t => t.Identifier);
+        {
+            onTeamCreating(modelBuilder);
             onGameCreating(modelBuilder);
                                    
             onRankingCreating(modelBuilder);
             onRankingGroupCreating(modelBuilder);
 
-            modelBuilder.Entity<Competition>().HasKey(s => s.Identifier);
+            onCompetitionCreating(modelBuilder);
             onCompetitionRankingCreating(modelBuilder);
             onCompetitionRankingGroupCreating(modelBuilder);
             onCompetitionGameCreating(modelBuilder);
@@ -76,10 +80,24 @@ namespace JodyCore2.Data
             onStandingsCreating(modelBuilder);
             onStandingsRecordCreating(modelBuilder);
 
-        }
+            onPlayoffCreating(modelBuilder);
+            onPlayoffSeriesCreating(modelBuilder);
+            onPlayoffGameCreating(modelBuilder);
 
+
+        }
+        
+        private void onCompetitionCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Competition>().HasKey(s => s.Identifier);
+        }
+        private void onTeamCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Team>().HasKey(t => t.Identifier);
+        }
         private void onStandingsCreating(ModelBuilder modelBuilder)
         {
+            //eventually we'll need ranking groups here too to deal with sorting and stuff
             modelBuilder.Entity<Standings>().HasMany(s => (IList<StandingsRecord>)s.Records);
         }
 
@@ -122,6 +140,32 @@ namespace JodyCore2.Data
             modelBuilder.Entity<CompetitionGame>().HasOne(t => (Competition)t.Competition);
             modelBuilder.Entity<CompetitionGame>().HasOne(t => (Team)t.Home);
             modelBuilder.Entity<CompetitionGame>().HasOne(t => (Team)t.Away);
+        }
+
+        public void onPlayoffCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Playoff>().HasMany(t => (IList<PlayoffSeries>)t.Series);
+            modelBuilder.Entity<Playoff>().HasMany(t => (IList<CompetitionRankingGroup>)t.RankingGroups);
+        }
+
+        private void onPlayoffSeriesCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (Playoff)t.Playoff);
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (Team)t.Team1);
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (Team)t.Team2);
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (CompetitionRankingGroup)t.Team1FromGroup);
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (CompetitionRankingGroup)t.Team2FromGroup);
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (CompetitionRankingGroup)t.WinnerGoesTo);
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (CompetitionRankingGroup)t.WinnerRankFrom);
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (CompetitionRankingGroup)t.LoserGoesTo);
+            modelBuilder.Entity<PlayoffSeries>().HasOne(t => (CompetitionRankingGroup)t.LoserRankFrom);
+        }
+        private void onPlayoffGameCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PlayoffGame>().HasOne(t => (Playoff)t.Competition);
+            modelBuilder.Entity<PlayoffGame>().HasOne(t => (PlayoffSeries)t.Series);
+            modelBuilder.Entity<PlayoffGame>().HasOne(t => (Team)t.Home);
+            modelBuilder.Entity<PlayoffGame>().HasOne(t => (Team)t.Away);            
         }
         
     }

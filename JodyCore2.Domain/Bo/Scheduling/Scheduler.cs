@@ -11,7 +11,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
         public const int NO_TEAM_VALUE = -1;
                     
         //no test?
-
+        //this is not adding games appropriately
         public static void AddGamesToSchedule(IList<IScheduleGame> games, int year, int startingDay, IDictionary<int, IList<IScheduleGame>> currentGames)
         {
             //convert currentGames into a dictionary
