@@ -75,7 +75,7 @@ namespace JodyCore2.ConsoleApp
                     //create needed games
                     var newGames = playoff.CreateGames(scheduleOfGames.ToList<ICompetitionGame>());
                     //schedule them
-                    var newlyScheduledGames = Scheduler.AddGamesToSchedule(newGames.ToList<IScheduleGame>(), playoff.StartYear, lastDayPlayed + 1, scheduleOfGames.ToList<IScheduleGame>());
+                    var newlyScheduledGames = Scheduler.ScheduleGames(newGames.ToList<IScheduleGame>(), playoff.StartYear, lastDayPlayed + 1, scheduleOfGames.ToList<IScheduleGame>());
                     scheduleOfGames.AddRange(newlyScheduledGames.Select(a => (IPlayoffGame)a));                    
 
                     //get ready for next day to play

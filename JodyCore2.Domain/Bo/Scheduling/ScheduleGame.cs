@@ -14,6 +14,10 @@ namespace JodyCore2.Domain.Bo.Scheduling
         public ITeam Home { get; set; }
         public ITeam Away { get; set; }
 
+        public ScheduleGame(int year, int day, ITeam home, ITeam away):this(Guid.NewGuid(), year, day, home, away)
+        {
+        }
+
         public ScheduleGame(Guid identifier, int year, int day, ITeam home, ITeam away)
         {
             Identifier = identifier;

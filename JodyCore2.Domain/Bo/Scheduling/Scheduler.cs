@@ -12,7 +12,7 @@ namespace JodyCore2.Domain.Bo.Scheduling
                     
         //no test?
         //this is not adding games appropriately
-        public static void AddGamesToSchedule(IList<IScheduleGame> games, int year, int startingDay, IDictionary<int, IList<IScheduleGame>> currentGames)
+        public static IList<IScheduleGame> ScheduleGames(IList<IScheduleGame> games, int year, int startingDay, IDictionary<int, IList<IScheduleGame>> currentGames)
         {
             //convert currentGames into a dictionary
             games.ToList().ForEach(g =>
@@ -41,24 +41,27 @@ namespace JodyCore2.Domain.Bo.Scheduling
                     }
                 }
             });
+
+            return games;
         }
-        public static IList<IScheduleGame> AddGamesToSchedule(IList<IScheduleGame> games, int year, int startingDay, IList<IScheduleGame> currentGames)
+        public static IList<IScheduleGame> ScheduleGames(IList<IScheduleGame> games, int year, int startingDay, IList<IScheduleGame> currentGames)
         {
             var dictionary = new Dictionary<int, IList<IScheduleGame>>();
 
             currentGames.ToList().ForEach(cg =>
             {
-                if (!dictionary.ContainsKey(cg.Day) && cg.Day >= startingDay) //we only care about days we can create games on
-                {
-                    dictionary[cg.Day] = new List<IScheduleGame>();
-                }
+                if (cg.Day >= startingDay) {
+                    if (!dictionary.ContainsKey(cg.Day)) //we only care about days we can create games on
+                    {
+                        dictionary[cg.Day] = new List<IScheduleGame>();
+                    }
 
-                dictionary[cg.Day] = new List<IScheduleGame>();
+                    dictionary[cg.Day].Add(cg);
+                }
             });
 
-            AddGamesToSchedule(games, year, startingDay, dictionary);
-
-            return games;
+            return ScheduleGames(games, year, startingDay, dictionary);
+            
         }
         //make sure this gets tested
         public static Dictionary<int, IList<IScheduleGame>> ScheduleRoundRobin(int year, int startingDay, IList<ITeam> teams)

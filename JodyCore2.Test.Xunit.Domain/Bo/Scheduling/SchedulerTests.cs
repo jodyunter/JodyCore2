@@ -9,6 +9,55 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
 {
     public class SchedulerTests
     {
+        [Fact]
+        public void ShouldScheduleGames()
+        {
+            var team1 = new Team("Team 1", 5);
+            var team2 = new Team( "Team 2", 5);
+            var team3 = new Team("Team 3", 5);
+            var team4 = new Team("Team 4", 5);
+            var team5 = new Team("Team 5", 5);
+            var team6 = new Team("Team 6", 5);
+
+            var day1 = new List<IScheduleGame>() 
+            { 
+                new ScheduleGame(1, 1, team1, team2),
+                new ScheduleGame(1, 1, team3, team4),
+                new ScheduleGame(1, 1, team5, team6),
+            };
+
+            var day2 = new List<IScheduleGame>()
+            {
+                new ScheduleGame(1, 2, team1, team3),
+                new ScheduleGame(1, 2, team3, team5),
+                new ScheduleGame(1, 2, team2, team6),
+            };
+
+            var day3 = new List<IScheduleGame>()
+            {
+                new ScheduleGame(1, 3, team1, team4),
+                new ScheduleGame(1, 3, team2, team5),
+                new ScheduleGame(1, 3, team3, team6),
+            };
+
+            var newGames = new List<IScheduleGame>()
+            {
+                new ScheduleGame(-1, -1, team1, team2),
+                new ScheduleGame(-1, -1, team2, team3)
+        };
+
+            var currentGames = new List<IScheduleGame>();
+            currentGames.AddRange(day1);
+            currentGames.AddRange(day2);
+            currentGames.AddRange(day3);
+
+            var scheduledGames = Scheduler.ScheduleGames(newGames, 1, 3, currentGames);
+
+            Assert.StrictEqual(2, scheduledGames.Count);
+            Assert.StrictEqual(4, scheduledGames.Where(s => s.Identifier == newGames[0].Identifier).First().Day);
+            Assert.StrictEqual(5, scheduledGames.Where(s => s.Identifier == newGames[1].Identifier).First().Day);
+        }
+
         [Theory]
         [InlineData(1, 10, 2)]
         [InlineData(-1, 25, -1)]

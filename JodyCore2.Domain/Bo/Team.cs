@@ -10,6 +10,10 @@ namespace JodyCore2.Domain.Bo
 
         public Team() { }
 
+        public Team(string name, int skill):this(Guid.NewGuid(), name, skill)
+        {            
+        }
+
         public Team(Guid identifier, string name, int skill)
         {
             Identifier = identifier;

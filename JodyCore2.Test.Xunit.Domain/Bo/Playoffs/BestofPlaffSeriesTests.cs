@@ -176,13 +176,12 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
 
         [Theory]
         [MemberData(nameof(GetDataForCreateGames))]
-        public void ShouldCreateGames(PlayoffSeries series, int team1Score, int team2Score, IList<IPlayoffGame> currentGames, int expectedNewGames)
+        public void ShouldCreateGames(PlayoffSeries series, int team1Score, int team2Score, IList<ICompetitionGame> currentGames, int expectedNewGames)
         {
             series.Team1Score = team1Score;
-            series.Team2Score = team2Score;
-            series.Games = currentGames;
+            series.Team2Score = team2Score;            
 
-            var newGames = series.CreateGames();
+            var newGames = series.CreateGames(currentGames);
 
             Assert.StrictEqual(expectedNewGames, newGames.Count);
         }
@@ -200,9 +199,9 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             series.RequiredWins = 2;
             series.HomeString = "";
             var inCompleteGame1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 3, true, false, false);
-            series.Games = new List<IPlayoffGame>() { inCompleteGame1 };
+            var currentGames = new List<ICompetitionGame>() { inCompleteGame1 };
 
-            var exception = Assert.Throws<ApplicationException>(() => series.CreateGames());
+            var exception = Assert.Throws<ApplicationException>(() => series.CreateGames(currentGames));
             Assert.Equal(BestOfPlayoffSeries.UNPROCESSED_GAMES_EXIST, exception.Message);
         }
 
@@ -221,9 +220,9 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             series.Complete = true; //key value in this test
 
             var inCompleteGame1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 3, true, false, false);
-            series.Games = new List<IPlayoffGame>() { inCompleteGame1 };
+            var currentGames = new List<ICompetitionGame>() { inCompleteGame1 };
 
-            var exception = Assert.Throws<ApplicationException>(() => series.CreateGames());
+            var exception = Assert.Throws<ApplicationException>(() => series.CreateGames(currentGames));
             Assert.Equal(BestOfPlayoffSeries.SERIES_COMPLETE_CANT_CREATE_GAMES, exception.Message);
         }
 
