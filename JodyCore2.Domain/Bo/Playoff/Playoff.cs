@@ -9,12 +9,22 @@ namespace JodyCore2.Domain.Bo.Playoff
 {
     public class Playoff : Competition, IPlayoff
     {
-        public int CurrentRound { get; set; }
-        public IList<ICompetitionRankingGroup> RankingGroups { get; set; }
+        public int CurrentRound { get; set; }        
         public Playoff() : base(CompetitionType.Playoff)
         {
             Series = new List<IPlayoffSeries>();
             RankingGroups = new List<ICompetitionRankingGroup>();
+        }
+
+        public Playoff(string name, int startYear, int startDay, int order, string description, IList<IPlayoffSeries> series, IList<ICompetitionRankingGroup> rankingGroups, bool setup, bool started, bool complete, bool processed)
+            :this(Guid.NewGuid(), name, startYear, startDay, order, description, series, rankingGroups, setup, started, complete, processed)
+        {            
+        }
+
+        public Playoff(Guid identifier, string name, int startYear, int startDay, int order, string description, IList<IPlayoffSeries> series, IList<ICompetitionRankingGroup> rankingGroups, bool setup, bool started, bool complete, bool processed)
+            :base(identifier, name, startYear, startDay, order, description, setup, started, complete, processed, rankingGroups, CompetitionType.Playoff)
+        {
+            Series = series;  
         }
 
         public IList<IPlayoffSeries> Series { get; set; }
@@ -139,6 +149,12 @@ namespace JodyCore2.Domain.Bo.Playoff
                     SetupSeriesTeams(CurrentRound);
                 }
             }
+        }
+
+        public override ICompetitionGame CreateGame(int year, int day, ITeam home, ITeam away)
+        {
+            //do nothing, should never be called!
+            return null;
         }
     }
 }

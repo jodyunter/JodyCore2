@@ -21,6 +21,7 @@ namespace JodyCore2.Domain.Bo
 
         public Game() { }
 
+        //need to create a Game Rules class to handle things like Can Tie
         public Game(Guid identifier, int day, int year, ITeam home, ITeam away, int homeScore, int awayScore, bool complete, bool processed, bool canTie)
         {
             Identifier = identifier;

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JodyCore2.Domain.Bo.Standings
 {
     public static class StandingsExtensions
     {
-        public static int DefaultGetPoints(this IStandingsRecord record, IStandingsRecord thatRecord)
+        public static int DefaultGetPoints(this IStandingsRecord record, IStandingsRecord other)
         {
             return record.Wins * 2 + record.Ties;
         }    
@@ -46,6 +47,17 @@ namespace JodyCore2.Domain.Bo.Standings
 
             game.Process();
             
+        }
+
+        public static IList<IStandingsRecord> DefaultSort(this IStandings standings)
+        {
+            var result = standings.Records.ToList().OrderByDescending(r => r.Points)
+            .ThenBy(r => r.GamesPlayed)
+            .ThenByDescending(r => r.Wins)
+            .ThenByDescending(r => r.GoalDifference)
+            .ThenByDescending(r => r.GoalsFor).ToList();
+
+            return result;
         }
     }
 }

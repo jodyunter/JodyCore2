@@ -37,7 +37,7 @@ namespace JodyCore2.Service
             //todo CHECSK ON NAME ETC
             using (var context = new JodyContext()) 
             {
-                var standings = new Standings(Guid.NewGuid(), name, startYear, startDay, 1, description, division, null, false, false, false, false);
+                var standings = new Standings(Guid.NewGuid(), name, startYear, startDay, 1, description, division, null, null, false, false, false, false);
 
                 var teamDtoList = teamsToInclude.Select(t => teamRepository.GetByIdentifier(t.Identifier, context).FirstOrDefault()).ToList();
                 var standingsRecordList = teamDtoList.Select(ta => new StandingsRecord(Guid.NewGuid(), standings, ta, ta.Name, 0, 0, 0, 0, 0, 0, 0, 0, 0)).ToList();
@@ -46,7 +46,7 @@ namespace JodyCore2.Service
 
                 context.Add(standings);
                 //create the default rankings
-                var rankings = new CompetitionRankingGroup(Guid.NewGuid(), standings, division, new List<ICompetitionRanking>());
+                var rankings = new CompetitionRankingGroup(Guid.NewGuid(), new List<ICompetition>() { standings }, division, new List<ICompetitionRanking>());
                 teamDtoList.ForEach(team =>
                 {
                     rankings.Rankings.Add(new CompetitionRanking(Guid.NewGuid(), team, 1, rankings));
@@ -86,12 +86,13 @@ namespace JodyCore2.Service
             }
         }
 
+        //this is no good, we need a default stort or standing or maybe include all in view with a default
         public IStandingsViewModel GetByIdentifier(Guid guid)
         {
             using (var context = new JodyContext())
             {
                 var standings = standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(guid, context)).FirstOrDefault();
-                var rankingGroup = rankingGroupRepository.GetAll(context).Where(rg => rg.Competition.Identifier == standings.Identifier).FirstOrDefault();
+                var rankingGroup = rankingGroupRepository.GetByCompetition(standings.Identifier, context).First();
                 return StandingsMapper.StandingsToStandingsViewModel(standings, rankingGroup);
             }            
         }

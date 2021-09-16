@@ -9,13 +9,18 @@ namespace JodyCore2.Domain.Bo.Competitions
 {
     public class CompetitionRankingGroup : RankingGroup, ICompetitionRankingGroup
     {
-        public ICompetition Competition { get; set; }
+        public IList<ICompetition> Competitions { get; set; }
 
         public CompetitionRankingGroup() { }
 
-        public CompetitionRankingGroup(Guid identifier, ICompetition competition, string name, IList<ICompetitionRanking> rankings) : base(identifier, name, rankings.ToList<IRanking>())
+        public CompetitionRankingGroup(IList<ICompetition> competitions, string name, IList<ICompetitionRanking> rankings) 
+            :this(Guid.NewGuid(), competitions, name, rankings)
+        {            
+        }
+
+        public CompetitionRankingGroup(Guid identifier, IList<ICompetition> competitions, string name, IList<ICompetitionRanking> rankings) : base(identifier, name, rankings.ToList<IRanking>())
         {
-            Competition = competition;
+            Competitions = competitions;
         }
     }
 }

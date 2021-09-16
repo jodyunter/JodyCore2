@@ -13,7 +13,7 @@ namespace JodyCore2.Service.Mappers
     {
         public static IStandingsViewModel StandingsToStandingsViewModel(IStandings standings, ICompetitionRankingGroup rankingGroup)
         {
-            var records = standings.Records.Select(s =>
+            var records = standings.Records.Where(r => rankingGroup.GetRankingByTeam(r.Team) != null).Select(s => 
                 StandingsRecordMapper.StandingsRecordToStandingsRecordViewModel(s,
                 rankingGroup.GetRankingByTeam(s.Team).Rank,
                 rankingGroup.Name)

@@ -22,6 +22,18 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public BestOfPlayoffSeries() : base(SeriesType.BestOf) { }
 
+        public BestOfPlayoffSeries(IPlayoff playoff, string name, int round, int requiredWins, ITeam team1, ITeam team2,
+            ICompetitionRankingGroup team1FromGroup, int team1FromRank,
+            ICompetitionRankingGroup team2FromGroup, int team2FromRank,
+            ICompetitionRankingGroup winnerGoesTo, ICompetitionRankingGroup winnerRankFrom,
+            ICompetitionRankingGroup loserGoesTo, ICompetitionRankingGroup loserRankFrom,
+            string homeString): this(Guid.NewGuid(), playoff, name, round, requiredWins, team1, team2,
+                team1FromGroup, team1FromRank, team2FromGroup, team2FromRank, winnerGoesTo, winnerRankFrom, loserGoesTo, loserRankFrom,
+                0, 0, homeString, false, false)
+
+        {            
+        }
+
         public BestOfPlayoffSeries(Guid identifier, IPlayoff playoff, string name, int round, int requiredWins, ITeam team1, ITeam team2,
             ICompetitionRankingGroup team1FromGroup, int team1FromRank,
             ICompetitionRankingGroup team2FromGroup, int team2FromRank,

@@ -132,7 +132,7 @@ namespace JodyCore2.Data
 
         private void onCompetitionRankingGroupCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CompetitionRankingGroup>().HasOne(t => (Competition)t.Competition);
+            modelBuilder.Entity<CompetitionRankingGroup>().HasMany(t => (IList<Competition>)t.Competitions);
         }
 
         private void onCompetitionGameCreating(ModelBuilder modelBuilder)

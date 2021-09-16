@@ -32,6 +32,22 @@ namespace JodyCore2.Domain.Bo.Standings
         {
             calculatePoints = this.DefaultGetPoints;
         }
+
+        //quick constructor, new records
+        public StandingsRecord(IStandings standings, ITeam team, string name)
+            :this(Guid.NewGuid(), standings, team, name, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        {
+
+        }
+
+        //full constructor no guid
+        public StandingsRecord(IStandings standings, ITeam team, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
+            :this(Guid.NewGuid(), standings, team, name, regulationWins, overTimeWins, shootOutWins, regulationLoses, overTimeLoses, shootoutLoses, ties, goalsFor, goalsAgainst, points)
+        {
+
+        }
+
+        //full constructor
         public StandingsRecord(Guid identifier, IStandings standings, ITeam team, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst, Func<IStandingsRecord, int> points)
         {
             Identifier = identifier;
@@ -50,6 +66,7 @@ namespace JodyCore2.Domain.Bo.Standings
             calculatePoints = points;
         }
 
+        //full constructor default points
         public StandingsRecord(Guid identifier, IStandings standings, ITeam team, string name, int regulationWins, int overTimeWins, int shootOutWins, int regulationLoses, int overTimeLoses, int shootoutLoses, int ties, int goalsFor, int goalsAgainst)
         {
             Identifier = identifier;

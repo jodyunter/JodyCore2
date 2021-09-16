@@ -13,6 +13,17 @@ namespace JodyCore2.Domain.Bo.Competitions
 
         public CompetitionGame():base() { }
 
+        public CompetitionGame(ICompetition competition, int day, int year, ITeam home, ITeam away, bool canTie)
+            :this(competition, day, year, home, away, 0, 0, false, false, canTie)
+        {
+
+        }
+        public CompetitionGame(ICompetition competition, int day, int year, ITeam home, ITeam away, int homeScore, int awayScore, bool complete, bool processed, bool canTie)
+            :this(Guid.NewGuid(), competition, day, year, home, away, homeScore, awayScore, complete, processed, canTie)
+        {
+            
+        }
+
         public CompetitionGame(Guid identifier, ICompetition competition, int day, int year, ITeam home, ITeam away, int homeScore, int awayScore, bool complete, bool processed, bool canTie)
             : base(identifier, day, year, home, away, homeScore, awayScore, complete, processed, canTie)
         {

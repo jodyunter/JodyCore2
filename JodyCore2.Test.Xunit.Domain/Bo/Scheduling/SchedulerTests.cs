@@ -51,7 +51,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
             currentGames.AddRange(day2);
             currentGames.AddRange(day3);
 
-            var scheduledGames = Scheduler.ScheduleGames(newGames, 1, 3, currentGames);
+            var scheduledGames = Scheduler.ScheduleIndividualGames(newGames, 1, 3, currentGames);
 
             Assert.StrictEqual(2, scheduledGames.Count);
             Assert.StrictEqual(4, scheduledGames.Where(s => s.Identifier == newGames[0].Identifier).First().Day);
@@ -313,11 +313,15 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
             };
         }
 
+        private IScheduleGame CreateGame(int year, int day, ITeam home, ITeam away)
+        {
+            return new ScheduleGame(year, day, home, away);
+        }
         [Theory]
         [MemberData(nameof(GetDataForCreateGamesFromMatrix))]
         public void ShouldCreateGamesFromMatrix(int[,] matrix, IList<ITeam> teams, IList<IScheduleGame> expectedGames, int count)
         {
-            var games = Scheduler.CreateGamesFromMatrix(matrix, teams, 5, 2);
+            var games = Scheduler.CreateGamesFromMatrix(matrix, teams, 5, 2, CreateGame);
 
             games.ToList().ForEach(g =>
             {
@@ -352,7 +356,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
             //no duplicate teams on a day
             //result should be exact and consistent, write out the schedule results
 
-            var result = Scheduler.ScheduleRoundRobin(1, 1, teams);
+            var result = Scheduler.ScheduleRoundRobin(1, 1, teams, CreateGame);
 
             //expected days
             Assert.StrictEqual(expectedDays, result.Count);

@@ -14,7 +14,7 @@ namespace JodyCore2.Data.Repositories
     {
         public IQueryable<CompetitionRankingGroup> GetByCompetition(Guid competitionIdentifier, JodyContext context)
         {
-            return AlwaysInclude(context.CompetitionRankingGroups.Where(t => t.Competition.Identifier == competitionIdentifier));
+            return AlwaysInclude(context.CompetitionRankingGroups.Where(t => t.Competitions.Select(g => g.Identifier).Contains(competitionIdentifier)));
         }
 
         public override IQueryable<CompetitionRankingGroup> AlwaysInclude(IQueryable<CompetitionRankingGroup> query)

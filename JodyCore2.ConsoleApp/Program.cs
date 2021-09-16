@@ -14,7 +14,7 @@ namespace JodyCore2.ConsoleApp
         static void Main(string[] args)
         {
             Environment.SetEnvironmentVariable("CONNECTION_STRING", "consoleConnectionString");
-            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "console");            
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "console");
             /*
             using (var context = new JodyContext())
             {
@@ -73,7 +73,8 @@ namespace JodyCore2.ConsoleApp
             Console.WriteLine(StandingsView.GetView(standings2));
             */
 
-            var test = new TestPlayoffs();
+            //var test = new TestPlayoffs();
+            var test = new TestStandings();
             test.run();
 
             Console.ReadLine();

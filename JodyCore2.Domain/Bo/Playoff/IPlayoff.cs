@@ -9,8 +9,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 {
     public interface IPlayoff:ICompetition
     {
-        IList<IPlayoffSeries> Series { get; }                        
-        IList<ICompetitionRankingGroup> RankingGroups { get; }
+        IList<IPlayoffSeries> Series { get; }                                
         bool IsRoundComplete(int round);
         bool IsCurrentRoundComplete();
         void ProcessEndOfCurrentRound();

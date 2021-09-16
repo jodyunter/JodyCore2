@@ -10,7 +10,7 @@ namespace JodyCore2.Domain.Bo.Competitions
     {
         public Guid Identifier { get; set; }
         public string Name { get; set; }
-        public int StartYear { get; set; }        
+        public int StartYear { get; set; }
         public int StartDay { get; set; }
         public int Order { get; set; }
         public string Description { get; set; }
@@ -19,8 +19,10 @@ namespace JodyCore2.Domain.Bo.Competitions
         public bool Complete { get; set; }
         public bool Processed { get; set; }
         public CompetitionType CompetitionType { get; set; }
+        public IList<ICompetitionRankingGroup> RankingGroups {get; set;}
         public abstract void ProcessGame(ICompetitionGame game);
         public abstract IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> currentGames);
+        public abstract ICompetitionGame CreateGame(int year, int day, ITeam home, ITeam away);
         public virtual void SetupCompetition()
         {
             Setup = true;
@@ -41,7 +43,7 @@ namespace JodyCore2.Domain.Bo.Competitions
 
         public Competition(CompetitionType type) { CompetitionType = type; }
 
-        public Competition(Guid identifier, string name, int startYear, int startDay, int order,  string description, bool setup, bool started, bool complete, bool processed, CompetitionType type) : this(type)
+        public Competition(Guid identifier, string name, int startYear, int startDay, int order,  string description, bool setup, bool started, bool complete, bool processed, IList<ICompetitionRankingGroup> rankingGroups, CompetitionType type) : this(type)
         {
             Identifier = identifier;
             Name = name;
@@ -53,6 +55,7 @@ namespace JodyCore2.Domain.Bo.Competitions
             Started = started;
             Complete = complete;
             Processed = processed;
+            RankingGroups = rankingGroups;
         }
 
         public override bool Equals(object obj)
