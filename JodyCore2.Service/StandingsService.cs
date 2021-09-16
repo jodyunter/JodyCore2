@@ -56,7 +56,7 @@ namespace JodyCore2.Service
 
                 context.SaveChanges();
 
-                return StandingsMapper.StandingsToStandingsViewModel(standings, rankings);
+                return CompetitionMapper.StandingsToStandingsViewModel(standings, rankings);
             }
         }
 
@@ -82,7 +82,7 @@ namespace JodyCore2.Service
 
                 context.SaveChanges();
 
-                return StandingsMapper.StandingsToStandingsViewModel(standings, rankingGroup);
+                return CompetitionMapper.StandingsToStandingsViewModel(standings, rankingGroup);
             }
         }
 
@@ -93,7 +93,7 @@ namespace JodyCore2.Service
             {
                 var standings = standingsRepository.WithAllObjects(standingsRepository.GetByIdentifier(guid, context)).FirstOrDefault();
                 var rankingGroup = rankingGroupRepository.GetByCompetition(standings.Identifier, context).First();
-                return StandingsMapper.StandingsToStandingsViewModel(standings, rankingGroup);
+                return CompetitionMapper.StandingsToStandingsViewModel(standings, rankingGroup);
             }            
         }
 
@@ -116,7 +116,7 @@ namespace JodyCore2.Service
 
                 var rankingGroup = rankingGroupRepository.GetByCompetition(standings.Identifier, context).FirstOrDefault();
 
-                return StandingsMapper.StandingsToStandingsViewModel(standings, rankingGroup);
+                return CompetitionMapper.StandingsToStandingsViewModel(standings, rankingGroup);
             }
         }
         public IList<IGameSummaryViewModel> GetStandingsGames(Guid standingsIdentifier, int year, int firstDay, int lastDay)

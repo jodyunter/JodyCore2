@@ -18,17 +18,18 @@ namespace JodyCore2.ConsoleApp
     {
 
         public void run()
-        {
-            var team1 = new Team("Team 1", 5);
-            var team2 = new Team("Team 2", 5);
-            var team3 = new Team("Team 3", 5);
-            var team4 = new Team("Team 4", 5);
-            var team5 = new Team("Team 5", 5);
-            var team6 = new Team("Team 6", 5);
-            var team7 = new Team("Team 7", 5);
-            var team8 = new Team("Team 8", 5);
-            var team9 = new Team("Team 9", 5);
-            var team10 = new Team("Team 10", 5);
+        {            
+            var random = new Random();
+            var team1 = new Team("Team 1", random.Next(6));
+            var team2 = new Team("Team 2", random.Next(6));
+            var team3 = new Team("Team 3", random.Next(6));
+            var team4 = new Team("Team 4", random.Next(6));
+            var team5 = new Team("Team 5", random.Next(6));
+            var team6 = new Team("Team 6", random.Next(6));
+            var team7 = new Team("Team 7", random.Next(6));
+            var team8 = new Team("Team 8", random.Next(6));
+            var team9 = new Team("Team 9", random.Next(6));
+            var team10 = new Team("Team 10", random.Next(6));
 
             var teamList = new List<ITeam>() { team1, team2, team3, team4, team5, team6, team7, team8, team9, team10 };
 
@@ -80,6 +81,17 @@ namespace JodyCore2.ConsoleApp
 
             //schedule games
             var scheduledGames = Scheduler.ScheduleRoundRobin(1, 1, teamList, standings.CreateGame);
+            var maxDay = scheduledGames.Keys.Max();
+
+            var sg2 = Scheduler.ScheduleRoundRobin(1, scheduledGames.Keys.Max() + 1, teamList, standings.CreateGame);
+            var sg3 = Scheduler.ScheduleRoundRobin(1, sg2.Keys.Max() + 1, teamList, standings.CreateGame);
+            var sg4 = Scheduler.ScheduleRoundRobin(1, sg3.Keys.Max() + 1, teamList, standings.CreateGame);
+            var sg5 = Scheduler.ScheduleRoundRobin(1, sg4.Keys.Max() + 1, teamList, standings.CreateGame);
+
+            sg2.Keys.ToList().ForEach(k => scheduledGames[k] = sg2[k]);
+            sg3.Keys.ToList().ForEach(k => scheduledGames[k] = sg3[k]);
+            sg4.Keys.ToList().ForEach(k => scheduledGames[k] = sg4[k]);
+            sg5.Keys.ToList().ForEach(k => scheduledGames[k] = sg5[k]);            
 
             while (!standings.Complete)
             {
@@ -96,7 +108,7 @@ namespace JodyCore2.ConsoleApp
 
                     standings.SortGroups(TestStandings.SortMethod);
 
-                    var model = StandingsMapper.StandingsToStandingsViewModel(standings, overallGroup);
+                    var model = CompetitionMapper.StandingsToStandingsViewModel(standings, overallGroup);
                     Console.WriteLine(StandingsView.GetView(model));
                     Console.ReadLine();
                 });
@@ -136,8 +148,7 @@ namespace JodyCore2.ConsoleApp
                     //get ready for next day to play
                     lastDayPlayed += 1;
 
-                    //var random = new Random(554211);
-                    var random = new Random();
+                    //var random = new Random(554211);                    
                     var gameViews = new List<IGameSummaryViewModel>();
 
                     playoffGames.Where(sg => sg.Day == lastDayPlayed).ToList().ForEach(sg =>
@@ -147,7 +158,7 @@ namespace JodyCore2.ConsoleApp
                         gameViews.Add(TestPlayoffs.GetPlayoffView(sg));
                     });
 
-                    var model = StandingsMapper.StandingsToStandingsViewModel(standings, overallGroup);
+                    var model = CompetitionMapper.StandingsToStandingsViewModel(standings, overallGroup);
                     Console.WriteLine(StandingsView.GetView(model));
 
                     //Console.WriteLine(PrintGameDay(gameViews, lastDayPlayed));

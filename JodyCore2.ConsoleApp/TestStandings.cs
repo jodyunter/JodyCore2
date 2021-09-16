@@ -102,13 +102,13 @@ namespace JodyCore2.ConsoleApp
 
                 standings.SortGroups(SortMethod);
 
-                var model = StandingsMapper.StandingsToStandingsViewModel(standings, leagueGroup);
+                var model = CompetitionMapper.StandingsToStandingsViewModel(standings, leagueGroup);
                 Console.WriteLine(StandingsView.GetView(model));
 
-                var div1 = StandingsMapper.StandingsToStandingsViewModel(standings, division1Group);
+                var div1 = CompetitionMapper.StandingsToStandingsViewModel(standings, division1Group);
                 Console.WriteLine(StandingsView.GetView(div1));
 
-                var div2 = StandingsMapper.StandingsToStandingsViewModel(standings, division2Group);
+                var div2 = CompetitionMapper.StandingsToStandingsViewModel(standings, division2Group);
                 Console.WriteLine(StandingsView.GetView(div2));
 
                 Console.ReadLine();

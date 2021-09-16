@@ -48,8 +48,12 @@ namespace JodyCore2.Domain.Bo
 
         public void Play(Random r)
         {
-            var homeScore = r.Next(6);
-            var awayScore = r.Next(6);
+            var multiplier = Home.Skill < Away.Skill? -1: 1;
+
+            var diff = r.Next(Math.Abs(Home.Skill - Away.Skill)) * multiplier;
+
+            var homeScore = r.Next(6 + diff);
+            var awayScore = r.Next(6 - diff);
 
             while (!CanTie && (homeScore == awayScore))
             {

@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Service.Mappers
 {
-    public static class StandingsMapper
+    public static class CompetitionMapper
     {
+        public static ISimpleCompetitionViewModel CompetitionToSimpleCompetitionViewModel(ICompetition competition)
+        {
+            return new SimpleCompetitionViewModel(competition.Identifier, competition.Name);
+        }
         public static IStandingsViewModel StandingsToStandingsViewModel(IStandings standings, ICompetitionRankingGroup rankingGroup)
         {
-            var records = standings.Records.Where(r => rankingGroup.GetRankingByTeam(r.Team) != null).Select(s => 
+            var records = standings.Records.Where(r => rankingGroup.GetRankingByTeam(r.Team) != null).Select(s =>
                 StandingsRecordMapper.StandingsRecordToStandingsRecordViewModel(s,
                 rankingGroup.GetRankingByTeam(s.Team).Rank,
                 rankingGroup.Name)
@@ -21,12 +25,11 @@ namespace JodyCore2.Service.Mappers
             ).ToList();
             return new StandingsViewModel(standings.Identifier,
                 standings.Name,
-                standings.StartYear,                
-                standings.StartDay,                
+                standings.StartYear,
+                standings.StartDay,
                 standings.Description,
                 standings.Division,
                 records);
         }
-
     }
 }
