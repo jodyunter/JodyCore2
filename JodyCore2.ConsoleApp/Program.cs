@@ -74,7 +74,8 @@ namespace JodyCore2.ConsoleApp
             */
 
             //var test = new TestPlayoffs();
-            var test = new TestStandings();
+            //var test = new TestStandings();
+            var test = new TestCombo();
             test.run();
 
             Console.ReadLine();

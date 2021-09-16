@@ -30,6 +30,8 @@ namespace JodyCore2.Domain.Bo.Rankings
 
         public void SetRank(ITeam team, int rank)
         {
+            if (Rankings == null) Rankings = new List<IRanking>();
+
             var currentRank = Rankings.Where(r => r.Team.Identifier == team.Identifier).FirstOrDefault();
                 
             if (currentRank == null)
@@ -55,6 +57,8 @@ namespace JodyCore2.Domain.Bo.Rankings
 
         public virtual void AddRank(ITeam team, int rank)
         {
+            if (Rankings == null) Rankings = new List<IRanking>();
+
             Rankings.Add(new Ranking(Guid.NewGuid(), team, rank, this));
         }
 

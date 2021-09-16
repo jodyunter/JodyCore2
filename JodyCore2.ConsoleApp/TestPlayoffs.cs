@@ -132,6 +132,24 @@ namespace JodyCore2.ConsoleApp
             return value;
         }
 
+        public static string PrintAllSeriesSummary(IPlayoff playoff)
+        {
+            var value = "";
+            int currentRound = 0;            
+            playoff.Series.Where(s => s.Round <= playoff.CurrentRound).OrderByDescending(s => s.Round).ToList().ForEach(s =>
+            {
+                if (currentRound != s.Round)
+                {
+                    value += "\n\nRound " + s.Round;
+                    currentRound = s.Round;
+                }
+
+                value += "\n" + PrintSeries(s);
+            });
+                        
+            return value;
+        }
+
         public static string PrintSeries(IPlayoffSeries series)
         {
             string format = "R{5} {0}. {1} - {2} : {3} - {4}";

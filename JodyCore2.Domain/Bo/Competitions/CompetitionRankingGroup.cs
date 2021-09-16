@@ -18,7 +18,7 @@ namespace JodyCore2.Domain.Bo.Competitions
         {            
         }
 
-        public CompetitionRankingGroup(Guid identifier, IList<ICompetition> competitions, string name, IList<ICompetitionRanking> rankings) : base(identifier, name, rankings.ToList<IRanking>())
+        public CompetitionRankingGroup(Guid identifier, IList<ICompetition> competitions, string name, IList<ICompetitionRanking> rankings) : base(identifier, name, rankings != null? rankings.ToList<IRanking>():null)
         {
             Competitions = competitions;
         }

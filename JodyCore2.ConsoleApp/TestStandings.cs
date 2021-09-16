@@ -119,7 +119,7 @@ namespace JodyCore2.ConsoleApp
 
         }
 
-        public IList<IStandingsRecord> SortMethod(IStandings standings)
+        public static IList<IStandingsRecord> SortMethod(IStandings standings)
         {
             return standings.Records.ToList().OrderByDescending(r => r.Points)
                             .ThenBy(r => r.GamesPlayed)
