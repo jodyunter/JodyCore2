@@ -6,22 +6,13 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Service.ViewModels
 {
-    public interface ICompetitiongRankingGroupViewModel
+    public interface ICompetitiongRankingGroupViewModel:IRankingGroupViewModel
     {
-        Guid Identifier { get; }
-        string Name { get; }
-        IList<ISimpleCompetitionViewModel> Competitions { get; }
-        IList<ICompetitionRankingViewModel> Rankings { get; }
+        IList<ISimpleCompetitionViewModel> Competitions { get; }        
     }
 
-    public interface ICompetitionRankingViewModel
-    {
-        Guid Identifier { get; }        
-        Guid GroupIdentifier { get; }
-        string GroupName { get; }
-        Guid TeamIdentifier { get; }
-        string TeamName { get; }
-        int Rank { get; }
+    public interface ICompetitionRankingViewModel:IRankingViewModel
+    {        
     }
     public interface ISimpleCompetitionViewModel
     {
