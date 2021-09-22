@@ -59,6 +59,7 @@ namespace JodyCore2.Data
         public DbSet<Playoff> Playoffs { get; set; }
         public DbSet<StandingsRecord> StandingsRecords { get; set; }
         public DbSet<PlayoffSeries> PlayoffSeries { get; set; }
+        public DbSet<BestOfPlayoffSeries> BestOfPlayoffSeries { get; set; }
         public DbSet<Ranking> Rankings { get; set; }
         public DbSet<RankingGroup> RankingGroups { get; set; }
         public DbSet<CompetitionRanking> CompetitionRankings { get; set; }
@@ -90,6 +91,7 @@ namespace JodyCore2.Data
         private void onCompetitionCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Competition>().HasKey(s => s.Identifier);
+            modelBuilder.Entity<Competition>().HasMany(s => (IList<CompetitionRankingGroup>)s.RankingGroups);
         }
         private void onTeamCreating(ModelBuilder modelBuilder)
         {
@@ -150,6 +152,7 @@ namespace JodyCore2.Data
 
         private void onPlayoffSeriesCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<PlayoffSeries>().HasKey(ps => ps.Identifier);
             modelBuilder.Entity<PlayoffSeries>().HasOne(t => (Playoff)t.Playoff);
             modelBuilder.Entity<PlayoffSeries>().HasOne(t => (Team)t.Team1);
             modelBuilder.Entity<PlayoffSeries>().HasOne(t => (Team)t.Team2);
