@@ -23,6 +23,10 @@ namespace JodyCore2.Domain.Bo.Rankings
             Rankings = rankings;
         }
 
+        public RankingGroup(string name, IList<IRanking> rankings):this(Guid.NewGuid(), name, rankings)
+        {        
+        }
+
         public IRanking GetRankingByTeam(ITeam team)
         {
             return Rankings.Where(r => r.Team.Identifier == team.Identifier).FirstOrDefault();

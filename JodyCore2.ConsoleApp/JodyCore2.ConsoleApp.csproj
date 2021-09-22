@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\JodyCore2.ProcessWork\JodyCore2.ProcessWork.csproj" />
     <ProjectReference Include="..\JodyCore2.Data\JodyCore2.Data.csproj" />
     <ProjectReference Include="..\JodyCore2.Service\JodyCore2.Service.csproj" />
   </ItemGroup>

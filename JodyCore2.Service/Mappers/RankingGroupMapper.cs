@@ -11,12 +11,12 @@ namespace JodyCore2.Service.Mappers
 {
     public class RankingGroupMapper
     {
-        public IRankingGroupViewModel RankingGroupToRankingGroupViewModel(IRankingGroup group)
+        public static IRankingGroupViewModel RankingGroupToRankingGroupViewModel(IRankingGroup group)
         {
             return new RankingGroupViewModel(group.Identifier, group.Name,
                 group.Rankings.Select(r => RankingMapper.RankingToRankingViewModel(r)).ToList());
         }
-        public ICompetitiongRankingGroupViewModel CompetitionRankingGroupToCompetitionRankingGroupViewModel(ICompetitionRankingGroup group)
+        public static ICompetitiongRankingGroupViewModel CompetitionRankingGroupToCompetitionRankingGroupViewModel(ICompetitionRankingGroup group)
         {
             return new CompetitionRankingGroupViewModel(group.Identifier, group.Name,
                 group.Competitions.Select(s => CompetitionMapper.CompetitionToSimpleCompetitionViewModel(s)).ToList(),

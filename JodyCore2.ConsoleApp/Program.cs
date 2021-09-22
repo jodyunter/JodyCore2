@@ -1,6 +1,7 @@
 ﻿using JodyCore2.ConsoleApp.Views;
 using JodyCore2.Data;
 using JodyCore2.Data.Repositories;
+using JodyCore2.ProcessWork.Competitions.Standing;
 using JodyCore2.Service;
 using JodyCore2.Service.ViewModels;
 using System;
@@ -22,6 +23,9 @@ namespace JodyCore2.ConsoleApp
                 context.Database.EnsureCreated();
             }
 
+            var process = new NewStandingsProcess();
+
+            process.Scratch();
             /*
             var services = new Services();
             var teamService = services.TeamService;
