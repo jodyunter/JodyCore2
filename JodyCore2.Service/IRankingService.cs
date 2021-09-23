@@ -11,5 +11,6 @@ namespace JodyCore2.Service
     {
         IRankingViewModel CreateRanking(IRankingGroupViewModel group, ITeamViewModel team, int initialRank);
         IRankingGroupViewModel CreateRankingGroup(string name, IList<ITeamViewModel> teams, int defaultRank = 1);
+        ICompetitiongRankingGroupViewModel CreateCompetitionRakingGroupFromRankingGroup(Guid rankingGroupIdentifier, IList<Guid> competitionIdentifierList);
     }
 }
