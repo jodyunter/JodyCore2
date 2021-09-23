@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo.Scheduling
 {
-    public interface IScheduleGame
-    {
-        public Guid Identifier { get; }
+    public interface IScheduleGame:IBO
+    {        
         public int Year { get; }
         public int Day { get; }
         public ITeam Home { get; }

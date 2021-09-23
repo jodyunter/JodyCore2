@@ -8,9 +8,8 @@ namespace JodyCore2.Domain.Bo.Competitions
 {
     //todo:  Generalize the playoff and standings as competitions
     //todo:  Rankings could be moved higher up as a competition ranking.
-    public interface ICompetition
-    {
-        Guid Identifier { get; }
+    public interface ICompetition:IBO
+    {        
         string Name { get; }
         int StartYear { get; }        
         int StartDay { get; }

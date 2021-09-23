@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace JodyCore2.Domain.Bo
 {
     //todo add a game stats class to keep track of all game stats
-    public interface IGame:IScheduleGame
+    public interface IGame:IScheduleGame, IBO
     {        
         int HomeScore { get; }
         int AwayScore { get; }

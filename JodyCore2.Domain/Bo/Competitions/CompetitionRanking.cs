@@ -13,5 +13,9 @@ namespace JodyCore2.Domain.Bo.Competitions
         public CompetitionRanking(Guid identifier, ITeam team, int rank, ICompetitionRankingGroup group) : base(identifier, team, rank, group)
         {
         }
+
+        public CompetitionRanking(ITeam team, int rank, ICompetitionRankingGroup group) : this(Guid.NewGuid(), team, rank, group)
+        {
+        }
     }
 }

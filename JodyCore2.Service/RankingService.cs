@@ -1,4 +1,5 @@
 ﻿using JodyCore2.Data;
+using JodyCore2.Data.Repositories.Competitions;
 using JodyCore2.Data.Repositories.Rankings;
 using JodyCore2.Data.Repositories.Teams;
 using JodyCore2.Domain.Bo.Competitions;
@@ -17,11 +18,13 @@ namespace JodyCore2.Service
     {
         private readonly ITeamRepository teamRepository;
         private readonly IRankingGroupRepository rankingGroupRepository;
-        private readonly ICompetitionRepoistory competitionRepoistory;
+        private readonly ICompetitionRepository competitionRepository;
 
-        public RankingService(IRankingGroupRepository rankingRep,ICompetitionRepository competitionRepo, ITeamRepository teamRepo)
+        public RankingService(IRankingGroupRepository rankingGroupRepo,ICompetitionRepository competitionRepo, ITeamRepository teamRepo)
         {
             teamRepository = teamRepo;
+            rankingGroupRepository = rankingGroupRepo;
+            competitionRepository = competitionRepo;
         }
 
         public ICompetitiongRankingGroupViewModel CreateCompetitionRakingGroupFromRankingGroup(Guid rankingGroupIdentifier, IList<Guid> competitionIdentifierList)
@@ -29,7 +32,18 @@ namespace JodyCore2.Service
             using (var context = new JodyContext()) 
             {
                 var rankingGroup = rankingGroupRepository.GetByIdentifier(rankingGroupIdentifier, context).First();
-                var newCompetitionGroup = new CompetitionRankingGroup(new List<ICompetition>(), )
+                var competitions = competitionRepository.GetCompetitionsByList(competitionIdentifierList, context);
+                var newCompetitionGroup = new CompetitionRankingGroup(competitions.ToList<ICompetition>(), rankingGroup.Name, new List<ICompetitionRanking>());
+
+                rankingGroup.Rankings.ToList().ForEach(rankings =>
+                {
+                    newCompetitionGroup.AddRank(rankings.Team, 1);
+                });
+
+                context.Add(newCompetitionGroup);
+                context.SaveChanges();
+
+                return RankingGroupMapper.CompetitionRankingGroupToCompetitionRankingGroupViewModel(newCompetitionGroup);
             }
         }
 

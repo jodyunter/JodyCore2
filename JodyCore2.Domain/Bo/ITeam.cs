@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Domain.Bo
 {
-    public interface ITeam
-    {
-        Guid Identifier { get; set; }
+    public interface ITeam: IBO
+    {        
         string Name { get; set; }
         int Skill { get; set; }
     }

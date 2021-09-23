@@ -1,10 +1,11 @@
-﻿using JodyCore2.Domain.Bo.Standings;
+﻿using JodyCore2.Data.Repositories.Competitions;
+using JodyCore2.Domain.Bo.Standings;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace JodyCore2.Data.Repositories.Standing
 {
-    public class StandingsRepository : BaseRepository<Standings>, IStandingsRepository
+    public class StandingsRepository : BaseCompetitionRepository<Standings>, IStandingsRepository
     {
         public override IQueryable<Standings> WithAllObjects(IQueryable<Standings> query)
         {
