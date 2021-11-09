@@ -30,11 +30,11 @@ namespace JodyCore2.Domain.Bo.Playoff
         bool Complete { get; }
         bool Processed { get; }
         SeriesType SeriesType { get; }
-        void ProcessGame(ICompetitionGame game);
+        void ProcessGame(IPlayoffGame game);
         bool IsComplete();
-        IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> seriesGames);
+        IList<IPlayoffGame> CreateGames(IList<IPlayoffGame> seriesGames);
         string HomeString { get; } //this says which team will be home/away
-        ICompetitionGame CreateGame(IList<ICompetitionGame> seriesGames);
+        IPlayoffGame CreateGame(IList<IPlayoffGame> seriesGames);
         void SetTeam1(ITeam team);
         void SetTeam2(ITeam team);
         void Process();        

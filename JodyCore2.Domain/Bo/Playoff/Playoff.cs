@@ -31,14 +31,16 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public override IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> games)
         {
-            var newGames = new List<ICompetitionGame>();
+            var newGames = new List<IPlayoffGame>();
+            var oldGames = games.ToList().Select(g => (IPlayoffGame)g);
 
             Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>
             {
-                newGames.AddRange(s.CreateGames(games.Where(g => ((IPlayoffGame)g).Series.Identifier == s.Identifier).ToList()));
+                
+                newGames.AddRange(s.CreateGames(oldGames.Where(g => g.Series.Identifier == s.Identifier).ToList()));
             });
 
-            return newGames;
+            return newGames.ToList<ICompetitionGame>();
         }
 
         public IList<IPlayoffSeries> GetByRound(int round)
@@ -64,7 +66,7 @@ namespace JodyCore2.Domain.Bo.Playoff
             {
                 var playoffGame = (IPlayoffGame)game;
                 //the game should have it's series already so ti should be able to process it
-                playoffGame.Series.ProcessGame(game);
+                playoffGame.Series.ProcessGame(playoffGame);
             }
         }
 

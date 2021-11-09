@@ -45,7 +45,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public bool Processed { get; set; }
 
-        public abstract IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> games);
+        public abstract IList<IPlayoffGame> CreateGames(IList<IPlayoffGame> games);
 
         public abstract ITeam GetLoser();
 
@@ -53,7 +53,7 @@ namespace JodyCore2.Domain.Bo.Playoff
 
         public abstract bool IsComplete();
 
-        public abstract void ProcessGame(ICompetitionGame game);
+        public abstract void ProcessGame(IPlayoffGame game);
 
         public virtual void SetTeam1(ITeam team)
         {
@@ -159,7 +159,7 @@ namespace JodyCore2.Domain.Bo.Playoff
                 }
             }
         }
-        public ICompetitionGame CreateGame(IList<ICompetitionGame> seriesGames)
+        public IPlayoffGame CreateGame(IList<IPlayoffGame> seriesGames)
         {
             int gameNumber = seriesGames.Count();
 

@@ -176,7 +176,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
 
         [Theory]
         [MemberData(nameof(GetDataForCreateGames))]
-        public void ShouldCreateGames(PlayoffSeries series, int team1Score, int team2Score, IList<ICompetitionGame> currentGames, int expectedNewGames)
+        public void ShouldCreateGames(PlayoffSeries series, int team1Score, int team2Score, IList<IPlayoffGame> currentGames, int expectedNewGames)
         {
             series.Team1Score = team1Score;
             series.Team2Score = team2Score;            
@@ -199,7 +199,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             series.RequiredWins = 2;
             series.HomeString = "";
             var inCompleteGame1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 3, true, false, false);
-            var currentGames = new List<ICompetitionGame>() { inCompleteGame1 };
+            var currentGames = new List<IPlayoffGame>() { inCompleteGame1 };
 
             var exception = Assert.Throws<ApplicationException>(() => series.CreateGames(currentGames));
             Assert.Equal(BestOfPlayoffSeries.UNPROCESSED_GAMES_EXIST, exception.Message);
@@ -220,7 +220,7 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             series.Complete = true; //key value in this test
 
             var inCompleteGame1 = new PlayoffGame(Guid.NewGuid(), null, series, 1, 1, team1, team2, 0, 3, true, false, false);
-            var currentGames = new List<ICompetitionGame>() { inCompleteGame1 };
+            var currentGames = new List<IPlayoffGame>() { inCompleteGame1 };
 
             var exception = Assert.Throws<ApplicationException>(() => series.CreateGames(currentGames));
             Assert.Equal(BestOfPlayoffSeries.SERIES_COMPLETE_CANT_CREATE_GAMES, exception.Message);
@@ -276,31 +276,10 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Playoffs
             series.Team1Score = 2;
             series.Team2Score = 1;
 
-            var game = new CompetitionGame(Guid.NewGuid(), null, 1, 5, series.Team1, series.Team2, 5, 3, true, false, true);
-
+            var game = new PlayoffGame(Guid.NewGuid(), null, series, 1, 5, series.Team1, series.Team2, 5, 3, true, false, true);          
 
             var exception = Assert.Throws<ApplicationException>(() => series.ProcessGame(game));
             Assert.Equal(BestOfPlayoffSeries.SERIES_COMPLETE_CANT_PROCESS_GAMES, exception.Message);
-        }
-
-        [Fact]
-        public void ShouldNotProcessGameNotPlayoffGame()
-        {
-            var badseries = new BestOfPlayoffSeries();
-
-            var series = new BestOfPlayoffSeries();
-            series.Team1 = new Team(Guid.NewGuid(), "Test 1", 5);
-            series.Team2 = new Team(Guid.NewGuid(), "Test 2", 5);
-            series.RequiredWins = 3;
-
-            series.Team1Score = 2;
-            series.Team2Score = 1;
-
-            var game = new CompetitionGame(Guid.NewGuid(), null, 1, 5, series.Team1, series.Team2, 5, 3, true, false, true);
-
-
-            var exception = Assert.Throws<ApplicationException>(() => series.ProcessGame(game));
-            Assert.Equal(BestOfPlayoffSeries.NOT_PLAYOFF_GAME, exception.Message);
         }
 
         [Fact]

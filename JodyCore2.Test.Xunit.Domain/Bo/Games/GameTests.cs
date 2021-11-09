@@ -19,8 +19,8 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Games
             game.Play(RandomUtility.GetRandom(1277734512));
 
             Assert.True(game.Complete);
-            Assert.StrictEqual(3, game.HomeScore);
-            Assert.StrictEqual(5, game.AwayScore);
+            Assert.StrictEqual(5, game.HomeScore);
+            Assert.StrictEqual(4, game.AwayScore);
 
         }
 

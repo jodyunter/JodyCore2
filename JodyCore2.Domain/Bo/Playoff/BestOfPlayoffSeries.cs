@@ -12,8 +12,7 @@ namespace JodyCore2.Domain.Bo.Playoff
         public static string NO_TEAM_HAS_REQUIRED_SCORE = "Neither team has the required score.";
         public static string GAME_INCOMPLETE_OR_PROCESSED =  "Can't process an incomplete game or already processed game.";
         public static string WRONG_SERIES_FOR_GAME = "Game is not for this playoff series.";
-        public static string WRONG_TEAMS_FOR_SERIES = "Teams in game are not in this series.";
-        public static string NOT_PLAYOFF_GAME = "This is not a playoff game!";
+        public static string WRONG_TEAMS_FOR_SERIES = "Teams in game are not in this series.";        
         public static string SERIES_COMPLETE_CANT_PROCESS_GAMES = "Can't process a game when series is complete.";
         public static string UNPROCESSED_GAMES_EXIST = "Can't create new games for series, if some games are unprocessed.";
         public static string SERIES_COMPLETE_CANT_CREATE_GAMES = "Trying to create games for a complete series.";
@@ -49,9 +48,9 @@ namespace JodyCore2.Domain.Bo.Playoff
             RequiredWins = requiredWins;
         }
 
-        public override IList<ICompetitionGame> CreateGames(IList<ICompetitionGame> seriesGames)
+        public override IList<IPlayoffGame> CreateGames(IList<IPlayoffGame> seriesGames)
         {
-            var newGames = new List<ICompetitionGame>();
+            var newGames = new List<IPlayoffGame>();
 
             if (!Complete)
             {
@@ -78,7 +77,7 @@ namespace JodyCore2.Domain.Bo.Playoff
             }
             else
             {
-                //do nothing don't throw an error
+                throw new ApplicationException(SERIES_COMPLETE_CANT_CREATE_GAMES);
             }
             return newGames;
         }
@@ -143,43 +142,37 @@ namespace JodyCore2.Domain.Bo.Playoff
             return Complete;
         }
 
-        public override void ProcessGame(ICompetitionGame game)
+        public override void ProcessGame(IPlayoffGame game)
         {
             if (!Complete)
             {
                 if (game.Complete && !game.Processed)
                 {
-                    if (game is IPlayoffGame)
+   
+                     var playoffGame = (IPlayoffGame)game;
+
+                    if (playoffGame.Series.Identifier.Equals(this.Identifier))
                     {
-                        var playoffGame = (IPlayoffGame)game;
-
-                        if (playoffGame.Series.Identifier.Equals(this.Identifier))
+                        if (game.GetWinner().Identifier == Team1.Identifier)
                         {
-                            if (game.GetWinner().Identifier == Team1.Identifier)
-                            {
-                                Team1Score++;
-                            }
-                            else if (game.GetWinner().Identifier == Team2.Identifier)
-                            {
-                                Team2Score++;
-                            }
-                            else
-                            {
-                                throw new ApplicationException(WRONG_TEAMS_FOR_SERIES);
-                            }
-
-                            game.Process();
-                            this.IsComplete(); //be sure to check and set if complete
+                            Team1Score++;
+                        }
+                        else if (game.GetWinner().Identifier == Team2.Identifier)
+                        {
+                            Team2Score++;
                         }
                         else
                         {
-                            throw new ApplicationException(WRONG_SERIES_FOR_GAME);
+                            throw new ApplicationException(WRONG_TEAMS_FOR_SERIES);
                         }
+
+                        game.Process();
+                        this.IsComplete(); //be sure to check and set if complete
                     }
                     else
                     {
-                        throw new ApplicationException(NOT_PLAYOFF_GAME);
-                    }
+                        throw new ApplicationException(WRONG_SERIES_FOR_GAME);
+                    }                    
                 }
                 else
                 {

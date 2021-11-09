@@ -6,8 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JodyCore2\JodyCore2.Domain\JodyCore2.Domain.csproj" />
-    <ProjectReference Include="..\JodyCore2\JodyCore2.Service\JodyCore2.Service.csproj" />
+    <ProjectReference Include="..\JodyCore2.Service\JodyCore2.Service.csproj" />
   </ItemGroup>
 
 </Project>

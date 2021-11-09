@@ -361,8 +361,9 @@ namespace JodyCore2.Test.Xunit.Domain.Bo.Scheduling
             //expected days
             Assert.StrictEqual(expectedDays, result.Count);
 
+            throw new NotImplementedException("Still not implemented fully.");
             //need way more validation here!
-            Assert.True(false);
+//            Assert.True(false);
             
         }
     }
