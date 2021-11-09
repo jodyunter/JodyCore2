@@ -78,7 +78,7 @@ namespace JodyCore2.ProcessWork.Competitions.Standing
             //Create base teams
             //Create base ranking groups
 
-            //Choose Teams
+            //Choose Teams            
             //Set Year and starting day
             //Create the standings            
             //Create competition ranking groups            
