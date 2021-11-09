@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JodyCore2.Data.Repositories.Playoffs
 {
-    class IPlayoffSeriesRepository
+    interface IPlayoffSeriesRepository
     {
     }
 }
